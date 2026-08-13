@@ -1,0 +1,4 @@
+Lora is licensed under the SIL Open Font License 1.1.
+Copyright 2011 The Lora Project Authors (https://github.com/cyrealtype/Lora-Cyrillic)
+Full licence: https://openfontlicense.org
+Bundled here so the app looks the same on a machine where Lora is not installed.

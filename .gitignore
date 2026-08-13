@@ -1,0 +1,21 @@
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# PyInstaller / local run output
+build/
+dist/
+*.log
+build-config.json
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
