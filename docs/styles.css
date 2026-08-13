@@ -1,0 +1,346 @@
+:root {
+  --bg: #F1ECE1;
+  --card: #FBF8F2;
+  --edge: #DED7C9;
+  --text: #232120;
+  --muted: #8C8578;
+  --grad-a: #1E1C1A;
+  --grad-b: #8A7452;
+  --ready: #1F9D5B;
+  --listen: #E2542A;
+  --font: "Lora", Georgia, Constantia, Cambria, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+a {
+  color: var(--text);
+}
+
+a:hover {
+  color: var(--grad-b);
+}
+
+:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+}
+
+.wordmark {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, var(--grad-a), var(--grad-b));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+}
+
+.nav .wordmark {
+  font-size: 1.2rem;
+}
+
+.nav nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.nav nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.nav nav a:hover {
+  color: var(--text);
+}
+
+main {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+.hero {
+  padding: 3.5rem 0 2.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.hero h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  line-height: 1.1;
+}
+
+.lead {
+  margin: 0 0 0.85rem;
+  font-size: 1.35rem;
+  line-height: 1.45;
+  max-width: 28rem;
+}
+
+.sub {
+  margin: 0 0 1.75rem;
+  color: var(--text);
+  max-width: 32rem;
+}
+
+.sub em, .how em {
+  font-style: italic;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--text);
+  color: var(--bg);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 0;
+  padding: 0.7rem 1.15rem;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--grad-a);
+  color: var(--bg);
+}
+
+.how {
+  display: grid;
+  gap: 1.75rem;
+  margin: 3rem 0;
+}
+
+@media (min-width: 720px) {
+  .how {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.how h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.how p {
+  margin: 0;
+}
+
+.example {
+  margin-top: 0.7rem !important;
+  padding: 0.7rem 0.8rem;
+  background: var(--card);
+  border: 1px solid var(--edge);
+  font-size: 0.95rem;
+}
+
+.example span {
+  display: block;
+  font-style: italic;
+  margin-bottom: 0.2rem;
+}
+
+.gallery {
+  display: grid;
+  gap: 1rem;
+  margin: 2.5rem 0;
+}
+
+@media (min-width: 720px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.shot {
+  position: relative;
+  margin: 0;
+  background: var(--card);
+  border: 1px solid var(--edge);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shot.contain {
+  background: var(--bg);
+}
+
+.shot.contain img {
+  object-fit: contain;
+}
+
+.shot.empty img {
+  display: none;
+}
+
+.shot.empty::after {
+  content: attr(data-file);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.shot figcaption {
+  position: absolute;
+  left: 0.7rem;
+  bottom: 0.55rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  background: color-mix(in srgb, var(--card) 85%, transparent);
+  padding: 0.1rem 0.35rem;
+}
+
+.shot.empty figcaption {
+  display: none;
+}
+
+.hero + .shot {
+  margin-bottom: 0.5rem;
+}
+
+.notes {
+  margin: 3rem 0;
+  max-width: 34rem;
+}
+
+.notes p {
+  margin: 0 0 0.8rem;
+}
+
+.contact {
+  margin: 3.5rem 0 1rem;
+  max-width: 26rem;
+}
+
+.contact h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.contact > p {
+  margin: 0 0 1.4rem;
+}
+
+form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+label {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+input, textarea {
+  font-family: inherit;
+  font-size: 1.05rem;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--edge);
+  padding: 0.55rem 0.7rem;
+  width: 100%;
+}
+
+input:focus, textarea:focus {
+  outline: 2px solid var(--text);
+  outline-offset: 0;
+  border-color: var(--text);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 7rem;
+}
+
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+}
+
+.form-status {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.form-status.ok { color: var(--ready); }
+.form-status.err { color: var(--listen); }
+
+form .btn {
+  justify-self: start;
+}
+
+form.sent .btn,
+form.sent label {
+  display: none;
+}
+
+footer {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: var(--muted);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--edge);
+}
+
+footer .wordmark {
+  font-size: 1rem;
+}

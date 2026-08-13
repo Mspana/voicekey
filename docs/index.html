@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VoiceKey</title>
+  <meta name="description" content="Hold Space and talk to type. Hold Ctrl and talk to run a command. Hands-free PC control for Windows.">
+  <meta property="og:title" content="VoiceKey">
+  <meta property="og:description" content="Hold Space and talk to type. Hold Ctrl and talk to run a command.">
+  <meta property="og:image" content="images/hero.jpg">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav">
+    <a class="wordmark" href="#">voicekey</a>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Windows · alpha</p>
+      <h1 class="wordmark">voicekey</h1>
+      <p class="lead">Hold Space and talk to type. Hold Ctrl and talk to run a command.</p>
+      <p class="sub">A small app. One file, nothing to install. Inside dictation, the word <em>zulu</em> works like a key — everything before it is text, the words after it are an action.</p>
+      <p><a class="btn" href="#contact">Ask for a copy</a></p>
+    </section>
+
+    <figure class="shot contain" data-file="images/hero.jpg">
+      <img src="images/hero.jpg" alt="The VoiceKey window, ready to dictate" width="960" height="600">
+    </figure>
+
+    <section id="how" class="how">
+      <article>
+        <h2>Dictate</h2>
+        <p>Hold Space — or a foot pedal — speak, let go. The words are pasted into whatever window you were already in. A short tap is still a space.</p>
+      </article>
+      <article>
+        <h2>Command</h2>
+        <p>Hold Ctrl and say the action: click, tab, undo, scroll up 5. Or stay in dictation and drop <em>zulu</em> in mid-sentence.</p>
+        <p class="example"><span>“ship it zulu enter”</span> types ship it, then hits Enter.</p>
+      </article>
+      <article>
+        <h2>Aim</h2>
+        <p>Say <em>zulu grid</em>. Two numbers zoom into a cell. Repeat until you’re on the thing, then click. Two levels gets you close; three gets you to a character.</p>
+      </article>
+    </section>
+
+    <section class="gallery" aria-label="The product in use">
+      <figure class="shot contain" data-file="images/dictate.png">
+        <img src="images/dictate.png" alt="VoiceKey listening, ready to transcribe" width="640" height="400">
+        <figcaption>Dictation</figcaption>
+      </figure>
+      <figure class="shot" data-file="images/grid.png">
+        <img src="images/grid.png" alt="The VoiceKey mouse grid over a screen" width="640" height="400">
+        <figcaption>Grid</figcaption>
+      </figure>
+      <figure class="shot" data-file="images/command.png">
+        <img src="images/command.png" alt="Screen-edge glow while VoiceKey listens for a command" width="640" height="400">
+        <figcaption>Command</figcaption>
+      </figure>
+    </section>
+
+    <section class="notes">
+      <p>You don’t have to watch it. A high beep when it starts listening, a lower one when it captured, a long low one if something went wrong.</p>
+      <p>USB foot pedals show up as a normal key. Remap to F13 in the config next to the app and you’re done.</p>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact</h2>
+      <p>Still alpha. If you want to try it, say who you are and what you’re using it for.</p>
+
+      <form id="contact-form" action="https://formspree.io/f/xvkpqzql" method="POST">
+        <label>
+          Name
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <label>
+          Message
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="_subject" value="VoiceKey">
+        <p class="form-status" role="status" hidden></p>
+        <button class="btn" type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <span class="wordmark">voicekey</span>
+    <span>Windows · alpha</span>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>
