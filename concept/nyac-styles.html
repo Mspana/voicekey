@@ -1,0 +1,381 @@
+<title>Three Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Public+Sans:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&family=Cinzel:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --pg-bg:#E9E2D6; --pg-bg2:#E0D6C6; --pg-panel:#FBF8F2; --pg-ink:#1E1B16;
+  --pg-muted:#6B6455; --pg-faint:#948C7C; --pg-hair:#DCD2C0; --pg-gold:#8C6E3C;
+  --pg-shadow:26,22,16;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --pg-bg:#131109; --pg-bg2:#191509; --pg-panel:#201C13; --pg-ink:#F0EADD;
+  --pg-muted:#ABA391; --pg-faint:#7E7768; --pg-hair:#312B1F; --pg-gold:#C6A45F;
+  --pg-shadow:0,0,0;
+}}
+:root[data-theme="dark"]{
+  --pg-bg:#131109; --pg-bg2:#191509; --pg-panel:#201C13; --pg-ink:#F0EADD;
+  --pg-muted:#ABA391; --pg-faint:#7E7768; --pg-hair:#312B1F; --pg-gold:#C6A45F;
+  --pg-shadow:0,0,0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg-bg);color:var(--pg-ink);
+  font-family:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(130% 90% at 50% -10%,var(--pg-bg2),var(--pg-bg) 62%);min-height:100vh}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.wrap{max-width:1200px;margin:0 auto;padding:clamp(22px,4vw,46px) clamp(16px,4vw,40px) 46px}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:clamp(26px,4vw,44px)}
+.top .eyebrow{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--pg-gold);font-weight:700}
+.top h1{font-family:"Libre Caslon Display",Georgia,serif;font-weight:400;font-size:clamp(30px,5vw,52px);
+  line-height:1;margin:10px 0 0;letter-spacing:-.005em;text-wrap:balance}
+.top .lede{color:var(--pg-muted);font-size:15px;max-width:52ch;margin:12px 0 0;line-height:1.55}
+.tbtn{width:44px;height:44px;border-radius:12px;border:1px solid var(--pg-hair);background:var(--pg-panel);
+  color:var(--pg-ink);display:grid;place-items:center;cursor:pointer;flex:none}
+.tbtn:active{transform:scale(.94)}
+.tbtn svg{width:20px;height:20px}
+.tbtn .mo{display:none}
+:root[data-theme="dark"] .tbtn .mo{display:block}:root[data-theme="dark"] .tbtn .su{display:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .tbtn .mo{display:block}:root:not([data-theme="light"]) .tbtn .su{display:none}}
+
+.rig{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+@media (max-width:1000px){.rig{grid-template-columns:1fr;gap:48px;justify-items:center}}
+.col{display:flex;flex-direction:column;align-items:center;max-width:360px;width:100%}
+
+/* ===== device ===== */
+.phone{width:min(324px,86vw);background:linear-gradient(160deg,#211d16,#0b0906);
+  border-radius:44px;padding:11px;border:1px solid #000;
+  box-shadow:0 30px 60px -26px rgba(var(--pg-shadow),.6),0 10px 22px -12px rgba(var(--pg-shadow),.4)}
+.pscreen{position:relative;height:648px;border-radius:34px;overflow:hidden;display:flex;flex-direction:column;background:#111}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:11px 22px 5px;font-size:12.5px;font-weight:700;flex:none;z-index:5;position:relative}
+.sb .r{display:flex;gap:5px;align-items:center}.sb svg{width:15px;height:15px}
+.pbody{flex:1;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.hbar{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:110px;height:4.5px;border-radius:5px;z-index:8}
+
+/* ===== hero shared ===== */
+.hero{position:relative;flex:none;overflow:hidden}
+.hero canvas,.hero .art{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .scrim{position:absolute;inset:0}
+.hero .hcontent{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:18px}
+
+/* caption under phone */
+.cap{margin-top:22px;text-align:center;width:100%}
+.cap .rn{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--pg-gold);font-weight:700}
+.cap .nm{font-family:"Libre Caslon Display",Georgia,serif;font-size:23px;margin:7px 0 0;letter-spacing:-.01em}
+.cap .ds{color:var(--pg-muted);font-size:13.5px;line-height:1.55;margin:9px auto 0;max-width:34ch}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px}
+.chips span{font-size:11px;font-weight:600;color:var(--pg-muted);border:1px solid var(--pg-hair);
+  background:var(--pg-panel);border-radius:999px;padding:5px 10px;letter-spacing:.02em}
+.chips span b{color:var(--pg-ink);font-weight:700}
+
+.foot{margin-top:44px;padding-top:20px;border-top:1px solid var(--pg-hair);color:var(--pg-faint);font-size:12px;line-height:1.6;max-width:760px}
+.foot b{color:var(--pg-muted)}
+
+/* ============================================================= */
+/* STYLE A — THE ROLL OF HONOR (Heritage Editorial)              */
+/* ============================================================= */
+.A{background:#F4EFE6;color:#191510;font-family:"Public Sans",sans-serif}
+.A .sb{color:#F4EFE6}
+.A .hero{height:270px}
+.A .hero .scrim{background:linear-gradient(180deg,rgba(10,7,4,.15) 0%,rgba(10,7,4,0) 34%,rgba(10,7,4,.72) 100%)}
+.A .hero .est{font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:#D8B978;font-weight:700}
+.A .hero .wm{font-family:"Libre Caslon Display",serif;color:#F6F1E6;font-size:27px;line-height:1.02;margin-top:6px;letter-spacing:-.01em;text-shadow:0 1px 18px rgba(0,0,0,.4)}
+.A .abody{flex:1;background:#F4EFE6;padding:20px 20px 0;overflow:hidden}
+.A .greet{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#9B7B3E;font-weight:700}
+.A .lead{font-family:"Libre Caslon Display",serif;font-size:27px;line-height:1.08;margin:9px 0 0;letter-spacing:-.01em}
+.A .reserve{display:inline-flex;align-items:center;gap:8px;margin-top:15px;background:#9B1B31;color:#fff;
+  border:0;border-radius:2px;padding:13px 18px;font-family:"Public Sans";font-weight:700;font-size:14px;cursor:pointer}
+.A .reserve:active{transform:translateY(1px)}
+.A .rule{height:1px;background:#D8CDB8;margin:20px 0 0}
+.A .sec{display:flex;align-items:baseline;justify-content:space-between;margin:14px 0 4px}
+.A .sec .t{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#9B7B3E;font-weight:700}
+.A .sec .a{font-size:12px;color:#9B1B31;font-weight:600}
+.A .ev{display:flex;gap:14px;padding:11px 0;border-top:1px solid #E3D9C4;align-items:baseline}
+.A .ev:first-of-type{border-top:0}
+.A .ev .tm{font-family:"Libre Caslon Display",serif;font-size:15px;width:52px;flex:none;font-variant-numeric:tabular-nums;color:#191510}
+.A .ev .en{font-size:14.5px;font-weight:600;line-height:1.22}
+.A .ev .el{font-size:12px;color:#7E735C;margin-top:2px}
+.A .ev .el.ti{color:#3C7286}
+
+/* ============================================================= */
+/* STYLE B — THE FIELD HOUSE (Modern Athletic, dark)             */
+/* ============================================================= */
+.B{background:#14171A;color:#EFEDE7;font-family:"Barlow",sans-serif}
+.B .sb{color:#EFEDE7}
+.B .hero{height:288px}
+.B .hero .scrim{background:linear-gradient(180deg,rgba(8,12,14,.35),rgba(8,12,14,.05) 40%,rgba(8,12,14,.88))}
+.B .hero .kick{font-family:"Barlow Semi Condensed";font-weight:600;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#63B3D4}
+.B .hero .wm{font-family:"Barlow Semi Condensed";font-weight:800;font-size:54px;line-height:.86;letter-spacing:.01em;color:#fff;margin-top:2px}
+.B .hero .subw{font-family:"Barlow Semi Condensed";font-weight:600;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#EFEDE7;opacity:.82;margin-top:6px}
+.B .bbody{flex:1;background:#14171A;padding:16px 16px 0;overflow:hidden}
+.B .cta{width:100%;background:#D2213C;color:#fff;border:0;border-radius:4px;padding:15px;
+  font-family:"Barlow Semi Condensed";font-weight:800;font-size:16px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between}
+.B .cta:active{transform:translateY(1px)}
+.B .cta svg{width:20px;height:20px}
+.B .board-h{font-family:"Barlow Semi Condensed";font-weight:700;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#7C8790;margin:18px 2px 8px;display:flex;justify-content:space-between}
+.B .row{display:grid;grid-template-columns:60px 1fr auto;gap:10px;align-items:center;padding:11px 0;border-top:1px solid #23282C}
+.B .row .tm{font-family:"Barlow Semi Condensed";font-weight:700;font-size:15px;color:#fff;font-variant-numeric:tabular-nums}
+.B .row .nm{font-family:"Barlow Semi Condensed";font-weight:700;font-size:15px;letter-spacing:.02em;text-transform:uppercase;line-height:1.05}
+.B .row .vn{font-size:11px;color:#8C959C;letter-spacing:.04em;margin-top:2px;text-transform:uppercase}
+.B .tagx{font-family:"Barlow Semi Condensed";font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:3px}
+.B .tagx.ch{background:rgba(210,33,60,.16);color:#EE7080}
+.B .tagx.ti{background:rgba(99,179,212,.16);color:#7EC4E0}
+
+/* ============================================================= */
+/* STYLE C — THE GRAND HALL (Deco Hospitality, warm)             */
+/* ============================================================= */
+.C{background:#F1E7D6;color:#241B12;font-family:"Jost",sans-serif}
+.C .sb{color:#F1E7D6}
+.C .hero{height:300px;background:#4E1620}
+.C .hero .scrim{background:radial-gradient(120% 90% at 50% 8%,rgba(78,22,32,0) 40%,rgba(50,12,18,.55))}
+.C .deco-frame{position:absolute;inset:12px;border:1px solid rgba(184,150,86,.6);z-index:3;pointer-events:none}
+.C .deco-frame::before,.C .deco-frame::after{content:"";position:absolute;width:14px;height:14px;border:1px solid rgba(184,150,86,.9)}
+.C .deco-frame::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.C .deco-frame::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.C .hero .hcontent{align-items:center;text-align:center;justify-content:flex-end;padding-bottom:26px}
+.C .hero .wm{font-family:"Cinzel";font-weight:600;font-size:19px;letter-spacing:.12em;color:#EBD9B4;line-height:1.25}
+.C .hero .loc{font-family:"Jost";font-weight:400;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:#C7A05E;margin-top:9px}
+.C .hero .diamond{width:7px;height:7px;background:#B89656;transform:rotate(45deg);margin:12px auto 0}
+.C .cbody{flex:1;background:#F1E7D6;padding:20px 18px 0;overflow:hidden}
+.C .greet{font-family:"Jost";font-weight:400;font-size:13px;letter-spacing:.02em;color:#7A6B54;text-align:center}
+.C .rcard{margin-top:14px;border:1px solid #C9B489;background:#F7F0E2;padding:16px;position:relative}
+.C .rcard .rh{font-family:"Cinzel";font-weight:600;font-size:14px;letter-spacing:.06em;text-align:center;color:#4E1620}
+.C .rcard .rs{font-family:"Jost";font-size:12px;color:#7A6B54;text-align:center;margin-top:4px}
+.C .rcard .rbtn{width:100%;margin-top:13px;background:#4E1620;color:#F1E7D6;border:0;padding:13px;
+  font-family:"Cinzel";font-weight:600;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.C .rcard .rbtn:active{transform:translateY(1px)}
+.C .csec{font-family:"Jost";font-weight:500;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:#9B7B3E;margin:20px 0 6px;text-align:center}
+.C .cev{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid #DDCBA9}
+.C .cev .di{width:6px;height:6px;background:#B89656;transform:rotate(45deg);flex:none}
+.C .cev .di.ti{background:#5E97AE}
+.C .cev .tm{font-family:"Jost";font-weight:500;font-size:13px;width:48px;flex:none;font-variant-numeric:tabular-nums}
+.C .cev .nm{font-family:"Jost";font-weight:500;font-size:13.5px;line-height:1.2}
+.C .cev .vn{font-size:11px;color:#8A795F}
+
+:focus-visible{outline:2.5px solid var(--pg-gold);outline-offset:2px}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="s-sig" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="14" width="3.2" height="6" rx="1"/><rect x="7" y="10" width="3.2" height="10" rx="1"/><rect x="12" y="6" width="3.2" height="14" rx="1"/><rect x="17" y="3" width="3.2" height="17" rx="1"/></symbol>
+  <symbol id="s-wifi" viewBox="0 0 24 24" fill="currentColor"><path d="M12 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/><path d="M12 12c2.2 0 4.2.9 5.6 2.3l1.8-1.8A11 11 0 0 0 4.6 12.5l1.8 1.8A7.9 7.9 0 0 1 12 12Z"/><path d="M12 6c3.9 0 7.4 1.6 9.9 4.1l1.8-1.8A15.9 15.9 0 0 0 .3 8.3l1.8 1.8A13.9 13.9 0 0 1 12 6Z"/></symbol>
+  <symbol id="s-bat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="8" width="18" height="10" rx="2.5"/><rect x="4" y="10" width="12" height="6" rx="1" fill="currentColor" stroke="none"/><path d="M22 11v4" stroke-linecap="round"/></symbol>
+  <symbol id="s-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="s-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="s-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">NYAC App · Concept</div>
+      <h1>Three directions</h1>
+      <p class="lede">Each opens on an image of the House and rebuilds around the two jobs — reserving and knowing. Pick a world; I'll build it out fully. Every hero is the frame your own photography drops into.</p>
+    </div>
+    <button class="tbtn" id="tt" aria-label="Toggle theme"><svg class="su"><use href="#s-sun"/></svg><svg class="mo"><use href="#s-moon"/></svg></button>
+  </header>
+
+  <div class="rig">
+    <!-- ========== A ========== -->
+    <div class="col">
+      <div class="phone"><div class="pscreen A">
+        <div class="sb"><span>4:03</span><span class="r"><svg><use href="#s-sig"/></svg><svg><use href="#s-wifi"/></svg><svg><use href="#s-bat"/></svg></span></div>
+        <div class="pbody">
+          <div class="hero">
+            <canvas id="cvBronze"></canvas>
+            <div class="scrim"></div>
+            <div class="hcontent">
+              <span class="est">Established 1868</span>
+              <div class="wm">New York<br>Athletic Club</div>
+            </div>
+          </div>
+          <div class="abody">
+            <div class="greet">Good afternoon</div>
+            <div class="lead">Dine at the House tonight.</div>
+            <button class="reserve">Reserve a Table <svg width="15" height="15" style="stroke:#fff;fill:none;stroke-width:2.4"><use href="#s-arrow"/></svg></button>
+            <div class="rule"></div>
+            <div class="sec"><span class="t">This Evening</span><span class="a">Calendar</span></div>
+            <div class="ev"><span class="tm">7:00</span><span><div class="en">Badminton at the City House</div><div class="el">City House · Gym</div></span></div>
+            <div class="ev"><span class="tm">7:00</span><span><div class="en">Chess Club Game</div><div class="el">City House · TBA</div></span></div>
+            <div class="ev"><span class="tm">7:30</span><span><div class="en">Adult Pickup Basketball</div><div class="el ti">Travers Island · Field House</div></span></div>
+          </div>
+        </div>
+        <div class="hbar" style="background:#191510;opacity:.22"></div>
+      </div></div>
+      <div class="cap">
+        <div class="rn">Direction I</div>
+        <div class="nm">The Roll of Honor</div>
+        <div class="ds">Heritage editorial. A club journal: engraved photography, big Caslon headlines, confident whitespace, crimson used like ink.</div>
+        <div class="chips"><span><b>Libre Caslon</b> + Public Sans</span><span>Ivory · crimson · gilt</span><span>Distinguished, quiet</span></div>
+      </div>
+    </div>
+
+    <!-- ========== B ========== -->
+    <div class="col">
+      <div class="phone"><div class="pscreen B">
+        <div class="sb"><span>4:03</span><span class="r"><svg><use href="#s-sig"/></svg><svg><use href="#s-wifi"/></svg><svg><use href="#s-bat"/></svg></span></div>
+        <div class="pbody">
+          <div class="hero">
+            <canvas id="cvWater"></canvas>
+            <div class="scrim"></div>
+            <div class="hcontent">
+              <span class="kick">Travers Island · Open</span>
+              <div class="wm">NYAC</div>
+              <div class="subw">The Field House</div>
+            </div>
+          </div>
+          <div class="bbody">
+            <button class="cta">Reserve a Table <svg style="stroke:#fff;fill:none;stroke-width:2.4"><use href="#s-arrow"/></svg></button>
+            <div class="board-h"><span>Tonight</span><span>Aug 24</span></div>
+            <div class="row"><span class="tm">7:00</span><span><div class="nm">Badminton</div><div class="vn">City House · Gym</div></span><span class="tagx ch">CH</span></div>
+            <div class="row"><span class="tm">7:00</span><span><div class="nm">Chess Club</div><div class="vn">City House · TBA</div></span><span class="tagx ch">CH</span></div>
+            <div class="row"><span class="tm">7:30</span><span><div class="nm">Pickup Basketball</div><div class="vn">Travers · Field House</div></span><span class="tagx ti">TI</span></div>
+          </div>
+        </div>
+        <div class="hbar" style="background:#EFEDE7;opacity:.5"></div>
+      </div></div>
+      <div class="cap">
+        <div class="rn">Direction II</div>
+        <div class="nm">The Field House</div>
+        <div class="ds">Modern athletic. Dark and high-contrast, condensed type, a scoreboard for the day. Energetic, but with a dress code.</div>
+        <div class="chips"><span><b>Barlow S.C.</b> + Barlow</span><span>Charcoal · crimson · pool-blue</span><span>Bold, sporting</span></div>
+      </div>
+    </div>
+
+    <!-- ========== C ========== -->
+    <div class="col">
+      <div class="phone"><div class="pscreen C">
+        <div class="sb"><span>4:03</span><span class="r"><svg><use href="#s-sig"/></svg><svg><use href="#s-wifi"/></svg><svg><use href="#s-bat"/></svg></span></div>
+        <div class="pbody">
+          <div class="hero">
+            <canvas id="cvFacade"></canvas>
+            <div class="scrim"></div>
+            <div class="deco-frame"></div>
+            <div class="hcontent">
+              <div class="wm">New York<br>Athletic Club</div>
+              <div class="loc">City House · Central Park South</div>
+              <div class="diamond"></div>
+            </div>
+          </div>
+          <div class="cbody">
+            <div class="greet">Good afternoon. How may we host you?</div>
+            <div class="rcard">
+              <div class="rh">Reserve a Table</div>
+              <div class="rs">Main Dining Room · this evening</div>
+              <button class="rbtn">Begin</button>
+            </div>
+            <div class="csec">This Evening</div>
+            <div class="cev"><span class="di"></span><span class="tm">7:00</span><span><div class="nm">Badminton at the City House</div><div class="vn">City House · Gym</div></span></div>
+            <div class="cev"><span class="di"></span><span class="tm">7:00</span><span><div class="nm">Chess Club Game</div><div class="vn">City House · TBA</div></span></div>
+            <div class="cev"><span class="di ti"></span><span class="tm">7:30</span><span><div class="nm">Pickup Basketball</div><div class="vn">Travers Island</div></span></div>
+          </div>
+        </div>
+        <div class="hbar" style="background:#241B12;opacity:.2"></div>
+      </div></div>
+      <div class="cap">
+        <div class="rn">Direction III</div>
+        <div class="nm">The Grand Hall</div>
+        <div class="ds">Deco hospitality. Warm cream and gilt, monumental inscriptional caps, a drawn façade, a concierge's tone. Grand and looked-after.</div>
+        <div class="chips"><span><b>Cinzel</b> + Jost</span><span>Cream · oxblood · gold</span><span>Warm, gilded</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <b>Concept prototype — three visual directions.</b> Sample data from your current app; a stylized crest and original hero artwork stand in for the Club's own photography, which drops into each hero frame. Not the official NYAC app, and not affiliated with or endorsed by the Club or its vendors. All three honor a crimson-and-white scheme with aged gold, and reserve pool-blue for Travers Island.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function fit(cv){var d=Math.min(2,window.devicePixelRatio||1);var r=cv.getBoundingClientRect();
+    var w=Math.max(1,Math.round(r.width)),h=Math.max(1,Math.round(r.height));
+    cv.width=w*d;cv.height=h*d;var x=cv.getContext("2d");x.setTransform(d,0,0,d,0,0);return {x:x,w:w,h:h};}
+  function frac(n){return n-Math.floor(n);}
+  function rnd(a){return frac(Math.sin(a*127.1+311.7)*43758.5453);}
+
+  // ---- A: engraved bronze memorial wall ----
+  function bronze(){var cv=document.getElementById("cvBronze");if(!cv)return;var c=fit(cv),x=c.x,w=c.w,h=c.h;
+    var g=x.createLinearGradient(0,0,w*.3,h);g.addColorStop(0,"#33281b");g.addColorStop(.5,"#20180f");g.addColorStop(1,"#140d07");
+    x.fillStyle=g;x.fillRect(0,0,w,h);
+    for(var i=0;i<w;i+=2){x.globalAlpha=0.05;x.fillStyle=(Math.floor(i/2)%2)?"#42311d":"#0c0805";x.fillRect(i,0,1,h);}
+    x.globalAlpha=1;
+    // engraved name rows in 3 columns
+    for(var yy=16;yy<h-8;yy+=10){var cols=3,cw=(w-24)/cols;
+      for(var col=0;col<cols;col++){var seed=col*97+yy*13;var lw=cw*(0.42+0.44*rnd(seed));var lx=12+col*cw+3;
+        x.fillStyle="rgba(206,172,112,0.15)";x.fillRect(lx,yy,lw,1.4);
+        x.fillStyle="rgba(0,0,0,0.28)";x.fillRect(lx,yy+1.6,lw,1);}}
+    // warm top light
+    var tg=x.createRadialGradient(w*.4,-h*.2,10,w*.4,h*.1,h);tg.addColorStop(0,"rgba(224,182,110,0.22)");tg.addColorStop(1,"rgba(224,182,110,0)");
+    x.fillStyle=tg;x.fillRect(0,0,w,h);
+    // vignette
+    var vg=x.createRadialGradient(w/2,h*.42,20,w/2,h*.55,h*.95);vg.addColorStop(0,"rgba(0,0,0,0)");vg.addColorStop(1,"rgba(0,0,0,0.6)");
+    x.fillStyle=vg;x.fillRect(0,0,w,h);
+  }
+
+  // ---- B: pool caustics ----
+  function water(){var cv=document.getElementById("cvWater");if(!cv)return;var c=fit(cv),x=c.x,w=c.w,h=c.h;
+    var g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,"#0c3a4c");g.addColorStop(.55,"#0f5169");g.addColorStop(1,"#0a2c3a");
+    x.fillStyle=g;x.fillRect(0,0,w,h);
+    x.globalCompositeOperation="lighter";
+    var step=26;
+    for(var gy=-10;gy<h+20;gy+=step){for(var gx=-10;gx<w+20;gx+=step){
+      var ox=gx+Math.sin((gy*.05)+(gx*.02))*12;var oy=gy+Math.cos((gx*.06)+(gy*.03))*10;
+      var rr=step*(0.5+0.5*rnd(gx*3+gy));var a=0.05+0.09*rnd(gx+gy*7);
+      var rg=x.createRadialGradient(ox,oy,0,ox,oy,rr);
+      rg.addColorStop(0,"rgba(150,214,236,"+a+")");rg.addColorStop(1,"rgba(150,214,236,0)");
+      x.fillStyle=rg;x.beginPath();x.arc(ox,oy,rr,0,7);x.fill();
+    }}
+    // sun streak
+    var sg=x.createLinearGradient(0,0,w,h);sg.addColorStop(0,"rgba(220,244,255,0.28)");sg.addColorStop(.35,"rgba(220,244,255,0)");
+    x.fillStyle=sg;x.fillRect(0,0,w,h*.5);
+    x.globalCompositeOperation="source-over";
+  }
+
+  // ---- C: drawn City House façade (gold line-art on oxblood) ----
+  function facade(){var cv=document.getElementById("cvFacade");if(!cv)return;var c=fit(cv),x=c.x,w=c.w,h=c.h;
+    var bg=x.createLinearGradient(0,0,0,h);bg.addColorStop(0,"#5c1a26");bg.addColorStop(1,"#3d0f18");
+    x.fillStyle=bg;x.fillRect(0,0,w,h);
+    var gold="rgba(198,164,95,0.85)",goldF="rgba(198,164,95,0.14)";
+    x.strokeStyle=gold;x.lineWidth=1;x.fillStyle=goldF;
+    var bw=w*0.66,bx=(w-bw)/2,top=h*0.16,base=h*0.99;
+    // building block
+    x.strokeRect(bx,top,bw,base-top);
+    // cornice (double line)
+    x.beginPath();x.moveTo(bx-8,top);x.lineTo(bx+bw+8,top);x.moveTo(bx-8,top-6);x.lineTo(bx+bw+8,top-6);x.stroke();
+    // small pediment
+    x.beginPath();x.moveTo(w/2-22,top-6);x.lineTo(w/2,top-20);x.lineTo(w/2+22,top-6);x.stroke();
+    // flagpole + flag
+    x.beginPath();x.moveTo(w/2,top-20);x.lineTo(w/2,top-40);x.stroke();
+    x.fillStyle="rgba(198,164,95,0.5)";x.fillRect(w/2,top-40,16,9);x.fillStyle=goldF;
+    // window grid
+    var cols=5,rows=5,pad=bw*0.1,gw=(bw-pad*2),cwx=gw/cols,gutter=cwx*0.34,winW=cwx-gutter;
+    var floorTop=top+18,floorBot=base-24,gh=(floorBot-floorTop)/rows,winH=gh*0.62;
+    for(var r=0;r<rows;r++){for(var cx=0;cx<cols;cx++){
+      var wx=bx+pad+cx*cwx+gutter/2,wy=floorTop+r*gh+(gh-winH)/2;
+      if(r===rows-1){ // ground arcade: arched openings
+        x.beginPath();x.moveTo(wx,wy+winH);x.lineTo(wx,wy+winH*0.4);x.arc(wx+winW/2,wy+winH*0.4,winW/2,Math.PI,0);x.lineTo(wx+winW,wy+winH);x.closePath();x.fill();x.stroke();
+      }else{
+        x.fillRect(wx,wy,winW,winH);x.strokeRect(wx,wy,winW,winH);
+        x.beginPath();x.moveTo(wx+winW/2,wy);x.lineTo(wx+winW/2,wy+winH);x.moveTo(wx,wy+winH/2);x.lineTo(wx+winW,wy+winH/2);x.stroke();
+      }
+    }}
+    // string courses between floors
+    for(var s=1;s<rows;s++){var sy=floorTop+s*gh;x.globalAlpha=.5;x.beginPath();x.moveTo(bx+4,sy);x.lineTo(bx+bw-4,sy);x.stroke();x.globalAlpha=1;}
+  }
+
+  function paintAll(){bronze();if(!reduce){water();}else{water();}facade();}
+  if(document.readyState==="complete")paintAll();else window.addEventListener("load",paintAll);
+  var t;window.addEventListener("resize",function(){clearTimeout(t);t=setTimeout(paintAll,180);});
+
+  document.getElementById("tt").addEventListener("click",function(){
+    var root=document.documentElement,cur=root.getAttribute("data-theme");
+    var dark=cur?cur==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+    root.setAttribute("data-theme",dark?"light":"dark");
+  });
+})();
+</script>
