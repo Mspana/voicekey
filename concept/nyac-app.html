@@ -1,0 +1,841 @@
+<title>The Winged Foot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --stage:#ECE4D6; --stage-2:#E3D8C6;
+  --app-bg:#F8F4EC; --panel:#FDFBF6; --panel-2:#F3ECDE;
+  --ink:#1C1A17; --muted:#6E6658; --faint:#9A9284;
+  --stone:#E4DBCA; --stone-soft:#EFE8DA; --hair:#DED4C1;
+  --crimson:#9E1B32; --crimson-deep:#7C1526; --crimson-ink:#9E1B32; --crimson-tint:#F5E6E6;
+  --gold:#B08B4F; --gold-deep:#8A6B37; --gold-tint:#F0E7D2;
+  --blue:#5E97AE; --blue-ink:#3F7A92; --blue-tint:#E4EEF1;
+  --green:#2F7D52; --green-tint:#E3F0E7;
+  --btn-ink:#FFFFFF;
+  --shadow:28,26,23;
+  --dev-shell:#1A1712; --dev-edge:#0d0b08;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --stage:#100E0A; --stage-2:#16130D;
+    --app-bg:#1A1712; --panel:#221E18; --panel-2:#2A251D;
+    --ink:#F2ECE0; --muted:#B4AB9A; --faint:#867D6C;
+    --stone:#332E24; --stone-soft:#2A251D; --hair:#332E24;
+    --crimson:#B4384C; --crimson-deep:#93283B; --crimson-ink:#E5899A; --crimson-tint:#2E1C1E;
+    --gold:#CAA461; --gold-deep:#CAA461; --gold-tint:#2C2618;
+    --blue:#7FB3C8; --blue-ink:#9BC6D7; --blue-tint:#1C2A30;
+    --green:#5FB489; --green-tint:#16281E;
+    --btn-ink:#FFFFFF;
+    --shadow:0,0,0;
+    --dev-shell:#050403; --dev-edge:#000;
+  }
+}
+:root[data-theme="dark"]{
+  --stage:#100E0A; --stage-2:#16130D;
+  --app-bg:#1A1712; --panel:#221E18; --panel-2:#2A251D;
+  --ink:#F2ECE0; --muted:#B4AB9A; --faint:#867D6C;
+  --stone:#332E24; --stone-soft:#2A251D; --hair:#332E24;
+  --crimson:#B4384C; --crimson-deep:#93283B; --crimson-ink:#E5899A; --crimson-tint:#2E1C1E;
+  --gold:#CAA461; --gold-deep:#CAA461; --gold-tint:#2C2618;
+  --blue:#7FB3C8; --blue-ink:#9BC6D7; --blue-tint:#1C2A30;
+  --green:#5FB489; --green-tint:#16281E;
+  --btn-ink:#FFFFFF;
+  --shadow:0,0,0;
+  --dev-shell:#050403; --dev-edge:#000;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--stage);
+  color:var(--ink);
+  font-family:"Libre Franklin",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  background-image:radial-gradient(120% 80% at 50% -10%, var(--stage-2), var(--stage) 60%);
+  min-height:100vh;
+}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important;animation:none!important} }
+
+/* ============ STAGE / MASTHEAD ============ */
+.stage{max-width:1120px;margin:0 auto;padding:clamp(20px,4vw,48px) clamp(16px,4vw,40px) 40px}
+.masthead{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:clamp(22px,4vw,38px)}
+.mast-crest{width:52px;height:52px;color:var(--crimson);flex:none}
+.mast-crest .gild{color:var(--gold)}
+.mast-titles{display:flex;flex-direction:column;gap:2px;flex:1;min-width:220px}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);font-weight:600}
+.mast-titles h1{
+  font-family:"Fraunces",Georgia,serif;font-weight:600;font-optical-sizing:auto;
+  font-size:clamp(26px,4.4vw,40px);line-height:1.02;margin:2px 0 0;letter-spacing:-.01em;
+  text-wrap:balance;
+}
+.mast-titles .sub{color:var(--muted);font-size:14px;margin-top:5px}
+.mast-tools{display:flex;align-items:center;gap:10px}
+.tag{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--hair);border-radius:999px;padding:6px 11px;background:var(--panel);font-weight:600}
+.tbtn{width:42px;height:42px;border-radius:12px;border:1px solid var(--hair);background:var(--panel);
+  color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:transform .15s,background .2s}
+.tbtn:hover{background:var(--panel-2)}
+.tbtn:active{transform:scale(.94)}
+.tbtn svg{width:20px;height:20px}
+.tbtn .i-moon{display:none}
+:root[data-theme="dark"] .tbtn .i-moon{display:block}
+:root[data-theme="dark"] .tbtn .i-sun{display:none}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .tbtn .i-moon{display:block}
+  :root:not([data-theme="light"]) .tbtn .i-sun{display:none}
+}
+
+/* ============ SHOWCASE GRID ============ */
+.showcase{display:grid;grid-template-columns:minmax(0,auto) 1fr;gap:clamp(28px,5vw,64px);align-items:start}
+@media (max-width:860px){ .showcase{grid-template-columns:1fr;justify-items:center} }
+
+/* ============ DEVICE ============ */
+.device{
+  width:min(392px,94vw);
+  background:linear-gradient(160deg,#26221b,var(--dev-shell));
+  border-radius:52px;padding:13px;flex:none;
+  box-shadow:0 1px 0 rgba(255,255,255,.06) inset,
+    0 40px 80px -30px rgba(var(--shadow),.55),
+    0 12px 30px -12px rgba(var(--shadow),.4);
+  border:1px solid var(--dev-edge);
+  position:sticky;top:24px;
+}
+@media (max-width:860px){ .device{position:static} }
+.screen{
+  position:relative;background:var(--app-bg);border-radius:40px;overflow:hidden;
+  height:min(806px,84vh);min-height:600px;display:flex;flex-direction:column;
+  border:1px solid rgba(0,0,0,.4);
+}
+.statusbar{display:flex;justify-content:space-between;align-items:center;
+  padding:12px 26px 6px;font-size:13px;font-weight:600;color:var(--ink);flex:none;letter-spacing:.02em}
+.statusbar .sb-r{display:flex;gap:6px;align-items:center}
+.statusbar svg{width:16px;height:16px;opacity:.8}
+
+/* ---- app chrome ---- */
+.appbar{display:flex;align-items:center;gap:10px;padding:6px 16px 12px;flex:none;
+  border-bottom:1px solid var(--hair);background:var(--app-bg)}
+.appbar .ab-crest{width:26px;height:26px;color:var(--crimson);flex:none}
+.appbar .ab-crest .gild{color:var(--gold)}
+.appbar .ab-title{flex:1;min-width:0}
+.appbar .ab-title .k{font-family:"Fraunces",serif;font-weight:600;font-size:17px;letter-spacing:-.01em}
+.appbar .ab-title .k.word{font-size:16px;letter-spacing:.02em}
+.appbar .ab-right{display:flex;gap:6px}
+.ab-icon{width:38px;height:38px;border-radius:11px;border:1px solid transparent;background:transparent;
+  display:grid;place-items:center;color:var(--ink);cursor:pointer;position:relative}
+.ab-icon:hover{background:var(--panel-2)}
+.ab-icon svg{width:20px;height:20px}
+.ab-icon .dot{position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;
+  background:var(--crimson);border:1.5px solid var(--app-bg)}
+
+.views{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;position:relative}
+.views::-webkit-scrollbar{width:0}
+.view{display:none;padding:18px 16px 26px;animation:fade .22s ease both}
+.view.is-active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---- tab bar ---- */
+.tabbar{flex:none;display:grid;grid-template-columns:repeat(5,1fr);
+  border-top:1px solid var(--hair);background:color-mix(in srgb,var(--app-bg) 88%,transparent);
+  backdrop-filter:blur(8px);padding:8px 6px 4px}
+.tab{border:0;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;
+  gap:4px;padding:6px 2px 4px;color:var(--faint);font-family:inherit;font-size:10.5px;font-weight:600;
+  letter-spacing:.01em;transition:color .18s}
+.tab svg{width:23px;height:23px;transition:transform .18s}
+.tab.is-active{color:var(--crimson-ink)}
+.tab.is-active svg{transform:translateY(-1px)}
+.tab:active svg{transform:scale(.9)}
+
+/* ============ SHARED UI ============ */
+.section-h{display:flex;align-items:baseline;justify-content:space-between;margin:22px 2px 12px}
+.section-h:first-child{margin-top:4px}
+.section-h .t{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-weight:600}
+.section-h .a{font-size:12.5px;color:var(--crimson-ink);font-weight:600;cursor:pointer}
+.card{background:var(--panel);border:1px solid var(--hair);border-radius:18px;padding:16px}
+.card + .card{margin-top:12px}
+.big-btn{width:100%;border:0;border-radius:15px;padding:16px;font-family:inherit;font-size:16px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:transform .12s,filter .2s}
+.big-btn:active{transform:scale(.985)}
+.big-btn svg{width:19px;height:19px}
+.btn-primary{background:var(--crimson);color:var(--btn-ink);box-shadow:0 8px 20px -10px var(--crimson)}
+.btn-primary:hover{filter:brightness(1.05)}
+.btn-ghost{background:transparent;color:var(--crimson-ink);border:1.5px solid var(--crimson);box-shadow:none}
+.btn-quiet{background:var(--panel-2);color:var(--ink);border:1px solid var(--hair)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:999px;
+  letter-spacing:.01em;line-height:1}
+.pill svg{width:12px;height:12px}
+.pill.athletics{background:var(--crimson-tint);color:var(--crimson-ink)}
+.pill.social{background:var(--gold-tint);color:var(--gold-deep)}
+.pill.family{background:var(--green-tint);color:var(--green)}
+.pill.reg{background:var(--green-tint);color:var(--green)}
+.loc{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:var(--muted);font-weight:500}
+.loc svg{width:13px;height:13px;color:var(--muted)}
+.loc.ti{color:var(--blue-ink)} .loc.ti svg{color:var(--blue-ink)}
+
+/* ============ HOME ============ */
+.hero{position:relative;border-radius:22px;overflow:hidden;padding:22px 20px 20px;margin-bottom:4px;
+  background:
+    radial-gradient(130% 120% at 100% 0,color-mix(in srgb,var(--crimson) 16%,var(--panel)),var(--panel) 62%);
+  border:1px solid var(--hair)}
+.hero .watermark{position:absolute;right:-26px;top:-20px;width:170px;height:170px;color:var(--gold);opacity:.14;pointer-events:none}
+.hero .greet{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+.hero h2{font-family:"Fraunces",serif;font-weight:600;font-size:27px;line-height:1.06;margin:6px 0 3px;letter-spacing:-.01em;text-wrap:balance}
+.hero .memno{font-size:12.5px;color:var(--faint);font-weight:500}
+.hero-actions{display:flex;gap:10px;margin-top:18px}
+.hero-actions .big-btn{font-size:14.5px;padding:14px 12px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.tile{background:var(--panel);border:1px solid var(--hair);border-radius:15px;padding:13px 14px;cursor:pointer;
+  display:flex;align-items:center;gap:11px;transition:transform .12s,background .2s;text-align:left;font-family:inherit}
+.tile:hover{background:var(--panel-2)} .tile:active{transform:scale(.98)}
+.tile .ti-ic{width:34px;height:34px;border-radius:10px;background:var(--crimson-tint);color:var(--crimson-ink);
+  display:grid;place-items:center;flex:none}
+.tile .ti-ic svg{width:18px;height:18px}
+.tile .lab{font-size:13.5px;font-weight:600;line-height:1.15}
+.tile .val{font-size:11.5px;color:var(--muted);margin-top:1px}
+.mini-ev{display:flex;gap:12px;align-items:flex-start;padding:12px 2px}
+.mini-ev + .mini-ev{border-top:1px solid var(--hair)}
+.mini-ev .when{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:600;color:var(--ink);width:66px;flex:none;padding-top:1px}
+.mini-ev .body .nm{font-size:14.5px;font-weight:600;line-height:1.2}
+.mini-ev .body .mt{margin-top:5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.island-card{margin-top:12px;border:1px solid var(--blue);border-radius:18px;padding:15px 16px;
+  background:linear-gradient(120deg,var(--blue-tint),var(--panel) 90%);display:flex;align-items:center;gap:14px}
+.island-card .wv{width:40px;height:40px;border-radius:12px;background:var(--panel);color:var(--blue-ink);display:grid;place-items:center;flex:none;border:1px solid var(--blue)}
+.island-card .wv svg{width:22px;height:22px}
+.island-card .nm{font-weight:600;font-size:14px}
+.island-card .dt{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ============ DINE ============ */
+.intro{color:var(--muted);font-size:13.5px;line-height:1.5;margin:2px 2px 16px}
+.venue{display:flex;gap:14px;align-items:center;cursor:pointer;transition:transform .12s}
+.venue:active{transform:scale(.99)}
+.venue + .venue{margin-top:12px}
+.venue .thumb{width:60px;height:60px;border-radius:14px;flex:none;display:grid;place-items:center;
+  font-family:"Fraunces",serif;font-weight:600;font-size:22px;color:var(--btn-ink);
+  background:linear-gradient(150deg,var(--crimson),var(--crimson-deep))}
+.venue.ti .thumb{background:linear-gradient(150deg,var(--blue),var(--blue-ink))}
+.venue .vmeta{flex:1;min-width:0}
+.venue .vmeta .nm{font-family:"Fraunces",serif;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.venue .vmeta .ds{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+.venue .vmeta .rw{margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.venue .chev{color:var(--faint);flex:none}
+.venue .chev svg{width:20px;height:20px}
+.dress{font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--gold-deep);text-transform:uppercase}
+
+/* ============ CALENDAR ============ */
+.daygroup{margin-bottom:6px}
+.dayhead{position:sticky;top:0;background:linear-gradient(var(--app-bg),color-mix(in srgb,var(--app-bg) 70%,transparent));
+  padding:12px 4px 8px;font-family:"Fraunces",serif;font-weight:600;font-size:16px;letter-spacing:-.01em;z-index:2;
+  backdrop-filter:blur(4px)}
+.dayhead .cnt{font-family:"Libre Franklin";font-size:11.5px;color:var(--faint);font-weight:600;margin-left:8px;letter-spacing:.02em}
+.event{display:flex;gap:13px;padding:14px 14px;background:var(--panel);border:1px solid var(--hair);border-radius:16px}
+.event + .event{margin-top:10px}
+.event .tcol{width:64px;flex:none;padding-top:2px}
+.event .tcol .t1{font-variant-numeric:tabular-nums;font-size:13px;font-weight:700;line-height:1.15}
+.event .tcol .t2{font-variant-numeric:tabular-nums;font-size:11.5px;color:var(--faint);font-weight:500;margin-top:1px}
+.event .ebody{flex:1;min-width:0}
+.event .ebody .nm{font-size:15px;font-weight:600;line-height:1.22;letter-spacing:-.005em}
+.event .ebody .rw{margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rsvp{margin-top:11px;border:1.5px solid var(--crimson);color:var(--crimson-ink);background:transparent;
+  border-radius:11px;padding:8px 14px;font-family:inherit;font-weight:600;font-size:13px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:7px;transition:transform .12s,background .2s}
+.rsvp svg{width:15px;height:15px}
+.rsvp:active{transform:scale(.96)}
+.rsvp.is-going{background:var(--green);border-color:var(--green);color:#fff}
+
+/* ============ BOOKINGS ============ */
+.bk-empty{text-align:center;color:var(--muted);padding:50px 20px}
+.bk-empty svg{width:44px;height:44px;color:var(--faint);margin-bottom:12px}
+.ticket{position:relative;background:var(--panel);border:1px solid var(--hair);border-radius:16px;
+  padding:15px 16px 15px 20px;overflow:hidden}
+.ticket + .ticket{margin-top:12px}
+.ticket::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:4px;background:var(--crimson)}
+.ticket.ti::before{background:var(--blue)}
+.ticket .tk-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.ticket .tk-nm{font-family:"Fraunces",serif;font-size:16.5px;font-weight:600;letter-spacing:-.01em;line-height:1.15}
+.ticket .tk-when{font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink);font-weight:600;margin-top:8px;display:flex;align-items:center;gap:7px}
+.ticket .tk-when svg{width:14px;height:14px;color:var(--muted)}
+.ticket .tk-row{margin-top:7px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.ticket .tk-actions{margin-top:13px;display:flex;gap:9px;border-top:1px dashed var(--hair);padding-top:12px}
+.tk-actions button{flex:1;border-radius:10px;padding:9px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--hair);background:var(--panel-2);color:var(--ink);transition:transform .1s}
+.tk-actions button:active{transform:scale(.97)}
+.tk-actions button.danger{color:var(--crimson-ink)}
+
+/* ============ CLUB ============ */
+.club-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.club-tile{background:var(--panel);border:1px solid var(--hair);border-radius:16px;padding:15px;cursor:pointer;
+  transition:transform .12s,background .2s;text-align:left;font-family:inherit;display:flex;flex-direction:column;gap:9px;min-height:104px}
+.club-tile:hover{background:var(--panel-2)} .club-tile:active{transform:scale(.98)}
+.club-tile .ci{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--crimson-tint);color:var(--crimson-ink)}
+.club-tile.blue .ci{background:var(--blue-tint);color:var(--blue-ink)}
+.club-tile.gold .ci{background:var(--gold-tint);color:var(--gold-deep)}
+.club-tile .ci svg{width:20px;height:20px}
+.club-tile .nm{font-weight:600;font-size:14px;line-height:1.2}
+.club-tile .ds{font-size:11.5px;color:var(--muted);line-height:1.35;margin-top:-3px}
+.hours-card{margin-top:11px}
+.hours-card .hc-h{font-family:"Fraunces",serif;font-weight:600;font-size:16px;margin-bottom:4px}
+.hours-row{display:flex;justify-content:space-between;padding:9px 0;font-size:13.5px;border-top:1px solid var(--hair)}
+.hours-row .p{color:var(--muted)} .hours-row .v{font-weight:600;font-variant-numeric:tabular-nums}
+.hours-row .v.open{color:var(--green)}
+
+/* ============ SHEET ============ */
+.scrim{position:absolute;inset:0;background:rgba(10,8,6,.44);opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
+.scrim.show{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--app-bg);border-radius:26px 26px 0 0;
+  padding:10px 18px calc(18px + env(safe-area-inset-bottom));transform:translateY(102%);transition:transform .32s cubic-bezier(.32,.72,0,1);
+  z-index:21;max-height:88%;overflow-y:auto;box-shadow:0 -18px 40px -20px rgba(var(--shadow),.5);border-top:1px solid var(--hair)}
+.sheet.show{transform:translateY(0)}
+.grab{width:38px;height:5px;border-radius:5px;background:var(--stone);margin:6px auto 14px}
+.sheet h3{font-family:"Fraunces",serif;font-weight:600;font-size:22px;margin:0 0 2px;letter-spacing:-.01em}
+.sheet .sh-sub{color:var(--muted);font-size:13px;margin-bottom:16px}
+.field-l{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin:16px 0 9px}
+.chiprow{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.chiprow::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1.5px solid var(--hair);background:var(--panel);border-radius:13px;padding:9px 12px;cursor:pointer;
+  font-family:inherit;text-align:center;min-width:60px;transition:transform .1s,border-color .15s,background .15s;color:var(--ink)}
+.chip:active{transform:scale(.96)}
+.chip .c1{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.chip .c2{font-size:16px;font-weight:600;font-family:"Fraunces",serif;margin-top:2px}
+.chip .c2.solo{font-size:14px;font-family:"Libre Franklin"}
+.chip.sel{border-color:var(--crimson);background:var(--crimson-tint)}
+.chip.sel .c1{color:var(--crimson-ink)}
+.timegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.timegrid .chip{min-width:0}
+.stepper{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--hair);border-radius:14px;padding:10px 14px;background:var(--panel)}
+.stepper .sp-v{font-family:"Fraunces",serif;font-size:19px;font-weight:600}
+.stepper button{width:40px;height:40px;border-radius:11px;border:1px solid var(--hair);background:var(--panel-2);color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.stepper button:active{transform:scale(.92)}
+.stepper button svg{width:18px;height:18px}
+.sheet-foot{margin-top:22px}
+.sheet-note{font-size:11.5px;color:var(--faint);text-align:center;margin-top:10px;line-height:1.4}
+.menu-list{margin-top:4px}
+.menu-item{padding:12px 0;border-top:1px solid var(--hair)}
+.menu-item:first-child{border-top:0}
+.menu-item .mi-top{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.menu-item .mi-nm{font-family:"Fraunces",serif;font-size:15.5px;font-weight:600}
+.menu-item .mi-pr{font-variant-numeric:tabular-nums;font-weight:600;color:var(--crimson-ink);font-size:14px}
+.menu-item .mi-ds{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+
+/* ---- toast ---- */
+.toast{position:absolute;left:50%;bottom:96px;transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  background:var(--ink);color:var(--app-bg);padding:12px 18px;border-radius:13px;font-size:13.5px;font-weight:600;
+  display:flex;align-items:center;gap:9px;z-index:30;transition:opacity .25s,transform .25s;box-shadow:0 12px 30px -12px rgba(var(--shadow),.6);white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast svg{width:17px;height:17px;color:var(--green)}
+.homebar{position:absolute;left:50%;bottom:7px;transform:translateX(-50%);width:128px;height:5px;border-radius:5px;
+  background:var(--ink);opacity:.28;z-index:25}
+
+/* ============ RAIL ============ */
+.rail{max-width:420px;padding-top:8px}
+@media (max-width:860px){ .rail{max-width:480px;width:100%} }
+.rail .lead{font-family:"Fraunces",serif;font-size:clamp(21px,2.6vw,25px);font-weight:600;line-height:1.18;letter-spacing:-.01em;text-wrap:balance;margin:0 0 6px}
+.rail .lead-sub{color:var(--muted);font-size:14.5px;line-height:1.55;margin:0 0 24px}
+.props{display:flex;flex-direction:column;gap:2px}
+.prop{display:flex;gap:15px;padding:17px 0;border-top:1px solid var(--hair)}
+.prop:last-child{border-bottom:1px solid var(--hair)}
+.prop .pn{font-family:"Fraunces",serif;font-size:15px;font-weight:600;color:var(--gold-deep);width:26px;flex:none;padding-top:1px}
+.prop .ph{font-weight:600;font-size:15px;margin-bottom:3px}
+.prop .pb{color:var(--muted);font-size:13.5px;line-height:1.5}
+.rail .data-note{margin-top:24px;background:var(--panel);border:1px solid var(--hair);border-radius:16px;padding:16px 17px}
+.rail .data-note .dn-h{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin-bottom:8px}
+.rail .data-note p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+.rail .try{margin-top:20px;font-size:13px;color:var(--faint);display:flex;align-items:center;gap:8px}
+.rail .try svg{width:16px;height:16px;color:var(--crimson-ink)}
+.pagefoot{margin-top:38px;padding-top:20px;border-top:1px solid var(--hair);color:var(--faint);font-size:12px;line-height:1.6;max-width:720px}
+.pagefoot b{color:var(--muted);font-weight:600}
+
+/* focus */
+:focus-visible{outline:2.5px solid var(--gold);outline-offset:2px;border-radius:6px}
+</style>
+
+<!-- ============ ICON / CREST SYMBOLS ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="crest" viewBox="0 0 100 100">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <!-- laurel left -->
+      <path class="gild" d="M31 78 C18 66 16 47 27 30" stroke-width="2.2"/>
+      <path class="gild" d="M27 40 C21 39 18 35 18 30 C23 31 27 33 28 38 Z" fill="currentColor" stroke="none"/>
+      <path class="gild" d="M24 50 C18 50 14 46 13 41 C19 41 24 43 26 48 Z" fill="currentColor" stroke="none"/>
+      <path class="gild" d="M24 62 C18 63 13 60 11 55 C17 54 23 55 26 60 Z" fill="currentColor" stroke="none"/>
+      <!-- laurel right -->
+      <path class="gild" d="M69 78 C82 66 84 47 73 30" stroke-width="2.2"/>
+      <path class="gild" d="M73 40 C79 39 82 35 82 30 C77 31 73 33 72 38 Z" fill="currentColor" stroke="none"/>
+      <path class="gild" d="M76 50 C82 50 86 46 87 41 C81 41 76 43 74 48 Z" fill="currentColor" stroke="none"/>
+      <path class="gild" d="M76 62 C82 63 87 60 89 55 C83 54 77 55 74 60 Z" fill="currentColor" stroke="none"/>
+    </g>
+    <!-- winged foot -->
+    <g fill="currentColor">
+      <path d="M35 60 C40 57 52 55 63 56 C69 56.5 71 59 68 61.5 C64 64 52 65 43 64.5 L35 64 C33 63.5 33 61 35 60 Z"/>
+      <path d="M40 55 C41 52 43 50 47 49 C45 52 45 54 46 56 Z"/>
+    </g>
+    <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <path d="M44 50 C50 43 58 40 66 40"/>
+      <path d="M43 46 C50 38 60 34 70 34"/>
+      <path d="M46 54 C52 49 59 47 66 47"/>
+    </g>
+  </symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/></symbol>
+  <symbol id="i-dine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v8a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V3M8 3v18"/><path d="M17 3c-2 0-3 2-3 5s1 4 3 4M17 3v18"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3.2v3.4M16 3.2v3.4"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4-7 4V4.5a1 1 0 0 1 1-1Z"/></symbol>
+  <symbol id="i-club" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M4 21V10l8-5 8 5v11M9 21v-6h6v6M4 10h16"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c5-5.5 7-8.5 7-11a7 7 0 1 0-14 0c0 2.5 2 5.5 7 11Z"/><circle cx="12" cy="10" r="2.4"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 19a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-menu-b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14v16l-3-2-2 2-2-2-2 2-2-2-3 2Z"/><path d="M8.5 9h7M8.5 13h5"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7Z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9c2 0 2 1.5 4 1.5S9 9 11 9s2 1.5 4 1.5S18 9 20 9"/><path d="M2 14c2 0 2 1.5 4 1.5S9 14 11 14s2 1.5 4 1.5S18 14 20 14"/></symbol>
+  <symbol id="i-shuttle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16V8h11l4 3v5"/><circle cx="7.5" cy="16.5" r="1.8"/><circle cx="16.5" cy="16.5" r="1.8"/><path d="M3 16h1.7M9.3 16h5.4M18.3 16H21v-3l-3-2"/></symbol>
+  <symbol id="i-racquet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="9" rx="6" ry="7"/><path d="M6 13l-3.5 6M8 15l2 4"/></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="12" height="16" rx="2"/><path d="M8 9h4M8 12h4"/><path d="M16 8l3 1 2 12-11 2"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></symbol>
+  <symbol id="i-signal" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="14" width="3.2" height="6" rx="1"/><rect x="7" y="10" width="3.2" height="10" rx="1"/><rect x="12" y="6" width="3.2" height="14" rx="1"/><rect x="17" y="3" width="3.2" height="17" rx="1"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24" fill="currentColor"><path d="M12 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/><path d="M12 12c2.2 0 4.2.9 5.6 2.3l1.8-1.8A11 11 0 0 0 4.6 12.5l1.8 1.8A7.9 7.9 0 0 1 12 12Z"/><path d="M12 6c3.9 0 7.4 1.6 9.9 4.1l1.8-1.8A15.9 15.9 0 0 0 .3 8.3l1.8 1.8A13.9 13.9 0 0 1 12 6Z"/></symbol>
+  <symbol id="i-batt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="8" width="18" height="10" rx="2.5"/><rect x="4" y="10" width="12" height="6" rx="1" fill="currentColor" stroke="none"/><path d="M22 11v4" stroke-linecap="round"/></symbol>
+</svg>
+
+<!-- ============ PAGE ============ -->
+<div class="stage">
+  <header class="masthead">
+    <svg class="mast-crest"><use href="#crest"/></svg>
+    <div class="mast-titles">
+      <span class="eyebrow">New York Athletic Club · Concept</span>
+      <h1>The Winged Foot</h1>
+      <span class="sub">The member app, reimagined — fast, effortless, and worthy of the House.</span>
+    </div>
+    <div class="mast-tools">
+      <span class="tag">Prototype</span>
+      <button class="tbtn" id="themeToggle" aria-label="Toggle light or dark">
+        <svg class="i-sun"><use href="#i-sun"/></svg>
+        <svg class="i-moon"><use href="#i-moon"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="showcase">
+    <!-- ============ DEVICE ============ -->
+    <div class="device">
+      <div class="screen">
+        <div class="statusbar">
+          <span>4:03</span>
+          <span class="sb-r">
+            <svg><use href="#i-signal"/></svg>
+            <svg><use href="#i-wifi"/></svg>
+            <svg><use href="#i-batt"/></svg>
+          </span>
+        </div>
+
+        <div class="appbar">
+          <svg class="ab-crest"><use href="#crest"/></svg>
+          <div class="ab-title"><div class="k word" id="abTitle">New York Athletic Club</div></div>
+          <div class="ab-right">
+            <button class="ab-icon" aria-label="Notifications"><svg><use href="#i-bell"/></svg><span class="dot"></span></button>
+          </div>
+        </div>
+
+        <main class="views" id="views">
+          <!-- ---------- HOME ---------- -->
+          <section class="view is-active" id="view-home" aria-label="Home">
+            <div class="hero">
+              <svg class="watermark"><use href="#crest"/></svg>
+              <div class="greet">Good afternoon</div>
+              <h2>Tuesday, August 25</h2>
+              <div class="memno">Member since 2011 · No. 8842</div>
+              <div class="hero-actions">
+                <button class="big-btn btn-primary" data-dine-open="Main Dining Room"><svg><use href="#i-dine"/></svg>Reserve a Table</button>
+                <button class="big-btn btn-ghost" data-goto="calendar"><svg><use href="#i-cal"/></svg>Events</button>
+              </div>
+            </div>
+
+            <div class="tiles">
+              <button class="tile" data-goto="bookings"><span class="ti-ic"><svg><use href="#i-book"/></svg></span><span><span class="lab">My Bookings</span><span class="val" id="tileBookings">2 upcoming</span></span></button>
+              <button class="tile" data-statement="1"><span class="ti-ic"><svg><use href="#i-doc"/></svg></span><span><span class="lab">Statement</span><span class="val">Balance $412.60</span></span></button>
+              <button class="tile" data-goto="club"><span class="ti-ic"><svg><use href="#i-menu-b"/></svg></span><span><span class="lab">Menus</span><span class="val">MDR · Tap Room</span></span></button>
+              <button class="tile" data-goto="club"><span class="ti-ic"><svg><use href="#i-clock"/></svg></span><span><span class="lab">Hours</span><span class="val">City House open</span></span></button>
+            </div>
+
+            <div class="section-h"><span class="t">Today at the Club</span><span class="a" data-goto="calendar">See all</span></div>
+            <div class="card" style="padding:6px 16px">
+              <div class="mini-ev">
+                <span class="when">7:00 PM</span>
+                <div class="body"><div class="nm">Badminton at the City House</div>
+                  <div class="mt"><span class="pill athletics">Athletics</span><span class="loc"><svg><use href="#i-pin"/></svg>City House · Gym</span></div></div>
+              </div>
+              <div class="mini-ev">
+                <span class="when">7:00 PM</span>
+                <div class="body"><div class="nm">Chess Club Game</div>
+                  <div class="mt"><span class="pill social">Social</span><span class="loc"><svg><use href="#i-pin"/></svg>City House · TBA</span></div></div>
+              </div>
+            </div>
+
+            <div class="island-card">
+              <span class="wv"><svg><use href="#i-wave"/></svg></span>
+              <div><div class="nm">Travers Island · Pool &amp; Lawn</div><div class="dt">Open until 8:00 PM · Water 78° · Last shuttle 9:15 PM</div></div>
+            </div>
+          </section>
+
+          <!-- ---------- DINE ---------- -->
+          <section class="view" id="view-dine" aria-label="Dining">
+            <p class="intro">Reserve a table in seconds. Tap a room to choose your evening — no page reloads, no waiting.</p>
+
+            <button class="venue card" data-dine-open="Main Dining Room">
+              <span class="thumb">M</span>
+              <span class="vmeta"><span class="nm">Main Dining Room</span>
+                <span class="ds">Continental fine dining · Pre-Theater prix fixe from 5:30</span>
+                <span class="rw"><span class="loc"><svg><use href="#i-pin"/></svg>City House</span><span class="dress">Jacket &amp; Tie</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+
+            <button class="venue card" data-dine-open="The Tap Room">
+              <span class="thumb">T</span>
+              <span class="vmeta"><span class="nm">The Tap Room</span>
+                <span class="ds">Tavern classics &amp; a proper bar · Walk-ins welcome after 8</span>
+                <span class="rw"><span class="loc"><svg><use href="#i-pin"/></svg>City House</span><span class="dress">Smart Casual</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+
+            <button class="venue card" data-dine-open="The Café">
+              <span class="thumb">C</span>
+              <span class="vmeta"><span class="nm">The Café</span>
+                <span class="ds">All-day dining &amp; light fare · Family-friendly</span>
+                <span class="rw"><span class="loc"><svg><use href="#i-pin"/></svg>City House</span><span class="dress">Casual</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+
+            <button class="venue card ti" data-dine-open="Travers Island Terrace" data-ti="1">
+              <span class="thumb">TI</span>
+              <span class="vmeta"><span class="nm">Travers Island Terrace</span>
+                <span class="ds">Waterfront grill on the Sound · Seasonal · Sunset seatings</span>
+                <span class="rw"><span class="loc ti"><svg><use href="#i-pin"/></svg>Travers Island</span><span class="dress">Resort Casual</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+          </section>
+
+          <!-- ---------- CALENDAR ---------- -->
+          <section class="view" id="view-calendar" aria-label="Calendar">
+            <div class="daygroup">
+              <div class="dayhead">Tonight · Mon, Aug 24<span class="cnt">2 events</span></div>
+              <div class="event" data-ev="badminton" data-title="Badminton at the City House" data-when="Mon, Aug 24 · 7:00 PM" data-loc="City House · Gym">
+                <div class="tcol"><div class="t1">7:00</div><div class="t2">9:00 PM</div></div>
+                <div class="ebody"><div class="nm">Badminton at the City House</div>
+                  <div class="rw"><span class="pill athletics">Athletics</span><span class="loc"><svg><use href="#i-pin"/></svg>City House · Gym</span></div>
+                  <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+              </div>
+              <div class="event" data-ev="chess" data-title="Chess Club Game" data-when="Mon, Aug 24 · 7:00 PM" data-loc="City House · TBA">
+                <div class="tcol"><div class="t1">7:00</div><div class="t2">9:00 PM</div></div>
+                <div class="ebody"><div class="nm">Chess Club Game</div>
+                  <div class="rw"><span class="pill social">Social</span><span class="loc"><svg><use href="#i-pin"/></svg>City House · TBA</span></div>
+                  <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+              </div>
+            </div>
+
+            <div class="daygroup">
+              <div class="dayhead">Wed, Aug 26<span class="cnt">4 events</span></div>
+              <div class="event" data-ev="saturn" data-title="Saturn Society US Open Mixed Doubles" data-when="Wed, Aug 26 · 5:30 PM" data-loc="Off Site" data-going="1">
+                <div class="tcol"><div class="t1">5:30</div><div class="t2">11:30 PM</div></div>
+                <div class="ebody"><div class="nm">Saturn Society US Open Mixed Doubles</div>
+                  <div class="rw"><span class="pill athletics">Athletics</span><span class="loc"><svg><use href="#i-pin"/></svg>Off Site</span></div>
+                  <button class="rsvp is-going"><svg><use href="#i-check"/></svg>Going</button></div>
+              </div>
+              <div class="event" data-ev="tabletennis" data-title="Table Tennis Game" data-when="Wed, Aug 26 · 6:30 PM" data-loc="City House · Gym">
+                <div class="tcol"><div class="t1">6:30</div><div class="t2">7:30 PM</div></div>
+                <div class="ebody"><div class="nm">Table Tennis Game</div>
+                  <div class="rw"><span class="pill athletics">Athletics</span><span class="loc"><svg><use href="#i-pin"/></svg>City House · Gym</span></div>
+                  <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+              </div>
+              <div class="event" data-ev="run" data-title="Runners' Club Central Park Run" data-when="Wed, Aug 26 · 6:30 PM" data-loc="City House · Lobby">
+                <div class="tcol"><div class="t1">6:30</div><div class="t2">8:00 PM</div></div>
+                <div class="ebody"><div class="nm">Runners' Club Central Park Run</div>
+                  <div class="rw"><span class="pill athletics">Athletics</span><span class="loc"><svg><use href="#i-pin"/></svg>City House · Lobby</span></div>
+                  <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+              </div>
+              <div class="event" data-ev="basketball" data-title="Adult Pickup Basketball" data-when="Wed, Aug 26 · 7:30 PM" data-loc="Travers Island · Field House" data-ti="1">
+                <div class="tcol"><div class="t1">7:30</div><div class="t2">9:00 PM</div></div>
+                <div class="ebody"><div class="nm">Adult Pickup Basketball</div>
+                  <div class="rw"><span class="pill athletics">Athletics</span><span class="loc ti"><svg><use href="#i-pin"/></svg>Travers Island · Field House</span></div>
+                  <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+              </div>
+            </div>
+
+            <div class="daygroup">
+              <div class="dayhead">Thu, Aug 27<span class="cnt">3 events</span></div>
+              <div class="event" data-ev="bridge" data-title="Bridge Club Game" data-when="Thu, Aug 27 · 1:30 PM" data-loc="City House · Committee Room">
+                <div class="tcol"><div class="t1">1:30</div><div class="t2">4:00 PM</div></div>
+                <div class="ebody"><div class="nm">Bridge Club Game</div>
+                  <div class="rw"><span class="pill social">Social</span><span class="loc"><svg><use href="#i-pin"/></svg>City House · Committee Room</span></div>
+                  <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+              </div>
+              <div class="event" data-ev="pickleball" data-title="Pickleball at the City House" data-when="Thu, Aug 27 · 5:00 PM" data-loc="City House · Gym">
+                <div class="tcol"><div class="t1">5:00</div><div class="t2">7:00 PM</div></div>
+                <div class="ebody"><div class="nm">Pickleball at the City House</div>
+                  <div class="rw"><span class="pill athletics">Athletics</span><span class="loc"><svg><use href="#i-pin"/></svg>City House · Gym</span></div>
+                  <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+              </div>
+              <div class="event" data-ev="movie" data-title="Kids' Movie Night" data-when="Thu, Aug 27 · 5:00 PM" data-loc="Travers Island · Cabana Lawn" data-ti="1">
+                <div class="tcol"><div class="t1">5:00</div><div class="t2">8:00 PM</div></div>
+                <div class="ebody"><div class="nm">Kids' Movie Night</div>
+                  <div class="rw"><span class="pill family">Family</span><span class="loc ti"><svg><use href="#i-pin"/></svg>Travers Island · Cabana Lawn</span></div>
+                  <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------- BOOKINGS ---------- -->
+          <section class="view" id="view-bookings" aria-label="My Bookings">
+            <div class="section-h"><span class="t">Upcoming</span></div>
+            <div id="bookings-list"></div>
+          </section>
+
+          <!-- ---------- CLUB ---------- -->
+          <section class="view" id="view-club" aria-label="Club">
+            <div class="hours-card card">
+              <div class="hc-h">Today · Hours</div>
+              <div class="hours-row"><span class="p">City House · Athletic Facilities</span><span class="v open">6a – 10p</span></div>
+              <div class="hours-row"><span class="p">Main Dining Room</span><span class="v open">5:30 – 10p</span></div>
+              <div class="hours-row"><span class="p">Travers Island · Pool</span><span class="v open">8a – 8p</span></div>
+            </div>
+
+            <div class="section-h"><span class="t">Club Information</span></div>
+            <div class="club-grid">
+              <button class="club-tile" data-menus="1"><span class="ci"><svg><use href="#i-menu-b"/></svg></span><span class="nm">Menus</span><span class="ds">Dining rooms &amp; today's specials</span></button>
+              <button class="club-tile gold" data-info="Facilities &amp; Booking"><span class="ci"><svg><use href="#i-racquet"/></svg></span><span class="nm">Facilities</span><span class="ds">Squash, pool, gym, courts</span></button>
+              <button class="club-tile blue" data-info="Travers Island"><span class="ci"><svg><use href="#i-wave"/></svg></span><span class="nm">Travers Island</span><span class="ds">Pool, lawn &amp; the Sound</span></button>
+              <button class="club-tile" data-info="Shuttle Service"><span class="ci"><svg><use href="#i-shuttle"/></svg></span><span class="nm">Shuttle</span><span class="ds">City House ⇄ Travers</span></button>
+              <button class="club-tile gold" data-info="Reciprocal Clubs"><span class="ci"><svg><use href="#i-globe"/></svg></span><span class="nm">Reciprocal Clubs</span><span class="ds">200+ clubs worldwide</span></button>
+              <button class="club-tile" data-statement="1"><span class="ci"><svg><use href="#i-doc"/></svg></span><span class="nm">Statements</span><span class="ds">Balance &amp; billing history</span></button>
+            </div>
+            <div style="height:6px"></div>
+          </section>
+        </main>
+
+        <nav class="tabbar" id="tabbar">
+          <button class="tab is-active" data-tab="home"><svg><use href="#i-home"/></svg>Home</button>
+          <button class="tab" data-tab="dine"><svg><use href="#i-dine"/></svg>Dine</button>
+          <button class="tab" data-tab="calendar"><svg><use href="#i-cal"/></svg>Events</button>
+          <button class="tab" data-tab="bookings"><svg><use href="#i-book"/></svg>Bookings</button>
+          <button class="tab" data-tab="club"><svg><use href="#i-club"/></svg>Club</button>
+        </nav>
+
+        <div class="scrim" id="scrim"></div>
+        <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+        <div class="toast" id="toast"><svg><use href="#i-check"/></svg><span id="toastMsg">Done</span></div>
+        <div class="homebar"></div>
+      </div>
+    </div>
+
+    <!-- ============ RAIL ============ -->
+    <aside class="rail">
+      <h2 class="lead">Everything the House offers, one tap away — and instant.</h2>
+      <p class="lead-sub">A ground-up redesign of the member app built around the two things members actually open it for: <b>reserving</b> and <b>knowing</b>. Try the phone — it's live.</p>
+
+      <div class="props">
+        <div class="prop"><span class="pn">01</span><div><div class="ph">Effortless for every member</div><div class="pb">Big type, plain labels, generous tap targets, and one obvious action per screen. No hunting, no fine print — dignified enough for the dining room, simple enough for a first-time visitor.</div></div></div>
+        <div class="prop"><span class="pn">02</span><div><div class="ph">Distinguished, not dated</div><div class="pb">The engraved crest, an old-style serif, aged gilt hairlines, and marble grounds — the House's own materials. Pool-blue is reserved for Travers Island so campus always reads at a glance.</div></div></div>
+        <div class="prop"><span class="pn">03</span><div><div class="ph">Instant, always</div><div class="pb">Screens are prefetched and cached, so navigation is immediate — never the five-second page fetch of today's app. Reservations confirm on the spot.</div></div></div>
+      </div>
+
+      <div class="data-note">
+        <div class="dn-h">On the data behind it</div>
+        <p>Live club data can flow in through a sanctioned Northstar / Clubessential integration, or — permissioned with your own login — a personal sync. This prototype runs on sample data drawn from your current app so the pitch stays about the experience.</p>
+      </div>
+
+      <div class="try"><svg><use href="#i-chev"/></svg>Tap “Reserve a Table,” RSVP to an event, then open Bookings.</div>
+    </aside>
+  </div>
+
+  <footer class="pagefoot">
+    <b>Concept prototype.</b> An independent redesign proposal for pitching internally, using sample data and a stylized crest — not the official NYAC app, and not affiliated with or endorsed by the Club or its software vendors. No data is collected. Palette: crimson &amp; white with aged gold and Travers Island pool-blue.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var titles={home:"New York Athletic Club",dine:"Dining",calendar:"Events",bookings:"My Bookings",club:"The Club"};
+  var wordTabs={home:true};
+  var views=document.getElementById("views");
+  var abTitle=document.getElementById("abTitle");
+
+  function setTab(name){
+    document.querySelectorAll(".tab").forEach(function(t){t.classList.toggle("is-active",t.dataset.tab===name);});
+    document.querySelectorAll(".view").forEach(function(v){v.classList.remove("is-active");});
+    var v=document.getElementById("view-"+name); if(v){v.classList.add("is-active");}
+    abTitle.textContent=titles[name]||"";
+    abTitle.classList.toggle("word",!!wordTabs[name]);
+    views.scrollTop=0;
+    if(name==="bookings"){renderBookings();}
+  }
+  document.getElementById("tabbar").addEventListener("click",function(e){
+    var b=e.target.closest(".tab"); if(b){setTab(b.dataset.tab);}
+  });
+  document.addEventListener("click",function(e){
+    var g=e.target.closest("[data-goto]"); if(g){setTab(g.dataset.goto);}
+  });
+
+  /* ---------- Bookings model ---------- */
+  var bookings=[
+    {id:"seed-dine",kind:"dine",ti:false,title:"Main Dining Room",when:"Fri, Aug 28 · 7:30 PM",loc:"City House · Party of 2",tag:"Reservation"},
+    {id:"ev-saturn",kind:"event",ti:false,title:"Saturn Society US Open Mixed Doubles",when:"Wed, Aug 26 · 5:30 PM",loc:"Off Site",tag:"Registered"}
+  ];
+  function esc(s){return (s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function renderBookings(){
+    var el=document.getElementById("bookings-list");
+    document.getElementById("tileBookings").textContent=bookings.length+" upcoming";
+    if(!bookings.length){
+      el.innerHTML='<div class="bk-empty"><svg><use href="#i-book"/></svg><div>No bookings yet.</div><div style="font-size:13px;margin-top:6px">Reserve a table or RSVP to an event.</div></div>';
+      return;
+    }
+    el.innerHTML=bookings.map(function(b){
+      var pill=b.tag==="Registered"?'<span class="pill reg"><svg><use href="#i-check"/></svg>Registered</span>':
+        '<span class="pill '+(b.ti?"":"athletics")+'" '+(b.ti?'style="background:var(--blue-tint);color:var(--blue-ink)"':'')+'>'+esc(b.tag)+'</span>';
+      var locCls=b.ti?"loc ti":"loc";
+      return '<div class="ticket'+(b.ti?" ti":"")+'">'+
+        '<div class="tk-top"><div class="tk-nm">'+esc(b.title)+'</div>'+pill+'</div>'+
+        '<div class="tk-when"><svg><use href="#i-clock"/></svg>'+esc(b.when)+'</div>'+
+        '<div class="tk-row"><span class="'+locCls+'"><svg><use href="#i-pin"/></svg>'+esc(b.loc)+'</span></div>'+
+        '<div class="tk-actions"><button data-modify="'+b.id+'">Modify</button><button class="danger" data-cancel="'+b.id+'">Cancel</button></div>'+
+        '</div>';
+    }).join("");
+  }
+  function addBooking(b){ if(!bookings.some(function(x){return x.id===b.id;})){bookings.push(b);} }
+  function removeBooking(id){ bookings=bookings.filter(function(x){return x.id!==id;}); }
+
+  document.getElementById("bookings-list").addEventListener("click",function(e){
+    var c=e.target.closest("[data-cancel]");
+    if(c){
+      var id=c.dataset.cancel; removeBooking(id);
+      var ev=document.querySelector('.event[data-ev="'+id.replace(/^ev-/,'')+'"] .rsvp');
+      if(ev){ev.classList.remove("is-going");ev.innerHTML='<svg><use href="#i-plus"/></svg>Reserve';}
+      renderBookings(); toast("Booking cancelled"); return;
+    }
+    var m=e.target.closest("[data-modify]");
+    if(m){ toast("Opening reservation…"); }
+  });
+
+  /* ---------- Event RSVP ---------- */
+  document.getElementById("view-calendar").addEventListener("click",function(e){
+    var btn=e.target.closest(".rsvp"); if(!btn) return;
+    var ev=btn.closest(".event"); var id="ev-"+ev.dataset.ev;
+    var going=btn.classList.toggle("is-going");
+    if(going){
+      btn.innerHTML='<svg><use href="#i-check"/></svg>Going';
+      addBooking({id:id,kind:"event",ti:ev.hasAttribute("data-ti"),title:ev.dataset.title,when:ev.dataset.when,loc:ev.dataset.loc,tag:"Registered"});
+      toast("You're going — added to Bookings");
+    }else{
+      btn.innerHTML='<svg><use href="#i-plus"/></svg>Reserve';
+      removeBooking(id); toast("Reservation removed");
+    }
+  });
+
+  /* ---------- Toast ---------- */
+  var toastEl=document.getElementById("toast"),toastMsg=document.getElementById("toastMsg"),toastT;
+  function toast(m){ toastMsg.textContent=m; toastEl.classList.add("show"); clearTimeout(toastT);
+    toastT=setTimeout(function(){toastEl.classList.remove("show");},2200); }
+
+  /* ---------- Sheet ---------- */
+  var scrim=document.getElementById("scrim"),sheet=document.getElementById("sheet");
+  function openSheet(html){ sheet.innerHTML='<div class="grab"></div>'+html; scrim.classList.add("show"); sheet.classList.add("show"); }
+  function closeSheet(){ scrim.classList.remove("show"); sheet.classList.remove("show"); }
+  scrim.addEventListener("click",closeSheet);
+
+  var DATES=[["TUE","25"],["WED","26"],["THU","27"],["FRI","28"],["SAT","29"],["SUN","30"]];
+  var TIMES=["5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00"];
+  function diningSheet(venue,ti){
+    var dateChips=DATES.map(function(d,i){return '<button class="chip'+(i===3?" sel":"")+'" data-date="'+d[0]+' '+d[1]+'"><span class="c1">'+d[0]+'</span><span class="c2">'+d[1]+'</span></button>';}).join("");
+    var timeChips=TIMES.map(function(t,i){return '<button class="chip'+(i===4?" sel":"")+'" data-time="'+t+'"><span class="c2 solo">'+t+'</span></button>';}).join("");
+    openSheet(
+      '<h3>'+esc(venue)+'</h3>'+
+      '<div class="sh-sub">'+(ti?'Travers Island · on the Sound':'City House · 180 Central Park South')+'</div>'+
+      '<div class="field-l">Date</div><div class="chiprow" data-group="date">'+dateChips+'</div>'+
+      '<div class="field-l">Time</div><div class="timegrid" data-group="time">'+timeChips+'</div>'+
+      '<div class="field-l">Party</div>'+
+      '<div class="stepper"><button data-step="-1" aria-label="Fewer"><svg><use href="#i-minus"/></svg></button>'+
+        '<span class="sp-v"><span id="partyN">2</span> guests</span>'+
+        '<button data-step="1" aria-label="More"><svg><use href="#i-plus"/></svg></button></div>'+
+      '<div class="sheet-foot"><button class="big-btn btn-primary" id="confirmDine"><svg><use href="#i-check"/></svg>Confirm Reservation</button>'+
+      '<div class="sheet-note">'+(ti?'Resort casual — collared shirt required after 6.':'Jacket &amp; tie required in the Main Dining Room.')+'</div></div>'
+    );
+    sheet.dataset.venue=venue; sheet.dataset.ti=ti?"1":"";
+  }
+  // selection + stepper delegation inside sheet
+  sheet.addEventListener("click",function(e){
+    var chip=e.target.closest(".chip");
+    if(chip){ var grp=chip.parentNode; grp.querySelectorAll(".chip").forEach(function(c){c.classList.remove("sel");}); chip.classList.add("sel"); return; }
+    var step=e.target.closest("[data-step]");
+    if(step){ var n=document.getElementById("partyN"); var v=Math.max(1,Math.min(12,parseInt(n.textContent,10)+parseInt(step.dataset.step,10))); n.textContent=v; return; }
+    if(e.target.closest("#stmtHist")){ toast("Loading full history…"); return; }
+    if(e.target.closest("#confirmDine")){
+      var venue=sheet.dataset.venue, ti=sheet.dataset.ti==="1";
+      var date=(sheet.querySelector('[data-group="date"] .sel')||{}).dataset||{};
+      var time=(sheet.querySelector('[data-group="time"] .sel')||{}).dataset||{};
+      var party=document.getElementById("partyN").textContent;
+      var dmap={"TUE 25":"Tue, Aug 25","WED 26":"Wed, Aug 26","THU 27":"Thu, Aug 27","FRI 28":"Fri, Aug 28","SAT 29":"Sat, Aug 29","SUN 30":"Sun, Aug 30"};
+      addBooking({id:"dine-"+Date.now(),kind:"dine",ti:ti,title:venue,
+        when:(dmap[date.date]||"Fri, Aug 28")+" · "+(time.time||"7:30")+" PM",
+        loc:(ti?"Travers Island":"City House")+" · Party of "+party,tag:"Reservation"});
+      closeSheet(); toast("Table reserved — see Bookings"); setTab("bookings");
+    }
+  });
+
+  /* ---------- Dine open + club info sheets ---------- */
+  document.addEventListener("click",function(e){
+    var d=e.target.closest("[data-dine-open]");
+    if(d){ var v=d.getAttribute("data-dine-open"); diningSheet(v,d.hasAttribute("data-ti")); return; }
+    var s=e.target.closest("[data-statement]");
+    if(s){ statementSheet(); return; }
+    var mn=e.target.closest("[data-menus]");
+    if(mn){ menuSheet(); return; }
+    var inf=e.target.closest("[data-info]");
+    if(inf){ infoSheet(inf.getAttribute("data-info")); return; }
+  });
+
+  function statementSheet(){
+    openSheet('<h3>August Statement</h3><div class="sh-sub">Account No. 8842 · Closes Aug 31</div>'+
+      '<div class="menu-list">'+
+      '<div class="menu-item"><div class="mi-top"><span class="mi-nm">Balance forward</span><span class="mi-pr">$0.00</span></div></div>'+
+      '<div class="menu-item"><div class="mi-top"><span class="mi-nm">Main Dining Room · Aug 14</span><span class="mi-pr">$186.40</span></div><div class="mi-ds">Dinner for two</div></div>'+
+      '<div class="menu-item"><div class="mi-top"><span class="mi-nm">Squash court · Aug 18</span><span class="mi-pr">$40.00</span></div></div>'+
+      '<div class="menu-item"><div class="mi-top"><span class="mi-nm">Monthly dues</span><span class="mi-pr">$186.20</span></div></div>'+
+      '<div class="menu-item"><div class="mi-top"><span class="mi-nm" style="color:var(--crimson-ink)">Current balance</span><span class="mi-pr">$412.60</span></div></div>'+
+      '</div><div class="sheet-foot"><button class="big-btn btn-primary" id="stmtHist"><svg><use href="#i-doc"/></svg>View Full History</button></div>');
+  }
+  function menuSheet(){
+    openSheet('<h3>Main Dining Room</h3><div class="sh-sub">Pre-Theater · tonight from 5:30</div>'+
+      '<div class="menu-list">'+
+      '<div class="menu-item"><div class="mi-top"><span class="mi-nm">Oysters Rockefeller</span><span class="mi-pr">$24</span></div><div class="mi-ds">Blue Point, creamed spinach, Pernod</div></div>'+
+      '<div class="menu-item"><div class="mi-top"><span class="mi-nm">Dover Sole Meunière</span><span class="mi-pr">$58</span></div><div class="mi-ds">Brown butter, capers, fingerlings</div></div>'+
+      '<div class="menu-item"><div class="mi-top"><span class="mi-nm">Prime Rib au Jus</span><span class="mi-pr">$52</span></div><div class="mi-ds">Yorkshire pudding, creamed horseradish</div></div>'+
+      '<div class="menu-item"><div class="mi-top"><span class="mi-nm">Baked Alaska</span><span class="mi-pr">$18</span></div><div class="mi-ds">Tableside · for two</div></div>'+
+      '</div><div class="sheet-foot"><button class="big-btn btn-primary" data-dine-open="Main Dining Room"><svg><use href="#i-dine"/></svg>Reserve a Table</button></div>');
+  }
+  var INFO={
+    "Facilities & Booking":["Facilities & Booking","Squash & racquetball, the swimming pool, the fitness floor, boxing, and the rooftop courts — reserve a court or lane the same way you reserve a table.","City House · open 6a–10p"],
+    "Travers Island":["Travers Island","The Club's 27-acre waterfront campus on Long Island Sound — pool, lawn, tennis, sailing, and the Terrace grill. Members-only shuttle runs from the City House.","On the Sound · Westchester"],
+    "Shuttle Service":["Shuttle Service","Complimentary members' shuttle between the City House and Travers Island. Next departures: 4:30 PM, 5:30 PM, 6:45 PM. Last return 9:15 PM.","City House ⇄ Travers Island"],
+    "Reciprocal Clubs":["Reciprocal Clubs","Over 200 reciprocal clubs worldwide extend privileges to NYAC members — from London to Tokyo. Request a letter of introduction in a tap.","Worldwide"]
+  };
+  function infoSheet(key){
+    var d=INFO[key]||["Club Information","",""];
+    openSheet('<h3>'+d[0]+'</h3><div class="sh-sub">'+d[2]+'</div><p class="intro" style="margin:8px 2px 4px">'+d[1]+'</p>'+
+      '<div class="sheet-foot"><button class="big-btn btn-quiet" id="closeInfo">Close</button></div>');
+    var c=document.getElementById("closeInfo"); if(c){c.addEventListener("click",closeSheet);}
+  }
+
+  /* ---------- Theme toggle ---------- */
+  document.getElementById("themeToggle").addEventListener("click",function(){
+    var root=document.documentElement;
+    var cur=root.getAttribute("data-theme");
+    var isDark = cur ? cur==="dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.setAttribute("data-theme", isDark?"light":"dark");
+  });
+
+  renderBookings();
+})();
+</script>
