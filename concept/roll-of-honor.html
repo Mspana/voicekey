@@ -1,0 +1,674 @@
+<title>The Roll of Honor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ================= TOKENS (heritage, theme-aware) ================= */
+:root{
+  --stage:#E7DECF; --stage2:#DED3C0;
+  --bg:#F4EFE6; --panel:#FBF7EF; --panel-2:#EFE7D8;
+  --ink:#191510; --muted:#7E735C; --faint:#A79C84;
+  --hair:#E3D9C5; --hair-strong:#D3C7AD;
+  --crimson:#9B1B31; --crimson-deep:#7C1526; --crimson-ink:#9B1B31;
+  --gold:#A8894E; --gold-deep:#8A6E3A;
+  --blue:#3C7286; --blue-soft:#5E97AE; --blue-tint:#E5EDF0;
+  --green:#2F6B47; --green-tint:#E5EEE6;
+  --on-hero:#F6F1E6; --btn-ink:#FBF7EF;
+  --shadow:33,26,16; --dev:#211d16; --dev-edge:#0b0906;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --stage:#0E0B06; --stage2:#141009;
+  --bg:#16120B; --panel:#1F1A11; --panel-2:#282013;
+  --ink:#F1E9DA; --muted:#B3A88F; --faint:#867B64;
+  --hair:#2C2517; --hair-strong:#39301E;
+  --crimson:#C0384C; --crimson-deep:#9A2033; --crimson-ink:#E68A9B;
+  --gold:#C6A45F; --gold-deep:#C6A45F;
+  --blue:#7FB2C9; --blue-soft:#7FB2C9; --blue-tint:#182A31;
+  --green:#5FB489; --green-tint:#16281E;
+  --on-hero:#F6F1E6; --btn-ink:#FBF7EF;
+  --shadow:0,0,0; --dev:#050403; --dev-edge:#000;
+}}
+:root[data-theme="dark"]{
+  --stage:#0E0B06; --stage2:#141009;
+  --bg:#16120B; --panel:#1F1A11; --panel-2:#282013;
+  --ink:#F1E9DA; --muted:#B3A88F; --faint:#867B64;
+  --hair:#2C2517; --hair-strong:#39301E;
+  --crimson:#C0384C; --crimson-deep:#9A2033; --crimson-ink:#E68A9B;
+  --gold:#C6A45F; --gold-deep:#C6A45F;
+  --blue:#7FB2C9; --blue-soft:#7FB2C9; --blue-tint:#182A31;
+  --green:#5FB489; --green-tint:#16281E;
+  --on-hero:#F6F1E6; --btn-ink:#FBF7EF;
+  --shadow:0,0,0; --dev:#050403; --dev-edge:#000;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--stage);color:var(--ink);
+  font-family:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  background-image:radial-gradient(125% 85% at 50% -8%,var(--stage2),var(--stage) 60%);min-height:100vh}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+h1,h2,h3,h4{font-family:"Libre Caslon Display",Georgia,serif;font-weight:400}
+
+/* ================= STAGE / MASTHEAD ================= */
+.stage{max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,46px) clamp(16px,4vw,40px) 42px}
+.masthead{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(22px,4vw,40px)}
+.mh-titles{flex:1;min-width:240px}
+.eyebrow{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-deep);font-weight:700}
+.masthead h1{font-size:clamp(28px,4.6vw,46px);line-height:1;margin:9px 0 0;letter-spacing:-.005em;text-wrap:balance}
+.masthead .sub{color:var(--muted);font-size:14.5px;margin-top:11px;line-height:1.55;max-width:50ch}
+.mh-tools{display:flex;align-items:center;gap:10px}
+.tag{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);border:1px solid var(--hair-strong);
+  border-radius:2px;padding:7px 11px;background:var(--panel);font-weight:600}
+.tbtn{width:44px;height:44px;border-radius:2px;border:1px solid var(--hair-strong);background:var(--panel);
+  color:var(--ink);display:grid;place-items:center;cursor:pointer}
+.tbtn:active{transform:scale(.95)}.tbtn svg{width:20px;height:20px}
+.tbtn .mo{display:none}
+:root[data-theme="dark"] .tbtn .mo{display:block}:root[data-theme="dark"] .tbtn .su{display:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .tbtn .mo{display:block}:root:not([data-theme="light"]) .tbtn .su{display:none}}
+
+.showcase{display:grid;grid-template-columns:minmax(0,auto) 1fr;gap:clamp(28px,5vw,66px);align-items:start}
+@media (max-width:880px){.showcase{grid-template-columns:1fr;justify-items:center}}
+
+/* ================= DEVICE ================= */
+.device{width:min(390px,94vw);background:linear-gradient(160deg,#26221b,var(--dev));border-radius:52px;padding:13px;
+  border:1px solid var(--dev-edge);position:sticky;top:22px;
+  box-shadow:0 42px 84px -30px rgba(var(--shadow),.55),0 12px 30px -14px rgba(var(--shadow),.4)}
+@media (max-width:880px){.device{position:static}}
+.screen{position:relative;background:var(--bg);border-radius:40px;overflow:hidden;height:min(812px,85vh);min-height:600px;
+  display:flex;flex-direction:column;border:1px solid rgba(0,0,0,.4)}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:12px 26px 7px;font-size:13px;font-weight:700;
+  color:var(--ink);flex:none;letter-spacing:.02em;z-index:6}
+.sb .r{display:flex;gap:6px;align-items:center}.sb svg{width:16px;height:16px;opacity:.85}
+
+.views{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.views::-webkit-scrollbar{width:0}
+.view{display:none;animation:fade .24s ease both;padding-bottom:24px}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* section header (editorial opener) */
+.opener{padding:22px 22px 0}
+.opener .k{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);font-weight:700}
+.opener h2{font-size:30px;line-height:1;margin:9px 0 0;letter-spacing:-.01em}
+.opener .rule{height:1px;background:var(--hair-strong);margin-top:16px}
+.pad{padding:0 22px}
+
+/* ================= HOME ================= */
+.hero{position:relative;height:238px;overflow:hidden}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,7,4,.1),rgba(10,7,4,0) 32%,rgba(10,7,4,.74))}
+.hero .hc{position:absolute;left:0;right:0;bottom:0;padding:20px 22px}
+.hero .est{font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:#DBBB79;font-weight:700}
+.hero .wm{font-family:"Libre Caslon Display",serif;color:var(--on-hero);font-size:29px;line-height:1.02;margin-top:6px;
+  letter-spacing:-.01em;text-shadow:0 1px 20px rgba(0,0,0,.45)}
+.hero .goldline{height:2px;width:44px;background:#C6A45F;margin-top:14px}
+
+.greetblock{padding:20px 22px 0}
+.greetblock .g{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);font-weight:700}
+.greetblock .lead{font-size:27px;line-height:1.08;margin:10px 0 0;letter-spacing:-.01em}
+.greetblock .memno{font-size:12px;color:var(--faint);margin-top:8px;font-weight:500}
+.acts{display:flex;gap:10px;margin-top:17px}
+.btn{border:0;border-radius:2px;padding:15px 18px;font-family:"Public Sans";font-weight:700;font-size:14.5px;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;letter-spacing:.01em;transition:transform .12s,filter .2s}
+.btn:active{transform:translateY(1px)}.btn svg{width:16px;height:16px}
+.btn-primary{background:var(--crimson);color:var(--btn-ink);flex:1}
+.btn-primary:hover{filter:brightness(1.06)}
+.btn-outline{background:transparent;color:var(--crimson-ink);border:1px solid var(--crimson);flex:1}
+
+.rule{height:1px;background:var(--hair);margin:22px 0}
+.rule.strong{background:var(--hair-strong)}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 4px}
+.sec-h .t{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);font-weight:700}
+.sec-h .a{font-size:12.5px;color:var(--crimson-ink);font-weight:600;cursor:pointer}
+.evrow{display:flex;gap:15px;padding:13px 0;border-top:1px solid var(--hair);align-items:baseline;cursor:pointer}
+.evrow:first-of-type{border-top:0}
+.evrow .tm{font-family:"Libre Caslon Display",serif;font-size:16px;width:52px;flex:none;font-variant-numeric:tabular-nums;padding-top:1px}
+.evrow .nm{font-size:15px;font-weight:600;line-height:1.24}
+.evrow .mt{margin-top:5px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.cat{font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+.cat.athletics{color:var(--crimson-ink)}.cat.social{color:var(--gold-deep)}.cat.family{color:var(--green)}
+.loc{font-size:12.5px;color:var(--muted);font-weight:500}
+.loc.ti{color:var(--blue)}
+
+.acct{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.acct .l{font-size:14.5px;font-weight:600}
+.acct .l small{display:block;font-weight:500;color:var(--muted);font-size:12.5px;margin-top:3px}
+.acct .v{font-family:"Libre Caslon Display",serif;font-size:20px;color:var(--crimson-ink)}
+
+.island{border-top:2px solid var(--blue);background:linear-gradient(180deg,var(--blue-tint),transparent 80%);padding:15px 16px;margin-top:2px}
+.island .nm{font-family:"Libre Caslon Display",serif;font-size:17px;color:var(--blue)}
+.island .dt{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+
+/* ================= DINE ================= */
+.intro{color:var(--muted);font-size:13.5px;line-height:1.5;margin:16px 0 4px}
+.venue{display:flex;gap:15px;padding:17px 0;border-top:1px solid var(--hair);align-items:center;cursor:pointer;width:100%;
+  background:transparent;border-left:0;border-right:0;border-bottom:0;text-align:left;font-family:inherit;color:var(--ink)}
+.venue:active{opacity:.7}
+.venue .initial{width:52px;height:52px;border:1px solid var(--hair-strong);display:grid;place-items:center;flex:none;
+  font-family:"Libre Caslon Display",serif;font-size:25px;color:var(--crimson-ink);background:var(--panel)}
+.venue.ti .initial{color:var(--blue);font-size:19px}
+.venue .vm{flex:1;min-width:0}
+.venue .vm .nm{font-family:"Libre Caslon Display",serif;font-size:19px;letter-spacing:-.01em;line-height:1.05}
+.venue .vm .ds{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.35}
+.venue .vm .rw{margin-top:8px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.dress{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep)}
+.venue .chev{color:var(--faint);flex:none}.venue .chev svg{width:20px;height:20px}
+
+/* ================= EVENTS ================= */
+.dayhead{font-family:"Libre Caslon Display",serif;font-size:19px;letter-spacing:-.01em;margin:24px 0 2px;
+  display:flex;align-items:baseline;gap:10px}
+.dayhead .cnt{font-family:"Public Sans";font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.event{display:flex;gap:15px;padding:16px 0;border-top:1px solid var(--hair);align-items:flex-start}
+.event .tcol{width:56px;flex:none;padding-top:2px}
+.event .tcol .t1{font-family:"Libre Caslon Display",serif;font-size:16px;font-variant-numeric:tabular-nums;line-height:1}
+.event .tcol .t2{font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums;margin-top:4px;font-weight:500}
+.event .eb{flex:1;min-width:0}
+.event .eb .nm{font-size:15.5px;font-weight:600;line-height:1.24;letter-spacing:-.005em}
+.event .eb .mt{margin-top:6px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.rsvp{margin-top:12px;border:1px solid var(--crimson);color:var(--crimson-ink);background:transparent;border-radius:2px;
+  padding:9px 16px;font-family:"Public Sans";font-weight:600;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;letter-spacing:.02em;transition:transform .12s,background .2s}
+.rsvp svg{width:15px;height:15px}.rsvp:active{transform:scale(.97)}
+.rsvp.is-going{background:var(--green);border-color:var(--green);color:#fff}
+
+/* ================= BOOKINGS ================= */
+.bk-empty{text-align:center;color:var(--muted);padding:56px 24px}
+.bk-empty .qm{font-family:"Libre Caslon Display",serif;font-size:44px;color:var(--faint)}
+.ticket{border:1px solid var(--hair-strong);border-top:2px solid var(--crimson);background:var(--panel);padding:17px 18px;margin-top:16px}
+.ticket.ti{border-top-color:var(--blue)}
+.ticket .tk-status{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px}
+.ticket .tk-status svg{width:13px;height:13px}
+.tk-status.conf{color:var(--green)}.tk-status.res{color:var(--gold-deep)}
+.ticket .tk-nm{font-family:"Libre Caslon Display",serif;font-size:20px;letter-spacing:-.01em;margin-top:8px;line-height:1.08}
+.ticket .tk-when{font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:600;margin-top:9px;display:flex;align-items:center;gap:8px}
+.ticket .tk-when svg{width:14px;height:14px;color:var(--muted)}
+.ticket .tk-loc{font-size:12.5px;color:var(--muted);margin-top:5px}
+.ticket .tk-loc.ti{color:var(--blue)}
+.ticket .tk-actions{margin-top:14px;padding-top:13px;border-top:1px solid var(--hair);display:flex;gap:22px}
+.tk-actions button{background:transparent;border:0;font-family:"Public Sans";font-size:13px;font-weight:600;cursor:pointer;color:var(--ink);letter-spacing:.02em;padding:0}
+.tk-actions button.danger{color:var(--crimson-ink)}
+
+/* ================= CLUB ================= */
+.hours{border:1px solid var(--hair-strong);background:var(--panel);padding:16px 18px;margin-top:16px}
+.hours .hh{font-family:"Libre Caslon Display",serif;font-size:18px;margin-bottom:4px}
+.hrow{display:flex;justify-content:space-between;padding:10px 0;font-size:13.5px;border-top:1px solid var(--hair)}
+.hrow .p{color:var(--muted)}.hrow .v{font-weight:600;font-variant-numeric:tabular-nums}.hrow .v.open{color:var(--green)}
+.index{margin-top:6px}
+.ix{display:flex;gap:15px;align-items:center;padding:16px 0;border-top:1px solid var(--hair);cursor:pointer;width:100%;
+  background:transparent;border-left:0;border-right:0;border-bottom:0;text-align:left;font-family:inherit;color:var(--ink)}
+.ix:active{opacity:.7}
+.ix .ic{width:26px;color:var(--crimson-ink);flex:none;display:grid;place-items:center}
+.ix.ti .ic{color:var(--blue)}.ix .ic svg{width:22px;height:22px}
+.ix .ib{flex:1;min-width:0}
+.ix .ib .nm{font-family:"Libre Caslon Display",serif;font-size:16.5px;letter-spacing:-.01em}
+.ix .ib .ds{font-size:12px;color:var(--muted);margin-top:2px}
+.ix .chev{color:var(--faint);flex:none}.ix .chev svg{width:19px;height:19px}
+.appearance{display:flex;justify-content:space-between;align-items:center;margin-top:18px;border:1px solid var(--hair-strong);background:var(--panel);padding:14px 18px}
+.appearance .al{font-size:14px;font-weight:600}
+.appearance .al small{display:block;color:var(--muted);font-weight:500;font-size:12px;margin-top:2px}
+.seg{display:flex;border:1px solid var(--hair-strong);border-radius:2px;overflow:hidden}
+.seg button{background:var(--panel-2);border:0;padding:9px 15px;font-family:"Public Sans";font-weight:600;font-size:12.5px;cursor:pointer;color:var(--muted)}
+.seg button.on{background:var(--crimson);color:var(--btn-ink)}
+
+/* ================= TAB BAR ================= */
+.tabs{flex:none;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--hair-strong);
+  background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);padding:0 4px}
+.tab{border:0;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:11px 2px 8px;color:var(--faint);font-family:"Public Sans";font-size:10px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;position:relative;transition:color .18s}
+.tab svg{width:22px;height:22px}
+.tab .mk{position:absolute;top:0;left:50%;transform:translateX(-50%);width:22px;height:2px;background:transparent}
+.tab.on{color:var(--crimson-ink)}.tab.on .mk{background:var(--crimson)}
+
+/* ================= SHEET ================= */
+.scrim{position:absolute;inset:0;background:rgba(10,7,4,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
+.scrim.show{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--bg);border-radius:22px 22px 0 0;border-top:1px solid var(--hair-strong);
+  padding:8px 20px calc(20px + env(safe-area-inset-bottom));transform:translateY(102%);transition:transform .34s cubic-bezier(.32,.72,0,1);
+  z-index:21;max-height:90%;overflow-y:auto;box-shadow:0 -20px 44px -22px rgba(var(--shadow),.5)}
+.sheet.show{transform:translateY(0)}
+.grab{width:38px;height:5px;border-radius:5px;background:var(--hair-strong);margin:8px auto 16px}
+.sheet h3{font-size:24px;margin:0;letter-spacing:-.01em}
+.sheet .ssub{color:var(--muted);font-size:13px;margin-top:5px}
+.fl{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);font-weight:700;margin:20px 0 10px}
+.chiprow{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.chiprow::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--hair-strong);background:var(--panel);border-radius:2px;padding:9px 13px;cursor:pointer;
+  font-family:inherit;text-align:center;min-width:58px;color:var(--ink);transition:border-color .15s,background .15s}
+.chip:active{transform:scale(.97)}
+.chip .c1{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.chip .c2{font-family:"Libre Caslon Display",serif;font-size:17px;margin-top:3px}
+.chip .c2.solo{font-family:"Public Sans";font-size:14px;font-weight:600;margin-top:0}
+.chip.sel{border-color:var(--crimson);background:var(--panel-2)}
+.chip.sel .c1,.chip.sel .c2{color:var(--crimson-ink)}
+.timegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.timegrid .chip{min-width:0;padding:11px 4px}
+.stepper{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--hair-strong);background:var(--panel);padding:9px 14px}
+.stepper .sv{font-family:"Libre Caslon Display",serif;font-size:19px}
+.stepper button{width:42px;height:42px;border:1px solid var(--hair-strong);background:var(--panel-2);color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.stepper button:active{transform:scale(.93)}.stepper button svg{width:18px;height:18px}
+.sheet-foot{margin-top:22px}
+.snote{font-size:11.5px;color:var(--faint);text-align:center;margin-top:11px;line-height:1.4}
+.mrow{padding:13px 0;border-top:1px solid var(--hair)}.mrow:first-child{border-top:0}
+.mrow .mt{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.mrow .mn{font-family:"Libre Caslon Display",serif;font-size:16px;letter-spacing:-.01em}
+.mrow .mp{font-variant-numeric:tabular-nums;font-weight:600;color:var(--crimson-ink)}
+.mrow .md{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+.mrow .mn.tot{color:var(--crimson-ink)}
+.para{color:var(--muted);font-size:14px;line-height:1.6;margin:10px 0 0}
+
+/* toast + homebar */
+.toast{position:absolute;left:50%;bottom:98px;transform:translate(-50%,18px);opacity:0;pointer-events:none;background:var(--ink);
+  color:var(--bg);padding:12px 18px;border-radius:2px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:9px;z-index:30;
+  transition:opacity .25s,transform .25s;box-shadow:0 14px 32px -14px rgba(var(--shadow),.6);white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}.toast svg{width:16px;height:16px;color:var(--green)}
+.homebar{position:absolute;left:50%;bottom:7px;transform:translateX(-50%);width:126px;height:5px;border-radius:5px;background:var(--ink);opacity:.24;z-index:25}
+
+/* ================= RAIL ================= */
+.rail{max-width:400px;padding-top:6px}
+@media (max-width:880px){.rail{max-width:520px;width:100%}}
+.rail .lead{font-size:clamp(21px,2.6vw,26px);line-height:1.16;letter-spacing:-.01em;text-wrap:balance;margin:0 0 8px}
+.rail .lead-sub{color:var(--muted);font-size:14.5px;line-height:1.6;margin:0 0 22px}
+.def{padding:16px 0;border-top:1px solid var(--hair)}
+.def:first-of-type{border-top:1px solid var(--hair-strong)}
+.def .dt{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);font-weight:700}
+.def .dd{margin-top:6px;color:var(--muted);font-size:13.5px;line-height:1.55}
+.def .dd b{color:var(--ink);font-weight:600}
+.data-note{margin-top:22px;border:1px solid var(--hair-strong);background:var(--panel);padding:16px 17px}
+.data-note .dh{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);font-weight:700;margin-bottom:8px}
+.data-note p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+.try{margin-top:20px;font-size:13px;color:var(--faint);display:flex;gap:8px;align-items:center}
+.try svg{width:16px;height:16px;color:var(--crimson-ink);flex:none}
+.pagefoot{margin-top:36px;padding-top:20px;border-top:1px solid var(--hair-strong);color:var(--faint);font-size:12px;line-height:1.6;max-width:720px}
+.pagefoot b{color:var(--muted);font-weight:600}
+:focus-visible{outline:2.5px solid var(--gold);outline-offset:2px}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/></symbol>
+  <symbol id="i-dine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v8a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V3M8 3v18"/><path d="M17 3c-2 0-3 2-3 5s1 4 3 4M17 3v18"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3.2v3.4M16 3.2v3.4"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4-7 4V4.5a1 1 0 0 1 1-1Z"/></symbol>
+  <symbol id="i-club" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M4 21V10l8-5 8 5v11M9 21v-6h6v6M4 10h16"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 19a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14v16l-3-2-2 2-2-2-2 2-2-2-3 2Z"/><path d="M8.5 9h7M8.5 13h5"/></symbol>
+  <symbol id="i-racquet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="9" rx="6" ry="7"/><path d="M6 13l-3.5 6M8 15l2 4"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9c2 0 2 1.5 4 1.5S9 9 11 9s2 1.5 4 1.5S18 9 20 9M2 14c2 0 2 1.5 4 1.5S9 14 11 14s2 1.5 4 1.5S18 14 20 14"/></symbol>
+  <symbol id="i-shuttle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16V8h11l4 3v5"/><circle cx="7.5" cy="16.5" r="1.7"/><circle cx="16.5" cy="16.5" r="1.7"/><path d="M9.3 16h5.4M18.3 16H21v-3l-3-2"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7Z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></symbol>
+  <symbol id="i-sig" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="14" width="3.2" height="6" rx="1"/><rect x="7" y="10" width="3.2" height="10" rx="1"/><rect x="12" y="6" width="3.2" height="14" rx="1"/><rect x="17" y="3" width="3.2" height="17" rx="1"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24" fill="currentColor"><path d="M12 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/><path d="M12 12c2.2 0 4.2.9 5.6 2.3l1.8-1.8A11 11 0 0 0 4.6 12.5l1.8 1.8A7.9 7.9 0 0 1 12 12Z"/><path d="M12 6c3.9 0 7.4 1.6 9.9 4.1l1.8-1.8A15.9 15.9 0 0 0 .3 8.3l1.8 1.8A13.9 13.9 0 0 1 12 6Z"/></symbol>
+  <symbol id="i-bat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="8" width="18" height="10" rx="2.5"/><rect x="4" y="10" width="12" height="6" rx="1" fill="currentColor" stroke="none"/><path d="M22 11v4" stroke-linecap="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+</svg>
+
+<div class="stage">
+  <header class="masthead">
+    <div class="mh-titles">
+      <div class="eyebrow">NYAC App Concept · The “just-right” one</div>
+      <h1>The Roll of Honor</h1>
+      <p class="sub">The heritage direction, built out. A working member app for the two things members open it for — reserving and knowing. Try the phone; it's live.</p>
+    </div>
+    <div class="mh-tools">
+      <span class="tag">Interactive</span>
+      <button class="tbtn" id="themeToggle" aria-label="Toggle light or dark"><svg class="su"><use href="#i-sun"/></svg><svg class="mo"><use href="#i-moon"/></svg></button>
+    </div>
+  </header>
+
+  <div class="showcase">
+    <div class="device"><div class="screen">
+      <div class="sb"><span>4:03</span><span class="r"><svg><use href="#i-sig"/></svg><svg><use href="#i-wifi"/></svg><svg><use href="#i-bat"/></svg></span></div>
+
+      <div class="views" id="views">
+        <!-- HOME -->
+        <section class="view on" id="view-home" aria-label="Home">
+          <div class="hero">
+            <canvas id="cvHero"></canvas>
+            <div class="scrim"></div>
+            <div class="hc"><span class="est">Established 1868</span><div class="wm">New York<br>Athletic Club</div><div class="goldline"></div></div>
+          </div>
+          <div class="greetblock">
+            <div class="g">Good afternoon · Tuesday, August 25</div>
+            <div class="lead">Shall we reserve your table?</div>
+            <div class="memno">Member No. 8842</div>
+            <div class="acts">
+              <button class="btn btn-primary" data-dine-open="Main Dining Room"><svg><use href="#i-dine"/></svg>Reserve a Table</button>
+              <button class="btn btn-outline" data-goto="calendar"><svg><use href="#i-cal"/></svg>Events</button>
+            </div>
+          </div>
+          <div class="pad">
+            <div class="rule"></div>
+            <div class="sec-h"><span class="t">This Evening</span><span class="a" data-goto="calendar">Full calendar</span></div>
+            <div class="evrow" data-goto="calendar"><span class="tm">7:00</span><div><div class="nm">Badminton at the City House</div><div class="mt"><span class="cat athletics">Athletics</span><span class="loc">City House · Gym</span></div></div></div>
+            <div class="evrow" data-goto="calendar"><span class="tm">7:00</span><div><div class="nm">Chess Club Game</div><div class="mt"><span class="cat social">Social</span><span class="loc">City House · TBA</span></div></div></div>
+            <div class="evrow" data-goto="calendar"><span class="tm">7:30</span><div><div class="nm">Adult Pickup Basketball</div><div class="mt"><span class="cat athletics">Athletics</span><span class="loc ti">Travers Island · Field House</span></div></div></div>
+            <div class="rule"></div>
+            <div class="acct" data-statement="1"><div class="l">August Statement<small>Closes Aug 31 · tap to review</small></div><div class="v">$412.60</div></div>
+            <div class="rule"></div>
+            <div class="island">
+              <div class="nm">Travers Island</div>
+              <div class="dt">Pool &amp; Lawn open until 8:00 · Water 78° · Last shuttle 9:15 PM</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DINE -->
+        <section class="view" id="view-dine" aria-label="Dining">
+          <div class="opener"><div class="k">Reservations</div><h2>Dining</h2><div class="rule"></div></div>
+          <div class="pad">
+            <p class="intro">Reserve a table in a few taps — instantly, no waiting.</p>
+            <button class="venue" data-dine-open="Main Dining Room">
+              <span class="initial">M</span>
+              <span class="vm"><span class="nm">Main Dining Room</span><span class="ds">Continental fine dining · Pre-Theater prix fixe from 5:30</span>
+                <span class="rw"><span class="loc">City House</span><span class="dress">Jacket &amp; Tie</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+            <button class="venue" data-dine-open="The Tap Room">
+              <span class="initial">T</span>
+              <span class="vm"><span class="nm">The Tap Room</span><span class="ds">Tavern classics &amp; a proper bar · Walk-ins after 8</span>
+                <span class="rw"><span class="loc">City House</span><span class="dress">Smart Casual</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+            <button class="venue" data-dine-open="The Café">
+              <span class="initial">C</span>
+              <span class="vm"><span class="nm">The Café</span><span class="ds">All-day dining &amp; light fare · Family-friendly</span>
+                <span class="rw"><span class="loc">City House</span><span class="dress">Casual</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+            <button class="venue ti" data-dine-open="Travers Island Terrace" data-ti="1">
+              <span class="initial">TI</span>
+              <span class="vm"><span class="nm">Travers Island Terrace</span><span class="ds">Waterfront grill on the Sound · Sunset seatings</span>
+                <span class="rw"><span class="loc ti">Travers Island</span><span class="dress">Resort Casual</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+          </div>
+        </section>
+
+        <!-- EVENTS -->
+        <section class="view" id="view-calendar" aria-label="Events">
+          <div class="opener"><div class="k">What's On</div><h2>Events</h2><div class="rule"></div></div>
+          <div class="pad" id="events">
+            <div class="dayhead">Tonight, Aug 24 <span class="cnt">2 events</span></div>
+            <div class="event" data-ev="badminton" data-title="Badminton at the City House" data-when="Mon, Aug 24 · 7:00 PM" data-loc="City House · Gym">
+              <div class="tcol"><div class="t1">7:00</div><div class="t2">9:00 PM</div></div>
+              <div class="eb"><div class="nm">Badminton at the City House</div><div class="mt"><span class="cat athletics">Athletics</span><span class="loc">City House · Gym</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+            </div>
+            <div class="event" data-ev="chess" data-title="Chess Club Game" data-when="Mon, Aug 24 · 7:00 PM" data-loc="City House · TBA">
+              <div class="tcol"><div class="t1">7:00</div><div class="t2">9:00 PM</div></div>
+              <div class="eb"><div class="nm">Chess Club Game</div><div class="mt"><span class="cat social">Social</span><span class="loc">City House · TBA</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+            </div>
+
+            <div class="dayhead">Wednesday, Aug 26 <span class="cnt">4 events</span></div>
+            <div class="event" data-ev="saturn" data-title="Saturn Society US Open Mixed Doubles" data-when="Wed, Aug 26 · 5:30 PM" data-loc="Off Site" data-going="1">
+              <div class="tcol"><div class="t1">5:30</div><div class="t2">11:30 PM</div></div>
+              <div class="eb"><div class="nm">Saturn Society US Open Mixed Doubles</div><div class="mt"><span class="cat athletics">Athletics</span><span class="loc">Off Site</span></div>
+                <button class="rsvp is-going"><svg><use href="#i-check"/></svg>Going</button></div>
+            </div>
+            <div class="event" data-ev="tabletennis" data-title="Table Tennis Game" data-when="Wed, Aug 26 · 6:30 PM" data-loc="City House · Gym">
+              <div class="tcol"><div class="t1">6:30</div><div class="t2">7:30 PM</div></div>
+              <div class="eb"><div class="nm">Table Tennis Game</div><div class="mt"><span class="cat athletics">Athletics</span><span class="loc">City House · Gym</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+            </div>
+            <div class="event" data-ev="run" data-title="Runners' Club Central Park Run" data-when="Wed, Aug 26 · 6:30 PM" data-loc="City House · Lobby">
+              <div class="tcol"><div class="t1">6:30</div><div class="t2">8:00 PM</div></div>
+              <div class="eb"><div class="nm">Runners' Club Central Park Run</div><div class="mt"><span class="cat athletics">Athletics</span><span class="loc">City House · Lobby</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+            </div>
+            <div class="event" data-ev="basketball" data-title="Adult Pickup Basketball" data-when="Wed, Aug 26 · 7:30 PM" data-loc="Travers Island · Field House" data-ti="1">
+              <div class="tcol"><div class="t1">7:30</div><div class="t2">9:00 PM</div></div>
+              <div class="eb"><div class="nm">Adult Pickup Basketball</div><div class="mt"><span class="cat athletics">Athletics</span><span class="loc ti">Travers Island · Field House</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+            </div>
+
+            <div class="dayhead">Thursday, Aug 27 <span class="cnt">3 events</span></div>
+            <div class="event" data-ev="bridge" data-title="Bridge Club Game" data-when="Thu, Aug 27 · 1:30 PM" data-loc="City House · Committee Room">
+              <div class="tcol"><div class="t1">1:30</div><div class="t2">4:00 PM</div></div>
+              <div class="eb"><div class="nm">Bridge Club Game</div><div class="mt"><span class="cat social">Social</span><span class="loc">City House · Committee Room</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+            </div>
+            <div class="event" data-ev="pickleball" data-title="Pickleball at the City House" data-when="Thu, Aug 27 · 5:00 PM" data-loc="City House · Gym">
+              <div class="tcol"><div class="t1">5:00</div><div class="t2">7:00 PM</div></div>
+              <div class="eb"><div class="nm">Pickleball at the City House</div><div class="mt"><span class="cat athletics">Athletics</span><span class="loc">City House · Gym</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+            </div>
+            <div class="event" data-ev="movie" data-title="Kids' Movie Night" data-when="Thu, Aug 27 · 5:00 PM" data-loc="Travers Island · Cabana Lawn" data-ti="1">
+              <div class="tcol"><div class="t1">5:00</div><div class="t2">8:00 PM</div></div>
+              <div class="eb"><div class="nm">Kids' Movie Night</div><div class="mt"><span class="cat family">Family</span><span class="loc ti">Travers Island · Cabana Lawn</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Reserve</button></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BOOKINGS -->
+        <section class="view" id="view-bookings" aria-label="Bookings">
+          <div class="opener"><div class="k">Your Reservations</div><h2>Bookings</h2><div class="rule"></div></div>
+          <div class="pad" id="bookings-list"></div>
+        </section>
+
+        <!-- CLUB -->
+        <section class="view" id="view-club" aria-label="The Club">
+          <div class="opener"><div class="k">The House</div><h2>The Club</h2><div class="rule"></div></div>
+          <div class="pad">
+            <div class="hours">
+              <div class="hh">Today's Hours</div>
+              <div class="hrow"><span class="p">City House · Athletics</span><span class="v open">6a – 10p</span></div>
+              <div class="hrow"><span class="p">Main Dining Room</span><span class="v open">5:30 – 10p</span></div>
+              <div class="hrow"><span class="p">Travers Island · Pool</span><span class="v open">8a – 8p</span></div>
+            </div>
+            <div class="index">
+              <button class="ix" data-menus="1"><span class="ic"><svg><use href="#i-menu"/></svg></span><span class="ib"><span class="nm">Menus</span><span class="ds">Dining rooms &amp; today's specials</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix" data-info="Facilities"><span class="ic"><svg><use href="#i-racquet"/></svg></span><span class="ib"><span class="nm">Facilities &amp; Booking</span><span class="ds">Squash, pool, gym, courts</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix ti" data-info="Travers Island"><span class="ic"><svg><use href="#i-wave"/></svg></span><span class="ib"><span class="nm">Travers Island</span><span class="ds">Pool, lawn &amp; the Sound</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix" data-info="Shuttle Service"><span class="ic"><svg><use href="#i-shuttle"/></svg></span><span class="ib"><span class="nm">Shuttle Service</span><span class="ds">City House ⇄ Travers Island</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix" data-info="Reciprocal Clubs"><span class="ic"><svg><use href="#i-globe"/></svg></span><span class="ib"><span class="nm">Reciprocal Clubs</span><span class="ds">200+ clubs worldwide</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix" data-statement="1"><span class="ic"><svg><use href="#i-doc"/></svg></span><span class="ib"><span class="nm">Statements</span><span class="ds">Balance &amp; billing history</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+            </div>
+            <div class="appearance">
+              <div class="al">Appearance<small>Light or evening</small></div>
+              <div class="seg" id="seg"><button data-set="light">Day</button><button data-set="dark">Night</button></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <nav class="tabs" id="tabs">
+        <button class="tab on" data-tab="home"><span class="mk"></span><svg><use href="#i-home"/></svg>Home</button>
+        <button class="tab" data-tab="dine"><span class="mk"></span><svg><use href="#i-dine"/></svg>Dine</button>
+        <button class="tab" data-tab="calendar"><span class="mk"></span><svg><use href="#i-cal"/></svg>Events</button>
+        <button class="tab" data-tab="bookings"><span class="mk"></span><svg><use href="#i-book"/></svg>Bookings</button>
+        <button class="tab" data-tab="club"><span class="mk"></span><svg><use href="#i-club"/></svg>Club</button>
+      </nav>
+
+      <div class="scrim" id="scrim"></div>
+      <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+      <div class="toast" id="toast"><svg><use href="#i-check"/></svg><span id="toastMsg">Done</span></div>
+      <div class="homebar"></div>
+    </div></div>
+
+    <aside class="rail">
+      <h2 class="lead">Distinguished, effortless, and instant — the one they'll choose.</h2>
+      <p class="lead-sub">Rebuilt around reserving and knowing, in the House's own materials: engraved photography, an old-style serif, gilt hairlines, marble grounds.</p>
+      <div class="def"><div class="dt">Effortless</div><div class="dd">Big type, plain labels, one obvious action per screen, generous tap targets. <b>Built for the Club's older members first.</b></div></div>
+      <div class="def"><div class="dt">Distinguished</div><div class="dd">Libre Caslon headlines, crimson used like ink, aged gilt rules. Pool-blue is reserved for Travers Island, so campus always reads at a glance.</div></div>
+      <div class="def"><div class="dt">Instant</div><div class="dd">Every screen is prefetched and cached — navigation is immediate, and a table confirms on the spot. Never the five-second fetch of today's app.</div></div>
+      <div class="data-note"><div class="dh">On the data</div><p>Live club data flows in through a sanctioned Northstar / Clubessential integration, or a permissioned personal sync. This runs on sample data so the pitch stays about the experience.</p></div>
+      <div class="try"><svg><use href="#i-arrow"/></svg>Reserve a table, RSVP to an event, then open Bookings. Try Night mode, top-right.</div>
+    </aside>
+  </div>
+
+  <footer class="pagefoot"><b>Concept prototype — the “just-right” direction.</b> Sample data drawn from the current app; a hand-drawn hero stands in for the Club's own photography, which drops into the hero frame. Not the official NYAC app, and not affiliated with or endorsed by the Club or its vendors. No data is collected.</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var titles={home:"Home",dine:"Dining",calendar:"Events",bookings:"Bookings",club:"The Club"};
+  var views=document.getElementById("views");
+  function setTab(name){
+    document.querySelectorAll(".tab").forEach(function(t){t.classList.toggle("on",t.dataset.tab===name);});
+    document.querySelectorAll(".view").forEach(function(v){v.classList.remove("on");});
+    var v=document.getElementById("view-"+name);if(v)v.classList.add("on");
+    views.scrollTop=0;
+    if(name==="bookings")renderBookings();
+    if(name==="club")syncSeg();
+    if(name==="home")paintHero();
+  }
+  document.getElementById("tabs").addEventListener("click",function(e){var b=e.target.closest(".tab");if(b)setTab(b.dataset.tab);});
+  document.addEventListener("click",function(e){var g=e.target.closest("[data-goto]");if(g)setTab(g.dataset.goto);});
+
+  /* bookings model */
+  var bookings=[
+    {id:"seed-dine",kind:"dine",ti:false,title:"Main Dining Room",when:"Fri, Aug 28 · 7:30 PM",loc:"City House · Party of 2",tag:"Reservation"},
+    {id:"ev-saturn",kind:"event",ti:false,title:"Saturn Society US Open Mixed Doubles",when:"Wed, Aug 26 · 5:30 PM",loc:"Off Site",tag:"Registered"}
+  ];
+  function esc(s){return (s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function renderBookings(){
+    var el=document.getElementById("bookings-list");
+    if(!bookings.length){el.innerHTML='<div class="bk-empty"><div class="qm">—</div><div>No reservations yet.</div><div style="font-size:13px;margin-top:6px">Reserve a table or RSVP to an event.</div></div>';return;}
+    el.innerHTML=bookings.map(function(b){
+      var reg=b.tag==="Registered";
+      var status=reg?'<span class="tk-status conf"><svg><use href="#i-check"/></svg>Registered</span>':'<span class="tk-status res">'+esc(b.tag)+'</span>';
+      return '<div class="ticket'+(b.ti?" ti":"")+'">'+status+
+        '<div class="tk-nm">'+esc(b.title)+'</div>'+
+        '<div class="tk-when"><svg><use href="#i-clock"/></svg>'+esc(b.when)+'</div>'+
+        '<div class="tk-loc'+(b.ti?" ti":"")+'">'+esc(b.loc)+'</div>'+
+        '<div class="tk-actions"><button data-modify="'+b.id+'">Modify</button><button class="danger" data-cancel="'+b.id+'">Cancel</button></div></div>';
+    }).join("");
+  }
+  function addBooking(b){if(!bookings.some(function(x){return x.id===b.id;}))bookings.push(b);}
+  function removeBooking(id){bookings=bookings.filter(function(x){return x.id!==id;});}
+  document.getElementById("bookings-list").addEventListener("click",function(e){
+    var c=e.target.closest("[data-cancel]");
+    if(c){var id=c.dataset.cancel;removeBooking(id);
+      var ev=document.querySelector('.event[data-ev="'+id.replace(/^ev-/,'')+'"] .rsvp');
+      if(ev){ev.classList.remove("is-going");ev.innerHTML='<svg><use href="#i-plus"/></svg>Reserve';}
+      renderBookings();toast("Reservation cancelled");return;}
+    if(e.target.closest("[data-modify]"))toast("Opening reservation…");
+  });
+
+  /* RSVP */
+  document.getElementById("view-calendar").addEventListener("click",function(e){
+    var btn=e.target.closest(".rsvp");if(!btn)return;
+    var ev=btn.closest(".event"),id="ev-"+ev.dataset.ev,going=btn.classList.toggle("is-going");
+    if(going){btn.innerHTML='<svg><use href="#i-check"/></svg>Going';
+      addBooking({id:id,kind:"event",ti:ev.hasAttribute("data-ti"),title:ev.dataset.title,when:ev.dataset.when,loc:ev.dataset.loc,tag:"Registered"});
+      toast("You're going — added to Bookings");
+    }else{btn.innerHTML='<svg><use href="#i-plus"/></svg>Reserve';removeBooking(id);toast("Reservation removed");}
+  });
+
+  /* toast */
+  var toastEl=document.getElementById("toast"),toastMsg=document.getElementById("toastMsg"),tT;
+  function toast(m){toastMsg.textContent=m;toastEl.classList.add("show");clearTimeout(tT);tT=setTimeout(function(){toastEl.classList.remove("show");},2200);}
+
+  /* sheet */
+  var scrim=document.getElementById("scrim"),sheet=document.getElementById("sheet");
+  function openSheet(h){sheet.innerHTML='<div class="grab"></div>'+h;scrim.classList.add("show");sheet.classList.add("show");}
+  function closeSheet(){scrim.classList.remove("show");sheet.classList.remove("show");}
+  scrim.addEventListener("click",closeSheet);
+
+  var DATES=[["TUE","25"],["WED","26"],["THU","27"],["FRI","28"],["SAT","29"],["SUN","30"]];
+  var TIMES=["5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00"];
+  function diningSheet(venue,ti){
+    var dc=DATES.map(function(d,i){return '<button class="chip'+(i===3?" sel":"")+'" data-date="'+d[0]+" "+d[1]+'"><span class="c1">'+d[0]+'</span><span class="c2">'+d[1]+'</span></button>';}).join("");
+    var tc=TIMES.map(function(t,i){return '<button class="chip'+(i===4?" sel":"")+'" data-time="'+t+'"><span class="c2 solo">'+t+'</span></button>';}).join("");
+    openSheet('<h3>'+esc(venue)+'</h3><div class="ssub">'+(ti?"Travers Island · on the Sound":"City House · 180 Central Park South")+'</div>'+
+      '<div class="fl">Date</div><div class="chiprow" data-group="date">'+dc+'</div>'+
+      '<div class="fl">Time</div><div class="timegrid" data-group="time">'+tc+'</div>'+
+      '<div class="fl">Party</div><div class="stepper"><button data-step="-1" aria-label="Fewer"><svg><use href="#i-minus"/></svg></button><span class="sv"><span id="partyN">2</span> guests</span><button data-step="1" aria-label="More"><svg><use href="#i-plus"/></svg></button></div>'+
+      '<div class="sheet-foot"><button class="btn btn-primary" id="confirmDine" style="width:100%"><svg><use href="#i-check"/></svg>Confirm Reservation</button>'+
+      '<div class="snote">'+(ti?"Resort casual — collared shirt required after 6.":"Jacket &amp; tie required in the Main Dining Room.")+'</div></div>');
+    sheet.dataset.venue=venue;sheet.dataset.ti=ti?"1":"";
+  }
+  sheet.addEventListener("click",function(e){
+    var chip=e.target.closest(".chip");
+    if(chip){chip.parentNode.querySelectorAll(".chip").forEach(function(c){c.classList.remove("sel");});chip.classList.add("sel");return;}
+    var step=e.target.closest("[data-step]");
+    if(step){var n=document.getElementById("partyN"),v=Math.max(1,Math.min(12,parseInt(n.textContent,10)+parseInt(step.dataset.step,10)));n.textContent=v;return;}
+    if(e.target.closest("#stmtHist")){toast("Loading full history…");return;}
+    if(e.target.closest("#closeInfo")){closeSheet();return;}
+    if(e.target.closest("#confirmDine")){
+      var venue=sheet.dataset.venue,ti=sheet.dataset.ti==="1";
+      var date=(sheet.querySelector('[data-group="date"] .sel')||{}).dataset||{};
+      var time=(sheet.querySelector('[data-group="time"] .sel')||{}).dataset||{};
+      var party=document.getElementById("partyN").textContent;
+      var dm={"TUE 25":"Tue, Aug 25","WED 26":"Wed, Aug 26","THU 27":"Thu, Aug 27","FRI 28":"Fri, Aug 28","SAT 29":"Sat, Aug 29","SUN 30":"Sun, Aug 30"};
+      addBooking({id:"dine-"+Date.now(),kind:"dine",ti:ti,title:venue,when:(dm[date.date]||"Fri, Aug 28")+" · "+(time.time||"7:30")+" PM",loc:(ti?"Travers Island":"City House")+" · Party of "+party,tag:"Reservation"});
+      closeSheet();toast("Table reserved — see Bookings");setTab("bookings");
+    }
+  });
+
+  document.addEventListener("click",function(e){
+    var d=e.target.closest("[data-dine-open]");if(d){diningSheet(d.getAttribute("data-dine-open"),d.hasAttribute("data-ti"));return;}
+    if(e.target.closest("[data-statement]")){statementSheet();return;}
+    if(e.target.closest("[data-menus]")){menuSheet();return;}
+    var inf=e.target.closest("[data-info]");if(inf){infoSheet(inf.getAttribute("data-info"));return;}
+  });
+  function statementSheet(){
+    openSheet('<h3>August Statement</h3><div class="ssub">Account No. 8842 · closes Aug 31</div>'+
+      '<div style="margin-top:14px">'+
+      '<div class="mrow"><div class="mt"><span class="mn">Balance forward</span><span class="mp">$0.00</span></div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Main Dining Room · Aug 14</span><span class="mp">$186.40</span></div><div class="md">Dinner for two</div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Squash court · Aug 18</span><span class="mp">$40.00</span></div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Monthly dues</span><span class="mp">$186.20</span></div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn tot">Current balance</span><span class="mp">$412.60</span></div></div></div>'+
+      '<div class="sheet-foot"><button class="btn btn-primary" id="stmtHist" style="width:100%"><svg><use href="#i-doc"/></svg>View Full History</button></div>');
+  }
+  function menuSheet(){
+    openSheet('<h3>Main Dining Room</h3><div class="ssub">Pre-Theater · tonight from 5:30</div>'+
+      '<div style="margin-top:14px">'+
+      '<div class="mrow"><div class="mt"><span class="mn">Oysters Rockefeller</span><span class="mp">$24</span></div><div class="md">Blue Point, creamed spinach, Pernod</div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Dover Sole Meunière</span><span class="mp">$58</span></div><div class="md">Brown butter, capers, fingerlings</div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Prime Rib au Jus</span><span class="mp">$52</span></div><div class="md">Yorkshire pudding, creamed horseradish</div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Baked Alaska</span><span class="mp">$18</span></div><div class="md">Tableside · for two</div></div></div>'+
+      '<div class="sheet-foot"><button class="btn btn-primary" data-dine-open="Main Dining Room" style="width:100%"><svg><use href="#i-dine"/></svg>Reserve a Table</button></div>');
+  }
+  var INFO={
+    "Facilities":["Facilities & Booking","Squash & racquetball, the swimming pool, the fitness floor, boxing, and the rooftop courts — reserve a court or lane the same way you reserve a table.","City House · open 6a–10p"],
+    "Travers Island":["Travers Island","The Club's 27-acre waterfront campus on Long Island Sound — pool, lawn, tennis, sailing, and the Terrace grill. A members' shuttle runs from the City House.","On the Sound · Westchester"],
+    "Shuttle Service":["Shuttle Service","Complimentary members' shuttle between the City House and Travers Island. Next departures 4:30, 5:30 and 6:45 PM. Last return 9:15 PM.","City House ⇄ Travers Island"],
+    "Reciprocal Clubs":["Reciprocal Clubs","Over 200 reciprocal clubs worldwide extend privileges to members — from London to Tokyo. Request a letter of introduction in a tap.","Worldwide"]
+  };
+  function infoSheet(k){var d=INFO[k]||["Club","",""];
+    openSheet('<h3>'+d[0]+'</h3><div class="ssub">'+d[2]+'</div><p class="para">'+d[1]+'</p>'+
+      '<div class="sheet-foot"><button class="btn btn-outline" id="closeInfo" style="width:100%">Close</button></div>');}
+
+  /* theme */
+  function isDark(){var c=document.documentElement.getAttribute("data-theme");return c?c==="dark":matchMedia("(prefers-color-scheme: dark)").matches;}
+  function setTheme(d){document.documentElement.setAttribute("data-theme",d?"dark":"light");syncSeg();paintHero();}
+  document.getElementById("themeToggle").addEventListener("click",function(){setTheme(!isDark());});
+  document.getElementById("seg").addEventListener("click",function(e){var b=e.target.closest("[data-set]");if(b)setTheme(b.dataset.set==="dark");});
+  function syncSeg(){var seg=document.getElementById("seg");if(!seg)return;var d=isDark();
+    seg.querySelectorAll("button").forEach(function(b){b.classList.toggle("on",(b.dataset.set==="dark")===d);});}
+
+  /* hero canvas — engraved bronze memorial wall */
+  function paintHero(){var cv=document.getElementById("cvHero");if(!cv)return;
+    var dpr=Math.min(2,window.devicePixelRatio||1),r=cv.getBoundingClientRect();
+    var w=Math.max(1,Math.round(r.width)),h=Math.max(1,Math.round(r.height));
+    cv.width=w*dpr;cv.height=h*dpr;var x=cv.getContext("2d");x.setTransform(dpr,0,0,dpr,0,0);
+    function frac(n){return n-Math.floor(n);}function rnd(a){return frac(Math.sin(a*127.1+311.7)*43758.5453);}
+    var g=x.createLinearGradient(0,0,w*.3,h);g.addColorStop(0,"#33281b");g.addColorStop(.5,"#20180f");g.addColorStop(1,"#140d07");
+    x.fillStyle=g;x.fillRect(0,0,w,h);
+    for(var i=0;i<w;i+=2){x.globalAlpha=.05;x.fillStyle=(Math.floor(i/2)%2)?"#42311d":"#0c0805";x.fillRect(i,0,1,h);}
+    x.globalAlpha=1;
+    for(var yy=16;yy<h-8;yy+=10){var cols=3,cw=(w-24)/cols;
+      for(var col=0;col<cols;col++){var seed=col*97+yy*13,lw=cw*(.42+.44*rnd(seed)),lx=12+col*cw+3;
+        x.fillStyle="rgba(206,172,112,0.15)";x.fillRect(lx,yy,lw,1.4);
+        x.fillStyle="rgba(0,0,0,0.28)";x.fillRect(lx,yy+1.6,lw,1);}}
+    var tg=x.createRadialGradient(w*.4,-h*.2,10,w*.4,h*.1,h);tg.addColorStop(0,"rgba(224,182,110,0.22)");tg.addColorStop(1,"rgba(224,182,110,0)");
+    x.fillStyle=tg;x.fillRect(0,0,w,h);
+    var vg=x.createRadialGradient(w/2,h*.42,20,w/2,h*.55,h*.95);vg.addColorStop(0,"rgba(0,0,0,0)");vg.addColorStop(1,"rgba(0,0,0,0.6)");
+    x.fillStyle=vg;x.fillRect(0,0,w,h);
+  }
+  var rt;window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(paintHero,160);});
+  if(document.readyState==="complete")paintHero();else window.addEventListener("load",paintHero);
+
+  renderBookings();syncSeg();
+})();
+</script>
