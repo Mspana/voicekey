@@ -1,0 +1,630 @@
+<title>The Field House</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============ PAGE SHELL (theme-aware) ============ */
+:root{
+  --pg-bg:#E8E4DC; --pg-bg2:#DDD8CD; --pg-panel:#F7F5F0; --pg-ink:#191B1D;
+  --pg-muted:#5F6569; --pg-faint:#8B9196; --pg-hair:#D5D0C5; --pg-accent:#B01D33;
+  --pg-shadow:20,22,24;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --pg-bg:#101315; --pg-bg2:#161A1D; --pg-panel:#1B2023; --pg-ink:#EFEDE7;
+  --pg-muted:#9BA3A9; --pg-faint:#6E767C; --pg-hair:#272D31; --pg-accent:#E5556C;
+  --pg-shadow:0,0,0;
+}}
+:root[data-theme="dark"]{
+  --pg-bg:#101315; --pg-bg2:#161A1D; --pg-panel:#1B2023; --pg-ink:#EFEDE7;
+  --pg-muted:#9BA3A9; --pg-faint:#6E767C; --pg-hair:#272D31; --pg-accent:#E5556C;
+  --pg-shadow:0,0,0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg-bg);color:var(--pg-ink);
+  font-family:"Barlow",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(125% 85% at 50% -8%,var(--pg-bg2),var(--pg-bg) 60%);min-height:100vh}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.stage{max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,46px) clamp(16px,4vw,40px) 42px}
+.masthead{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(22px,4vw,40px)}
+.mh-titles{flex:1;min-width:240px}
+.eyebrow{font-family:"Barlow Semi Condensed";font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--pg-accent);font-weight:700}
+.masthead h1{font-family:"Barlow Semi Condensed";font-weight:800;font-size:clamp(30px,5vw,50px);line-height:.92;margin:8px 0 0;
+  letter-spacing:.01em;text-transform:uppercase;text-wrap:balance}
+.masthead .sub{color:var(--pg-muted);font-size:14.5px;margin-top:11px;line-height:1.55;max-width:52ch}
+.mh-tools{display:flex;gap:10px;align-items:center}
+.tag{font-family:"Barlow Semi Condensed";font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--pg-muted);
+  border:1px solid var(--pg-hair);border-radius:3px;padding:7px 11px;background:var(--pg-panel);font-weight:700}
+.tbtn{width:44px;height:44px;border-radius:3px;border:1px solid var(--pg-hair);background:var(--pg-panel);
+  color:var(--pg-ink);display:grid;place-items:center;cursor:pointer}
+.tbtn:active{transform:scale(.95)}.tbtn svg{width:20px;height:20px}
+.tbtn .mo{display:none}
+:root[data-theme="dark"] .tbtn .mo{display:block}:root[data-theme="dark"] .tbtn .su{display:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .tbtn .mo{display:block}:root:not([data-theme="light"]) .tbtn .su{display:none}}
+
+.showcase{display:grid;grid-template-columns:minmax(0,auto) 1fr;gap:clamp(28px,5vw,66px);align-items:start}
+@media (max-width:880px){.showcase{grid-template-columns:1fr;justify-items:center}}
+
+.device{width:min(390px,94vw);background:linear-gradient(160deg,#23272b,#0a0c0e);border-radius:52px;padding:13px;
+  border:1px solid #000;position:sticky;top:22px;
+  box-shadow:0 42px 84px -30px rgba(var(--pg-shadow),.55),0 12px 30px -14px rgba(var(--pg-shadow),.4)}
+@media (max-width:880px){.device{position:static}}
+
+/* ============ PHONE — COMMITTED DARK WORLD ============ */
+/* Scoreboard palette, painted explicitly (single-theme by design) */
+.screen{position:relative;background:#14171A;color:#EFEDE7;border-radius:40px;overflow:hidden;
+  height:min(812px,85vh);min-height:600px;display:flex;flex-direction:column;border:1px solid #000;
+  font-family:"Barlow",sans-serif}
+.screen .cond{font-family:"Barlow Semi Condensed"}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:12px 26px 7px;font-size:13px;font-weight:700;
+  color:#EFEDE7;flex:none;letter-spacing:.02em;z-index:6}
+.sb .r{display:flex;gap:6px;align-items:center}.sb svg{width:16px;height:16px;opacity:.85}
+
+.views{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.views::-webkit-scrollbar{width:0}
+.view{display:none;animation:fade .22s ease both;padding-bottom:24px}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.opener{padding:20px 18px 0}
+.opener .k{font-family:"Barlow Semi Condensed";font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:#63B3D4;font-weight:700}
+.opener h2{font-family:"Barlow Semi Condensed";font-weight:800;font-size:34px;line-height:.9;margin:6px 0 0;letter-spacing:.01em;text-transform:uppercase}
+.opener .rule{height:2px;background:#22272C;margin-top:14px}
+.pad{padding:0 18px}
+
+/* HOME */
+.hero{position:relative;height:250px;overflow:hidden}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,12,14,.35),rgba(8,12,14,.05) 40%,rgba(20,23,26,.96))}
+.hero .hc{position:absolute;left:0;right:0;bottom:0;padding:16px 18px 12px}
+.hero .kick{font-family:"Barlow Semi Condensed";font-weight:600;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#7EC4E0}
+.hero .wm{font-family:"Barlow Semi Condensed";font-weight:800;font-size:56px;line-height:.84;letter-spacing:.01em;color:#fff;margin-top:2px}
+.hero .subw{font-family:"Barlow Semi Condensed";font-weight:600;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:#EFEDE7;opacity:.8;margin-top:6px}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #22272C;border-bottom:1px solid #22272C}
+.stat{padding:12px 8px;text-align:center;border-left:1px solid #22272C}
+.stat:first-child{border-left:0}
+.stat .sv{font-family:"Barlow Semi Condensed";font-weight:800;font-size:19px;color:#fff;font-variant-numeric:tabular-nums}
+.stat .sv .u{font-size:12px;color:#8C959C;font-weight:700}
+.stat .sl{font-family:"Barlow Semi Condensed";font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#8C959C;font-weight:700;margin-top:3px}
+.stat.blue .sv{color:#7EC4E0}
+.greet{padding:18px 18px 0}
+.greet .g{font-family:"Barlow Semi Condensed";font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#8C959C;font-weight:700}
+.greet .lead{font-family:"Barlow Semi Condensed";font-weight:800;font-size:29px;line-height:.95;margin:8px 0 0;text-transform:uppercase;letter-spacing:.01em}
+.cta{width:100%;background:#D2213C;color:#fff;border:0;border-radius:4px;padding:16px;margin-top:15px;
+  font-family:"Barlow Semi Condensed";font-weight:800;font-size:16.5px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;transition:transform .12s,filter .2s}
+.cta:hover{filter:brightness(1.08)}.cta:active{transform:translateY(1px)}.cta svg{width:20px;height:20px}
+.cta.ghost{background:transparent;color:#EFEDE7;border:1px solid #2E343A;margin-top:9px}
+
+.board-h{font-family:"Barlow Semi Condensed";font-weight:700;font-size:12px;letter-spacing:.24em;text-transform:uppercase;
+  color:#8C959C;margin:20px 0 4px;display:flex;justify-content:space-between;align-items:baseline}
+.board-h .a{color:#EE7080;cursor:pointer;letter-spacing:.12em;font-size:11.5px}
+.row{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid #23282C;cursor:pointer}
+.row:first-of-type{border-top:0}
+.row .tm{font-family:"Barlow Semi Condensed";font-weight:700;font-size:16px;color:#fff;font-variant-numeric:tabular-nums}
+.row .nm{font-family:"Barlow Semi Condensed";font-weight:700;font-size:15.5px;letter-spacing:.02em;text-transform:uppercase;line-height:1.05}
+.row .vn{font-size:11.5px;color:#8C959C;letter-spacing:.04em;margin-top:3px;text-transform:uppercase}
+.tagx{font-family:"Barlow Semi Condensed";font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-radius:3px;flex:none}
+.tagx.ch{background:rgba(210,33,60,.16);color:#EE7080}
+.tagx.ti{background:rgba(99,179,212,.16);color:#7EC4E0}
+.tagx.fam{background:rgba(61,187,126,.14);color:#6FD3A0}
+.acct{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-top:1px solid #23282C;cursor:pointer;margin-top:14px}
+.acct .l{font-family:"Barlow Semi Condensed";font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.acct .l small{display:block;font-family:"Barlow";font-weight:500;color:#8C959C;font-size:11.5px;margin-top:3px;text-transform:none;letter-spacing:0}
+.acct .v{font-family:"Barlow Semi Condensed";font-weight:800;font-size:21px;color:#EE7080;font-variant-numeric:tabular-nums}
+
+/* DINE */
+.intro{color:#8C959C;font-size:13.5px;line-height:1.5;margin:14px 0 2px}
+.venue{display:flex;gap:14px;padding:16px 0;border-top:1px solid #23282C;align-items:center;cursor:pointer;width:100%;
+  background:transparent;border-left:0;border-right:0;border-bottom:0;text-align:left;font-family:inherit;color:#EFEDE7}
+.venue:first-of-type{border-top:0}
+.venue:active{opacity:.7}
+.venue .initial{width:52px;height:52px;border-radius:4px;display:grid;place-items:center;flex:none;
+  font-family:"Barlow Semi Condensed";font-weight:800;font-size:21px;background:#22272C;color:#EE7080}
+.venue.ti .initial{color:#7EC4E0}
+.venue .vm{flex:1;min-width:0}
+.venue .vm .nm{font-family:"Barlow Semi Condensed";font-weight:800;font-size:18px;letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.venue .vm .ds{font-size:12.5px;color:#8C959C;margin-top:5px;line-height:1.35}
+.venue .vm .rw{margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.dress{font-family:"Barlow Semi Condensed";font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid #2E343A;border-radius:3px;padding:4px 7px;color:#9BA3A9}
+.venue .chev{color:#5C646B;flex:none}.venue .chev svg{width:20px;height:20px}
+
+/* EVENTS */
+.dayhead{font-family:"Barlow Semi Condensed";font-weight:800;font-size:17px;letter-spacing:.06em;text-transform:uppercase;
+  margin:22px 0 2px;display:flex;align-items:baseline;gap:10px}
+.dayhead .cnt{font-weight:700;font-size:10.5px;letter-spacing:.18em;color:#5C646B}
+.event{display:grid;grid-template-columns:56px 1fr;gap:12px;padding:15px 0;border-top:1px solid #23282C;align-items:start}
+.event .tcol .t1{font-family:"Barlow Semi Condensed";font-weight:700;font-size:16px;color:#fff;font-variant-numeric:tabular-nums;line-height:1}
+.event .tcol .t2{font-size:11px;color:#5C646B;font-variant-numeric:tabular-nums;margin-top:4px;font-weight:500}
+.event .nm{font-family:"Barlow Semi Condensed";font-weight:700;font-size:15.5px;letter-spacing:.02em;text-transform:uppercase;line-height:1.1}
+.event .mt{margin-top:7px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.event .vn{font-size:11.5px;color:#8C959C;letter-spacing:.04em;text-transform:uppercase}
+.rsvp{margin-top:11px;border:1px solid #D2213C;color:#EE7080;background:transparent;border-radius:4px;
+  padding:9px 15px;font-family:"Barlow Semi Condensed";font-weight:800;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .12s,background .2s}
+.rsvp svg{width:15px;height:15px}.rsvp:active{transform:scale(.97)}
+.rsvp.is-going{background:#2F9E67;border-color:#2F9E67;color:#fff}
+
+/* BOOKINGS */
+.bk-empty{text-align:center;color:#8C959C;padding:56px 24px}
+.bk-empty .qm{font-family:"Barlow Semi Condensed";font-weight:800;font-size:40px;color:#3A4147}
+.ticket{background:#1B2023;border:1px solid #262C31;border-radius:4px;border-top:3px solid #D2213C;padding:16px 17px;margin-top:14px}
+.ticket.ti{border-top-color:#63B3D4}
+.tk-status{font-family:"Barlow Semi Condensed";font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:6px}
+.tk-status svg{width:13px;height:13px}
+.tk-status.conf{color:#6FD3A0}.tk-status.res{color:#EE7080}
+.ticket.ti .tk-status.res{color:#7EC4E0}
+.tk-nm{font-family:"Barlow Semi Condensed";font-weight:800;font-size:19px;letter-spacing:.02em;text-transform:uppercase;margin-top:8px;line-height:1.02}
+.tk-when{font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:600;margin-top:9px;display:flex;align-items:center;gap:8px}
+.tk-when svg{width:14px;height:14px;color:#8C959C}
+.tk-loc{font-size:11.5px;color:#8C959C;margin-top:5px;letter-spacing:.04em;text-transform:uppercase}
+.tk-actions{margin-top:13px;padding-top:12px;border-top:1px solid #262C31;display:flex;gap:22px}
+.tk-actions button{background:transparent;border:0;font-family:"Barlow Semi Condensed";font-size:12px;font-weight:800;
+  letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:#EFEDE7;padding:0}
+.tk-actions button.danger{color:#EE7080}
+
+/* CLUB */
+.hours{background:#1B2023;border:1px solid #262C31;border-radius:4px;padding:15px 17px;margin-top:14px}
+.hours .hh{font-family:"Barlow Semi Condensed";font-weight:800;font-size:15px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.hrow{display:flex;justify-content:space-between;padding:10px 0;font-size:13px;border-top:1px solid #23282C}
+.hrow .p{color:#8C959C;letter-spacing:.02em}.hrow .v{font-family:"Barlow Semi Condensed";font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.hrow .v.open{color:#6FD3A0}
+.index{margin-top:4px}
+.ix{display:flex;gap:14px;align-items:center;padding:15px 0;border-top:1px solid #23282C;cursor:pointer;width:100%;
+  background:transparent;border-left:0;border-right:0;border-bottom:0;text-align:left;font-family:inherit;color:#EFEDE7}
+.ix:active{opacity:.7}
+.ix .ic{width:26px;color:#EE7080;flex:none;display:grid;place-items:center}
+.ix.ti .ic{color:#7EC4E0}.ix .ic svg{width:22px;height:22px}
+.ix .ib{flex:1;min-width:0}
+.ix .ib .nm{font-family:"Barlow Semi Condensed";font-weight:800;font-size:15px;letter-spacing:.05em;text-transform:uppercase}
+.ix .ib .ds{font-size:11.5px;color:#8C959C;margin-top:2px}
+.ix .chev{color:#5C646B;flex:none}.ix .chev svg{width:19px;height:19px}
+
+/* TAB BAR */
+.tabs{flex:none;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid #262C31;
+  background:rgba(20,23,26,.92);backdrop-filter:blur(8px);padding:0 4px}
+.tab{border:0;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:11px 2px 8px;color:#5C646B;font-family:"Barlow Semi Condensed";font-size:9.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;position:relative;transition:color .18s}
+.tab svg{width:22px;height:22px}
+.tab .mk{position:absolute;top:0;left:50%;transform:translateX(-50%);width:24px;height:2.5px;background:transparent}
+.tab.on{color:#EFEDE7}.tab.on .mk{background:#D2213C}
+
+/* SHEET */
+.scrim{position:absolute;inset:0;background:rgba(5,7,8,.6);opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
+.scrim.show{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#181C1F;border-radius:18px 18px 0 0;border-top:1px solid #2E343A;
+  padding:8px 18px calc(20px + env(safe-area-inset-bottom));transform:translateY(102%);transition:transform .34s cubic-bezier(.32,.72,0,1);
+  z-index:21;max-height:90%;overflow-y:auto;box-shadow:0 -20px 44px -22px rgba(0,0,0,.6)}
+.sheet.show{transform:translateY(0)}
+.grab{width:38px;height:5px;border-radius:5px;background:#2E343A;margin:8px auto 16px}
+.sheet h3{font-family:"Barlow Semi Condensed";font-weight:800;font-size:24px;margin:0;letter-spacing:.02em;text-transform:uppercase}
+.sheet .ssub{color:#8C959C;font-size:12.5px;margin-top:5px;letter-spacing:.04em;text-transform:uppercase}
+.fl{font-family:"Barlow Semi Condensed";font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#63B3D4;font-weight:700;margin:18px 0 9px}
+.chiprow{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.chiprow::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid #2E343A;background:#1F2428;border-radius:4px;padding:9px 12px;cursor:pointer;
+  font-family:inherit;text-align:center;min-width:56px;color:#EFEDE7;transition:border-color .15s,background .15s}
+.chip:active{transform:scale(.97)}
+.chip .c1{font-family:"Barlow Semi Condensed";font-size:9.5px;color:#8C959C;font-weight:700;text-transform:uppercase;letter-spacing:.12em}
+.chip .c2{font-family:"Barlow Semi Condensed";font-weight:800;font-size:18px;margin-top:2px}
+.chip .c2.solo{font-size:14px;font-weight:700;margin-top:0}
+.chip.sel{border-color:#D2213C;background:rgba(210,33,60,.14)}
+.chip.sel .c1,.chip.sel .c2{color:#EE7080}
+.timegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.timegrid .chip{min-width:0;padding:11px 4px}
+.stepper{display:flex;align-items:center;justify-content:space-between;border:1px solid #2E343A;background:#1F2428;border-radius:4px;padding:9px 13px}
+.stepper .sv{font-family:"Barlow Semi Condensed";font-weight:800;font-size:19px}
+.stepper button{width:42px;height:42px;border-radius:4px;border:1px solid #2E343A;background:#262C31;color:#EFEDE7;cursor:pointer;display:grid;place-items:center}
+.stepper button:active{transform:scale(.93)}.stepper button svg{width:18px;height:18px}
+.sheet-foot{margin-top:20px}
+.snote{font-size:11.5px;color:#5C646B;text-align:center;margin-top:10px;line-height:1.4}
+.mrow{padding:12px 0;border-top:1px solid #23282C}.mrow:first-child{border-top:0}
+.mrow .mt{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.mrow .mn{font-family:"Barlow Semi Condensed";font-weight:700;font-size:15px;letter-spacing:.03em;text-transform:uppercase}
+.mrow .mp{font-variant-numeric:tabular-nums;font-weight:700;color:#EE7080;font-size:14px}
+.mrow .md{font-size:12.5px;color:#8C959C;margin-top:3px;line-height:1.4}
+.mrow .mn.tot{color:#EE7080}
+.para{color:#9BA3A9;font-size:13.5px;line-height:1.6;margin:10px 0 0}
+
+.toast{position:absolute;left:50%;bottom:98px;transform:translate(-50%,18px);opacity:0;pointer-events:none;background:#EFEDE7;
+  color:#14171A;padding:12px 18px;border-radius:4px;font-family:"Barlow Semi Condensed";font-size:13px;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;display:flex;align-items:center;gap:9px;z-index:30;transition:opacity .25s,transform .25s;
+  box-shadow:0 14px 32px -14px rgba(0,0,0,.7);white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}.toast svg{width:16px;height:16px;color:#2F9E67}
+.homebar{position:absolute;left:50%;bottom:7px;transform:translateX(-50%);width:126px;height:5px;border-radius:5px;background:#EFEDE7;opacity:.3;z-index:25}
+
+/* RAIL */
+.rail{max-width:400px;padding-top:6px}
+@media (max-width:880px){.rail{max-width:520px;width:100%}}
+.rail .lead{font-family:"Barlow Semi Condensed";font-weight:800;font-size:clamp(22px,2.7vw,28px);line-height:1;letter-spacing:.01em;
+  text-transform:uppercase;text-wrap:balance;margin:0 0 10px}
+.rail .lead-sub{color:var(--pg-muted);font-size:14.5px;line-height:1.6;margin:0 0 22px}
+.def{padding:15px 0;border-top:1px solid var(--pg-hair)}
+.def .dt{font-family:"Barlow Semi Condensed";font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--pg-accent);font-weight:700}
+.def .dd{margin-top:6px;color:var(--pg-muted);font-size:13.5px;line-height:1.55}
+.def .dd b{color:var(--pg-ink);font-weight:600}
+.try{margin-top:20px;font-size:13px;color:var(--pg-faint);display:flex;gap:8px;align-items:center}
+.try svg{width:16px;height:16px;color:var(--pg-accent);flex:none}
+.pagefoot{margin-top:36px;padding-top:20px;border-top:1px solid var(--pg-hair);color:var(--pg-faint);font-size:12px;line-height:1.6;max-width:720px}
+.pagefoot b{color:var(--pg-muted);font-weight:600}
+:focus-visible{outline:2.5px solid var(--pg-accent);outline-offset:2px}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/></symbol>
+  <symbol id="i-dine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v8a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V3M8 3v18"/><path d="M17 3c-2 0-3 2-3 5s1 4 3 4M17 3v18"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3.2v3.4M16 3.2v3.4"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4-7 4V4.5a1 1 0 0 1 1-1Z"/></symbol>
+  <symbol id="i-club" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M4 21V10l8-5 8 5v11M9 21v-6h6v6M4 10h16"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14v16l-3-2-2 2-2-2-2 2-2-2-3 2Z"/><path d="M8.5 9h7M8.5 13h5"/></symbol>
+  <symbol id="i-racquet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="9" rx="6" ry="7"/><path d="M6 13l-3.5 6M8 15l2 4"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9c2 0 2 1.5 4 1.5S9 9 11 9s2 1.5 4 1.5S18 9 20 9M2 14c2 0 2 1.5 4 1.5S9 14 11 14s2 1.5 4 1.5S18 14 20 14"/></symbol>
+  <symbol id="i-shuttle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16V8h11l4 3v5"/><circle cx="7.5" cy="16.5" r="1.7"/><circle cx="16.5" cy="16.5" r="1.7"/><path d="M9.3 16h5.4M18.3 16H21v-3l-3-2"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 2.5 14.6 0 17M12 3.5c-2.5 2.4-2.5 14.6 0 17"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7Z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></symbol>
+  <symbol id="i-sig" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="14" width="3.2" height="6" rx="1"/><rect x="7" y="10" width="3.2" height="10" rx="1"/><rect x="12" y="6" width="3.2" height="14" rx="1"/><rect x="17" y="3" width="3.2" height="17" rx="1"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24" fill="currentColor"><path d="M12 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/><path d="M12 12c2.2 0 4.2.9 5.6 2.3l1.8-1.8A11 11 0 0 0 4.6 12.5l1.8 1.8A7.9 7.9 0 0 1 12 12Z"/><path d="M12 6c3.9 0 7.4 1.6 9.9 4.1l1.8-1.8A15.9 15.9 0 0 0 .3 8.3l1.8 1.8A13.9 13.9 0 0 1 12 6Z"/></symbol>
+  <symbol id="i-bat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="8" width="18" height="10" rx="2.5"/><rect x="4" y="10" width="12" height="6" rx="1" fill="currentColor" stroke="none"/><path d="M22 11v4" stroke-linecap="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+</svg>
+
+<div class="stage">
+  <header class="masthead">
+    <div class="mh-titles">
+      <div class="eyebrow">NYAC App Concept · The “too casual” one</div>
+      <h1>The Field House</h1>
+      <p class="sub">The modern-athletic direction, fully interactive. Dark, fast, and built like a scoreboard — every tap instant. Try the phone.</p>
+    </div>
+    <div class="mh-tools">
+      <span class="tag">Interactive</span>
+      <button class="tbtn" id="themeToggle" aria-label="Toggle page theme"><svg class="su"><use href="#i-sun"/></svg><svg class="mo"><use href="#i-moon"/></svg></button>
+    </div>
+  </header>
+
+  <div class="showcase">
+    <div class="device"><div class="screen">
+      <div class="sb"><span>4:03</span><span class="r"><svg><use href="#i-sig"/></svg><svg><use href="#i-wifi"/></svg><svg><use href="#i-bat"/></svg></span></div>
+
+      <div class="views" id="views">
+        <!-- HOME -->
+        <section class="view on" id="view-home" aria-label="Home">
+          <div class="hero">
+            <canvas id="cvHero"></canvas>
+            <div class="scrim"></div>
+            <div class="hc"><span class="kick">Travers Island · Pool Open</span><div class="wm">NYAC</div><div class="subw">The Field House</div></div>
+          </div>
+          <div class="stats">
+            <div class="stat blue"><div class="sv">78<span class="u">°</span></div><div class="sl">Pool · TI</div></div>
+            <div class="stat"><div class="sv">10<span class="u">PM</span></div><div class="sl">Gym Til</div></div>
+            <div class="stat"><div class="sv">9:15</div><div class="sl">Last Shuttle</div></div>
+          </div>
+          <div class="greet">
+            <div class="g">Tuesday · Aug 25 · No. 8842</div>
+            <div class="lead">Game on tonight.</div>
+            <button class="cta" data-dine-open="Main Dining Room">Reserve a Table <svg><use href="#i-arrow"/></svg></button>
+            <button class="cta ghost" data-goto="calendar">Tonight's Board <svg><use href="#i-chev"/></svg></button>
+          </div>
+          <div class="pad">
+            <div class="board-h"><span>Tonight</span><span class="a" data-goto="calendar">Full Board</span></div>
+            <div class="row" data-goto="calendar"><span class="tm">7:00</span><span><div class="nm">Badminton</div><div class="vn">City House · Gym</div></span><span class="tagx ch">CH</span></div>
+            <div class="row" data-goto="calendar"><span class="tm">7:00</span><span><div class="nm">Chess Club</div><div class="vn">City House · TBA</div></span><span class="tagx ch">CH</span></div>
+            <div class="row" data-goto="calendar"><span class="tm">7:30</span><span><div class="nm">Pickup Basketball</div><div class="vn">Travers · Field House</div></span><span class="tagx ti">TI</span></div>
+            <div class="acct" data-statement="1"><div class="l">House Account<small>August · closes the 31st</small></div><div class="v">$412.60</div></div>
+          </div>
+        </section>
+
+        <!-- DINE -->
+        <section class="view" id="view-dine" aria-label="Dining">
+          <div class="opener"><div class="k">Reservations</div><h2>Dine</h2><div class="rule"></div></div>
+          <div class="pad">
+            <p class="intro">Pick a room, pick a time. Done in seconds.</p>
+            <button class="venue" data-dine-open="Main Dining Room">
+              <span class="initial">M</span>
+              <span class="vm"><span class="nm">Main Dining Room</span><span class="ds">Continental fine dining · Pre-Theater from 5:30</span>
+                <span class="rw"><span class="tagx ch">CH</span><span class="dress">Jacket &amp; Tie</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+            <button class="venue" data-dine-open="The Tap Room">
+              <span class="initial">T</span>
+              <span class="vm"><span class="nm">The Tap Room</span><span class="ds">Tavern classics &amp; a proper bar · Walk-ins after 8</span>
+                <span class="rw"><span class="tagx ch">CH</span><span class="dress">Smart Casual</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+            <button class="venue" data-dine-open="The Café">
+              <span class="initial">C</span>
+              <span class="vm"><span class="nm">The Café</span><span class="ds">All-day dining &amp; light fare · Family-friendly</span>
+                <span class="rw"><span class="tagx ch">CH</span><span class="dress">Casual</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+            <button class="venue ti" data-dine-open="Travers Island Terrace" data-ti="1">
+              <span class="initial">TI</span>
+              <span class="vm"><span class="nm">Travers Terrace</span><span class="ds">Waterfront grill on the Sound · Sunset seatings</span>
+                <span class="rw"><span class="tagx ti">TI</span><span class="dress">Resort Casual</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+          </div>
+        </section>
+
+        <!-- EVENTS -->
+        <section class="view" id="view-calendar" aria-label="Events">
+          <div class="opener"><div class="k">What's On</div><h2>The Board</h2><div class="rule"></div></div>
+          <div class="pad" id="events">
+            <div class="dayhead">Tonight · Aug 24 <span class="cnt">2 Events</span></div>
+            <div class="event" data-ev="badminton" data-title="Badminton" data-when="Mon, Aug 24 · 7:00 PM" data-loc="City House · Gym">
+              <div class="tcol"><div class="t1">7:00</div><div class="t2">9:00 PM</div></div>
+              <div><div class="nm">Badminton</div><div class="mt"><span class="tagx ch">CH</span><span class="vn">City House · Gym</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Count Me In</button></div>
+            </div>
+            <div class="event" data-ev="chess" data-title="Chess Club" data-when="Mon, Aug 24 · 7:00 PM" data-loc="City House · TBA">
+              <div class="tcol"><div class="t1">7:00</div><div class="t2">9:00 PM</div></div>
+              <div><div class="nm">Chess Club</div><div class="mt"><span class="tagx ch">CH</span><span class="vn">City House · TBA</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Count Me In</button></div>
+            </div>
+
+            <div class="dayhead">Wed · Aug 26 <span class="cnt">4 Events</span></div>
+            <div class="event" data-ev="saturn" data-title="Saturn Society Mixed Doubles" data-when="Wed, Aug 26 · 5:30 PM" data-loc="Off Site">
+              <div class="tcol"><div class="t1">5:30</div><div class="t2">11:30 PM</div></div>
+              <div><div class="nm">Saturn Society Mixed Doubles</div><div class="mt"><span class="tagx ch">US Open</span><span class="vn">Off Site</span></div>
+                <button class="rsvp is-going"><svg><use href="#i-check"/></svg>You're In</button></div>
+            </div>
+            <div class="event" data-ev="tabletennis" data-title="Table Tennis" data-when="Wed, Aug 26 · 6:30 PM" data-loc="City House · Gym">
+              <div class="tcol"><div class="t1">6:30</div><div class="t2">7:30 PM</div></div>
+              <div><div class="nm">Table Tennis</div><div class="mt"><span class="tagx ch">CH</span><span class="vn">City House · Gym</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Count Me In</button></div>
+            </div>
+            <div class="event" data-ev="run" data-title="Runners' Club Park Run" data-when="Wed, Aug 26 · 6:30 PM" data-loc="City House · Lobby">
+              <div class="tcol"><div class="t1">6:30</div><div class="t2">8:00 PM</div></div>
+              <div><div class="nm">Runners' Club Park Run</div><div class="mt"><span class="tagx ch">CH</span><span class="vn">Meet · Lobby</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Count Me In</button></div>
+            </div>
+            <div class="event" data-ev="basketball" data-title="Pickup Basketball" data-when="Wed, Aug 26 · 7:30 PM" data-loc="Travers Island · Field House" data-ti="1">
+              <div class="tcol"><div class="t1">7:30</div><div class="t2">9:00 PM</div></div>
+              <div><div class="nm">Pickup Basketball</div><div class="mt"><span class="tagx ti">TI</span><span class="vn">Field House</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Count Me In</button></div>
+            </div>
+
+            <div class="dayhead">Thu · Aug 27 <span class="cnt">3 Events</span></div>
+            <div class="event" data-ev="bridge" data-title="Bridge Club" data-when="Thu, Aug 27 · 1:30 PM" data-loc="City House · Committee Room">
+              <div class="tcol"><div class="t1">1:30</div><div class="t2">4:00 PM</div></div>
+              <div><div class="nm">Bridge Club</div><div class="mt"><span class="tagx ch">CH</span><span class="vn">Committee Room</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Count Me In</button></div>
+            </div>
+            <div class="event" data-ev="pickleball" data-title="Pickleball" data-when="Thu, Aug 27 · 5:00 PM" data-loc="City House · Gym">
+              <div class="tcol"><div class="t1">5:00</div><div class="t2">7:00 PM</div></div>
+              <div><div class="nm">Pickleball</div><div class="mt"><span class="tagx ch">CH</span><span class="vn">City House · Gym</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Count Me In</button></div>
+            </div>
+            <div class="event" data-ev="movie" data-title="Kids' Movie Night" data-when="Thu, Aug 27 · 5:00 PM" data-loc="Travers Island · Cabana Lawn" data-ti="1">
+              <div class="tcol"><div class="t1">5:00</div><div class="t2">8:00 PM</div></div>
+              <div><div class="nm">Kids' Movie Night</div><div class="mt"><span class="tagx fam">Family</span><span class="vn">Cabana Lawn</span></div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Count Me In</button></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BOOKINGS -->
+        <section class="view" id="view-bookings" aria-label="Bookings">
+          <div class="opener"><div class="k">Your Lineup</div><h2>Bookings</h2><div class="rule"></div></div>
+          <div class="pad" id="bookings-list"></div>
+        </section>
+
+        <!-- CLUB -->
+        <section class="view" id="view-club" aria-label="Club">
+          <div class="opener"><div class="k">The House</div><h2>Club</h2><div class="rule"></div></div>
+          <div class="pad">
+            <div class="hours">
+              <div class="hh">Today's Hours</div>
+              <div class="hrow"><span class="p">City House · Athletics</span><span class="v open">6A – 10P</span></div>
+              <div class="hrow"><span class="p">Main Dining Room</span><span class="v open">5:30 – 10P</span></div>
+              <div class="hrow"><span class="p">Travers Island · Pool</span><span class="v open">8A – 8P</span></div>
+            </div>
+            <div class="index">
+              <button class="ix" data-menus="1"><span class="ic"><svg><use href="#i-menu"/></svg></span><span class="ib"><span class="nm">Menus</span><span class="ds">Dining rooms &amp; tonight's specials</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix" data-info="Facilities"><span class="ic"><svg><use href="#i-racquet"/></svg></span><span class="ib"><span class="nm">Facilities &amp; Courts</span><span class="ds">Squash, pool, gym, courts</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix ti" data-info="Travers Island"><span class="ic"><svg><use href="#i-wave"/></svg></span><span class="ib"><span class="nm">Travers Island</span><span class="ds">Pool, lawn &amp; the Sound</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix" data-info="Shuttle Service"><span class="ic"><svg><use href="#i-shuttle"/></svg></span><span class="ib"><span class="nm">Shuttle</span><span class="ds">City House ⇄ Travers Island</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix" data-info="Reciprocal Clubs"><span class="ic"><svg><use href="#i-globe"/></svg></span><span class="ib"><span class="nm">Reciprocal Clubs</span><span class="ds">200+ clubs worldwide</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix" data-statement="1"><span class="ic"><svg><use href="#i-doc"/></svg></span><span class="ib"><span class="nm">Statements</span><span class="ds">Balance &amp; billing history</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <nav class="tabs" id="tabs">
+        <button class="tab on" data-tab="home"><span class="mk"></span><svg><use href="#i-home"/></svg>Home</button>
+        <button class="tab" data-tab="dine"><span class="mk"></span><svg><use href="#i-dine"/></svg>Dine</button>
+        <button class="tab" data-tab="calendar"><span class="mk"></span><svg><use href="#i-cal"/></svg>Board</button>
+        <button class="tab" data-tab="bookings"><span class="mk"></span><svg><use href="#i-book"/></svg>Lineup</button>
+        <button class="tab" data-tab="club"><span class="mk"></span><svg><use href="#i-club"/></svg>Club</button>
+      </nav>
+
+      <div class="scrim" id="scrim"></div>
+      <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+      <div class="toast" id="toast"><svg><use href="#i-check"/></svg><span id="toastMsg">Done</span></div>
+      <div class="homebar"></div>
+    </div></div>
+
+    <aside class="rail">
+      <h2 class="lead">Fast. Loud-ish. Under the lights.</h2>
+      <p class="lead-sub">The “too casual” foil in the lineup — a scoreboard of the Club's day. Same instant engine as the flagship: reserve, RSVP, know. Deliberately sportier in voice and dress than the House usually wears.</p>
+      <div class="def"><div class="dt">Scoreboard, not brochure</div><div class="dd">Condensed type, stat strip, CH / TI tags. The whole day reads in one glance — <b>tonight first, always.</b></div></div>
+      <div class="def"><div class="dt">Committed dark</div><div class="dd">One visual world: charcoal under arena light, crimson for action, pool-blue strictly for Travers Island.</div></div>
+      <div class="def"><div class="dt">Same instant engine</div><div class="dd">Identical flows to the flagship — table reservation, one-tap RSVP, bookings, statements — so the comparison is purely about character.</div></div>
+      <div class="try"><svg><use href="#i-arrow"/></svg>Reserve a table, hit “Count Me In,” then check your Lineup.</div>
+    </aside>
+  </div>
+
+  <footer class="pagefoot"><b>Concept prototype — the “too casual” direction.</b> Sample data drawn from the current app; a generated pool-water hero stands in for the Club's own photography. Not the official NYAC app, and not affiliated with or endorsed by the Club or its vendors. No data is collected.</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var views=document.getElementById("views");
+  function setTab(name){
+    document.querySelectorAll(".tab").forEach(function(t){t.classList.toggle("on",t.dataset.tab===name);});
+    document.querySelectorAll(".view").forEach(function(v){v.classList.remove("on");});
+    var v=document.getElementById("view-"+name);if(v)v.classList.add("on");
+    views.scrollTop=0;
+    if(name==="bookings")renderBookings();
+    if(name==="home")paintHero();
+  }
+  document.getElementById("tabs").addEventListener("click",function(e){var b=e.target.closest(".tab");if(b)setTab(b.dataset.tab);});
+  document.addEventListener("click",function(e){var g=e.target.closest("[data-goto]");if(g)setTab(g.dataset.goto);});
+
+  var bookings=[
+    {id:"seed-dine",kind:"dine",ti:false,title:"Main Dining Room",when:"Fri, Aug 28 · 7:30 PM",loc:"City House · Party of 2",tag:"Reserved"},
+    {id:"ev-saturn",kind:"event",ti:false,title:"Saturn Society Mixed Doubles",when:"Wed, Aug 26 · 5:30 PM",loc:"Off Site",tag:"You're In"}
+  ];
+  function esc(s){return (s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function renderBookings(){
+    var el=document.getElementById("bookings-list");
+    if(!bookings.length){el.innerHTML='<div class="bk-empty"><div class="qm">0–0</div><div>Nothing on the lineup yet.</div><div style="font-size:13px;margin-top:6px">Reserve a table or hit “Count Me In.”</div></div>';return;}
+    el.innerHTML=bookings.map(function(b){
+      var reg=b.kind==="event";
+      var status=reg?'<span class="tk-status conf"><svg><use href="#i-check"/></svg>'+esc(b.tag)+'</span>':'<span class="tk-status res">'+esc(b.tag)+'</span>';
+      return '<div class="ticket'+(b.ti?" ti":"")+'">'+status+
+        '<div class="tk-nm">'+esc(b.title)+'</div>'+
+        '<div class="tk-when"><svg><use href="#i-clock"/></svg>'+esc(b.when)+'</div>'+
+        '<div class="tk-loc">'+esc(b.loc)+'</div>'+
+        '<div class="tk-actions"><button data-modify="'+b.id+'">Modify</button><button class="danger" data-cancel="'+b.id+'">Cancel</button></div></div>';
+    }).join("");
+  }
+  function addBooking(b){if(!bookings.some(function(x){return x.id===b.id;}))bookings.push(b);}
+  function removeBooking(id){bookings=bookings.filter(function(x){return x.id!==id;});}
+  document.getElementById("bookings-list").addEventListener("click",function(e){
+    var c=e.target.closest("[data-cancel]");
+    if(c){var id=c.dataset.cancel;removeBooking(id);
+      var ev=document.querySelector('.event[data-ev="'+id.replace(/^ev-/,'')+'"] .rsvp');
+      if(ev){ev.classList.remove("is-going");ev.innerHTML='<svg><use href="#i-plus"/></svg>Count Me In';}
+      renderBookings();toast("Scratched");return;}
+    if(e.target.closest("[data-modify]"))toast("Opening reservation…");
+  });
+
+  document.getElementById("view-calendar").addEventListener("click",function(e){
+    var btn=e.target.closest(".rsvp");if(!btn)return;
+    var ev=btn.closest(".event"),id="ev-"+ev.dataset.ev,going=btn.classList.toggle("is-going");
+    if(going){btn.innerHTML='<svg><use href="#i-check"/></svg>You\'re In';
+      addBooking({id:id,kind:"event",ti:ev.hasAttribute("data-ti"),title:ev.dataset.title,when:ev.dataset.when,loc:ev.dataset.loc,tag:"You're In"});
+      toast("You're in — see Lineup");
+    }else{btn.innerHTML='<svg><use href="#i-plus"/></svg>Count Me In';removeBooking(id);toast("Scratched");}
+  });
+
+  var toastEl=document.getElementById("toast"),toastMsg=document.getElementById("toastMsg"),tT;
+  function toast(m){toastMsg.textContent=m;toastEl.classList.add("show");clearTimeout(tT);tT=setTimeout(function(){toastEl.classList.remove("show");},2200);}
+
+  var scrim=document.getElementById("scrim"),sheet=document.getElementById("sheet");
+  function openSheet(h){sheet.innerHTML='<div class="grab"></div>'+h;scrim.classList.add("show");sheet.classList.add("show");}
+  function closeSheet(){scrim.classList.remove("show");sheet.classList.remove("show");}
+  scrim.addEventListener("click",closeSheet);
+
+  var DATES=[["TUE","25"],["WED","26"],["THU","27"],["FRI","28"],["SAT","29"],["SUN","30"]];
+  var TIMES=["5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00"];
+  function diningSheet(venue,ti){
+    var dc=DATES.map(function(d,i){return '<button class="chip'+(i===3?" sel":"")+'" data-date="'+d[0]+" "+d[1]+'"><span class="c1">'+d[0]+'</span><span class="c2">'+d[1]+'</span></button>';}).join("");
+    var tc=TIMES.map(function(t,i){return '<button class="chip'+(i===4?" sel":"")+'" data-time="'+t+'"><span class="c2 solo">'+t+'</span></button>';}).join("");
+    openSheet('<h3>'+esc(venue)+'</h3><div class="ssub">'+(ti?"Travers Island · On the Sound":"City House · 180 CPS")+'</div>'+
+      '<div class="fl">Date</div><div class="chiprow" data-group="date">'+dc+'</div>'+
+      '<div class="fl">Time</div><div class="timegrid" data-group="time">'+tc+'</div>'+
+      '<div class="fl">Party</div><div class="stepper"><button data-step="-1" aria-label="Fewer"><svg><use href="#i-minus"/></svg></button><span class="sv"><span id="partyN">2</span> Guests</span><button data-step="1" aria-label="More"><svg><use href="#i-plus"/></svg></button></div>'+
+      '<div class="sheet-foot"><button class="cta" id="confirmDine" style="margin-top:0">Lock It In <svg><use href="#i-check"/></svg></button>'+
+      '<div class="snote">'+(ti?"Resort casual — collared shirt after 6. House rules.":"Jacket &amp; tie in the MDR. House rules.")+'</div></div>');
+    sheet.dataset.venue=venue;sheet.dataset.ti=ti?"1":"";
+  }
+  sheet.addEventListener("click",function(e){
+    var chip=e.target.closest(".chip");
+    if(chip){chip.parentNode.querySelectorAll(".chip").forEach(function(c){c.classList.remove("sel");});chip.classList.add("sel");return;}
+    var step=e.target.closest("[data-step]");
+    if(step){var n=document.getElementById("partyN"),v=Math.max(1,Math.min(12,parseInt(n.textContent,10)+parseInt(step.dataset.step,10)));n.textContent=v;return;}
+    if(e.target.closest("#stmtHist")){toast("Loading history…");return;}
+    if(e.target.closest("#closeInfo")){closeSheet();return;}
+    if(e.target.closest("#confirmDine")){
+      var venue=sheet.dataset.venue,ti=sheet.dataset.ti==="1";
+      var date=(sheet.querySelector('[data-group="date"] .sel')||{}).dataset||{};
+      var time=(sheet.querySelector('[data-group="time"] .sel')||{}).dataset||{};
+      var party=document.getElementById("partyN").textContent;
+      var dm={"TUE 25":"Tue, Aug 25","WED 26":"Wed, Aug 26","THU 27":"Thu, Aug 27","FRI 28":"Fri, Aug 28","SAT 29":"Sat, Aug 29","SUN 30":"Sun, Aug 30"};
+      addBooking({id:"dine-"+Date.now(),kind:"dine",ti:ti,title:venue,when:(dm[date.date]||"Fri, Aug 28")+" · "+(time.time||"7:30")+" PM",loc:(ti?"Travers Island":"City House")+" · Party of "+party,tag:"Reserved"});
+      closeSheet();toast("Locked in — see Lineup");setTab("bookings");
+    }
+  });
+
+  document.addEventListener("click",function(e){
+    var d=e.target.closest("[data-dine-open]");if(d){diningSheet(d.getAttribute("data-dine-open"),d.hasAttribute("data-ti"));return;}
+    if(e.target.closest("[data-statement]")){statementSheet();return;}
+    if(e.target.closest("[data-menus]")){menuSheet();return;}
+    var inf=e.target.closest("[data-info]");if(inf){infoSheet(inf.getAttribute("data-info"));return;}
+  });
+  function statementSheet(){
+    openSheet('<h3>August</h3><div class="ssub">House Account · No. 8842 · closes Aug 31</div>'+
+      '<div style="margin-top:12px">'+
+      '<div class="mrow"><div class="mt"><span class="mn">Balance Forward</span><span class="mp">$0.00</span></div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Main Dining Room · 8/14</span><span class="mp">$186.40</span></div><div class="md">Dinner for two</div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Squash Court · 8/18</span><span class="mp">$40.00</span></div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Monthly Dues</span><span class="mp">$186.20</span></div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn tot">Balance</span><span class="mp">$412.60</span></div></div></div>'+
+      '<div class="sheet-foot"><button class="cta" id="stmtHist" style="margin-top:0">Full History <svg><use href="#i-arrow"/></svg></button></div>');
+  }
+  function menuSheet(){
+    openSheet('<h3>Main Dining Room</h3><div class="ssub">Pre-Theater · tonight from 5:30</div>'+
+      '<div style="margin-top:12px">'+
+      '<div class="mrow"><div class="mt"><span class="mn">Oysters Rockefeller</span><span class="mp">$24</span></div><div class="md">Blue Point, creamed spinach, Pernod</div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Dover Sole Meunière</span><span class="mp">$58</span></div><div class="md">Brown butter, capers, fingerlings</div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Prime Rib au Jus</span><span class="mp">$52</span></div><div class="md">Yorkshire pudding, creamed horseradish</div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Baked Alaska</span><span class="mp">$18</span></div><div class="md">Tableside · for two</div></div></div>'+
+      '<div class="sheet-foot"><button class="cta" data-dine-open="Main Dining Room" style="margin-top:0">Reserve a Table <svg><use href="#i-arrow"/></svg></button></div>');
+  }
+  var INFO={
+    "Facilities":["Facilities & Courts","Squash & racquetball, the pool, the fitness floor, boxing, and the rooftop courts — book a court or lane the same way you book a table.","City House · 6A–10P"],
+    "Travers Island":["Travers Island","27 waterfront acres on the Sound — pool, lawn, tennis, sailing, and the Terrace grill. Members' shuttle from the City House.","On the Sound · Westchester"],
+    "Shuttle Service":["Shuttle","City House ⇄ Travers Island, free for members. Next runs 4:30, 5:30, 6:45 PM. Last return 9:15 PM.","CH ⇄ TI"],
+    "Reciprocal Clubs":["Reciprocal Clubs","200+ reciprocal clubs worldwide, London to Tokyo. Grab a letter of introduction in a tap.","Worldwide"]
+  };
+  function infoSheet(k){var d=INFO[k]||["Club","",""];
+    openSheet('<h3>'+d[0]+'</h3><div class="ssub">'+d[2]+'</div><p class="para">'+d[1]+'</p>'+
+      '<div class="sheet-foot"><button class="cta ghost" id="closeInfo" style="margin-top:0;justify-content:center">Close</button></div>');}
+
+  /* page-shell theme toggle (phone stays committed dark) */
+  document.getElementById("themeToggle").addEventListener("click",function(){
+    var root=document.documentElement,cur=root.getAttribute("data-theme");
+    var dark=cur?cur==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+    root.setAttribute("data-theme",dark?"light":"dark");
+  });
+
+  /* hero canvas — pool caustics */
+  function paintHero(){var cv=document.getElementById("cvHero");if(!cv)return;
+    var dpr=Math.min(2,window.devicePixelRatio||1),r=cv.getBoundingClientRect();
+    var w=Math.max(1,Math.round(r.width)),h=Math.max(1,Math.round(r.height));
+    cv.width=w*dpr;cv.height=h*dpr;var x=cv.getContext("2d");x.setTransform(dpr,0,0,dpr,0,0);
+    function frac(n){return n-Math.floor(n);}function rnd(a){return frac(Math.sin(a*127.1+311.7)*43758.5453);}
+    var g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,"#0c3a4c");g.addColorStop(.55,"#0f5169");g.addColorStop(1,"#0a2c3a");
+    x.fillStyle=g;x.fillRect(0,0,w,h);
+    x.globalCompositeOperation="lighter";
+    var step=26;
+    for(var gy=-10;gy<h+20;gy+=step){for(var gx=-10;gx<w+20;gx+=step){
+      var ox=gx+Math.sin((gy*.05)+(gx*.02))*12,oy=gy+Math.cos((gx*.06)+(gy*.03))*10;
+      var rr=step*(0.5+0.5*rnd(gx*3+gy)),a=0.05+0.09*rnd(gx+gy*7);
+      var rg=x.createRadialGradient(ox,oy,0,ox,oy,rr);
+      rg.addColorStop(0,"rgba(150,214,236,"+a+")");rg.addColorStop(1,"rgba(150,214,236,0)");
+      x.fillStyle=rg;x.beginPath();x.arc(ox,oy,rr,0,7);x.fill();
+    }}
+    var sg=x.createLinearGradient(0,0,w,h);sg.addColorStop(0,"rgba(220,244,255,0.28)");sg.addColorStop(.35,"rgba(220,244,255,0)");
+    x.fillStyle=sg;x.fillRect(0,0,w,h*.5);
+    x.globalCompositeOperation="source-over";
+  }
+  var rt;window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(paintHero,160);});
+  if(document.readyState==="complete")paintHero();else window.addEventListener("load",paintHero);
+
+  renderBookings();
+})();
+</script>

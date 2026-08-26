@@ -1,8 +1,24 @@
-# The Winged Foot — NYAC member app concept
+# NYAC member app concept — the Goldilocks pitch
 
-A clickable prototype for pitching a modern replacement for the New York Athletic
-Club member app. Open `nyac-app.html` in any browser (or use the shared Artifact
-link). It runs entirely client-side on sample data — every tap is instant.
+Three fully interactive prototypes for pitching a modern replacement for the New
+York Athletic Club member app. The pitch: "I haven't made you one app — I've made
+three. One is a little too casual, one a little too fancy, and one is just right."
+
+- `nyac-styles.html` — **the pitch hub**: all three side by side, each linking to
+  its interactive app.
+- `roll-of-honor.html` — **I · The Roll of Honor** (heritage editorial) — *the
+  just-right one*, and the flagship. Libre Caslon + Public Sans; ivory, crimson,
+  gilt; Day/Night mode.
+- `field-house.html` — **II · The Field House** (modern athletic) — *the too-casual
+  foil*. Barlow Semi Condensed; committed dark scoreboard; CH/TI tags.
+- `grand-hall.html` — **III · The Grand Hall** (Deco hospitality) — *the too-fancy
+  foil and likeliest runner-up*. Cinzel + Jost; concierge voice; Day/Candlelight.
+- `nyac-app.html` — the original first-pass prototype (superseded, kept for record).
+
+All three apps share the same instant engine — table reservations, one-tap event
+RSVPs, bookings with modify/cancel, statements, menus, and club info — so the
+board compares character, not capability. Everything runs client-side on sample
+data; every tap is instant.
 
 ## Why redesign
 

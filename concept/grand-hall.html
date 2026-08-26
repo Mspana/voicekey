@@ -1,0 +1,687 @@
+<title>The Grand Hall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============ TOKENS — day (cream) / candlelight (oxblood) ============ */
+:root{
+  --stage:#E6D9C2; --stage2:#DCCDB2;
+  --bg:#F1E7D6; --panel:#F7F0E2; --panel-2:#EBDFC8;
+  --ink:#241B12; --muted:#7A6B54; --faint:#A2947A;
+  --hair:#DDCBA9; --hair-strong:#C9B489; --frame:#C9B489;
+  --oxblood:#4E1620; --accent:#4E1620; --accent-soft:#7A2434;
+  --gold:#B89656; --gold-deep:#8A6E3A; --gold-hero:#C7A05E;
+  --prim-bg:#4E1620; --prim-ink:#F1E7D6;
+  --blue:#3C7286; --blue-tint:#E2EDF1;
+  --green:#2F6B47;
+  --shadow:46,28,18; --dev:#211a14; --dev-edge:#0c0805;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --stage:#150609; --stage2:#1C0A0F;
+  --bg:#1F0C11; --panel:#2A1218; --panel-2:#33171E;
+  --ink:#F0E3C8; --muted:#BFA986; --faint:#8C7A5F;
+  --hair:#3B2028; --hair-strong:#4A2A33; --frame:#6B5433;
+  --oxblood:#4E1620; --accent:#D4B06A; --accent-soft:#D4B06A;
+  --gold:#D4B06A; --gold-deep:#D4B06A; --gold-hero:#D4B06A;
+  --prim-bg:#D4B06A; --prim-ink:#2A1218;
+  --blue:#8FB9CB; --blue-tint:#1E2A31;
+  --green:#7FBF9A;
+  --shadow:0,0,0; --dev:#0a0406; --dev-edge:#000;
+}}
+:root[data-theme="dark"]{
+  --stage:#150609; --stage2:#1C0A0F;
+  --bg:#1F0C11; --panel:#2A1218; --panel-2:#33171E;
+  --ink:#F0E3C8; --muted:#BFA986; --faint:#8C7A5F;
+  --hair:#3B2028; --hair-strong:#4A2A33; --frame:#6B5433;
+  --oxblood:#4E1620; --accent:#D4B06A; --accent-soft:#D4B06A;
+  --gold:#D4B06A; --gold-deep:#D4B06A; --gold-hero:#D4B06A;
+  --prim-bg:#D4B06A; --prim-ink:#2A1218;
+  --blue:#8FB9CB; --blue-tint:#1E2A31;
+  --green:#7FBF9A;
+  --shadow:0,0,0; --dev:#0a0406; --dev-edge:#000;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--stage);color:var(--ink);
+  font-family:"Jost",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  background-image:radial-gradient(125% 85% at 50% -8%,var(--stage2),var(--stage) 60%);min-height:100vh}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ============ STAGE ============ */
+.stage{max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,46px) clamp(16px,4vw,40px) 42px}
+.masthead{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(22px,4vw,40px)}
+.mh-titles{flex:1;min-width:240px}
+.eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-deep);font-weight:500}
+.masthead h1{font-family:"Cinzel",Georgia,serif;font-weight:600;font-size:clamp(26px,4.2vw,42px);line-height:1.06;margin:10px 0 0;
+  letter-spacing:.06em;text-wrap:balance}
+.masthead .sub{color:var(--muted);font-size:14.5px;margin-top:11px;line-height:1.6;max-width:52ch;font-weight:300}
+.mh-tools{display:flex;gap:10px;align-items:center}
+.tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--hair-strong);
+  padding:7px 12px;background:var(--panel);font-weight:500}
+.tbtn{width:44px;height:44px;border:1px solid var(--hair-strong);background:var(--panel);
+  color:var(--ink);display:grid;place-items:center;cursor:pointer}
+.tbtn:active{transform:scale(.95)}.tbtn svg{width:20px;height:20px}
+.tbtn .mo{display:none}
+:root[data-theme="dark"] .tbtn .mo{display:block}:root[data-theme="dark"] .tbtn .su{display:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .tbtn .mo{display:block}:root:not([data-theme="light"]) .tbtn .su{display:none}}
+
+.showcase{display:grid;grid-template-columns:minmax(0,auto) 1fr;gap:clamp(28px,5vw,66px);align-items:start}
+@media (max-width:880px){.showcase{grid-template-columns:1fr;justify-items:center}}
+
+.device{width:min(390px,94vw);background:linear-gradient(160deg,#2a211a,var(--dev));border-radius:52px;padding:13px;
+  border:1px solid var(--dev-edge);position:sticky;top:22px;
+  box-shadow:0 42px 84px -30px rgba(var(--shadow),.55),0 12px 30px -14px rgba(var(--shadow),.4)}
+@media (max-width:880px){.device{position:static}}
+.screen{position:relative;background:var(--bg);border-radius:40px;overflow:hidden;height:min(812px,85vh);min-height:600px;
+  display:flex;flex-direction:column;border:1px solid rgba(0,0,0,.4)}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:12px 26px 7px;font-size:13px;font-weight:600;
+  color:var(--ink);flex:none;letter-spacing:.02em;z-index:6}
+.sb .r{display:flex;gap:6px;align-items:center}.sb svg{width:16px;height:16px;opacity:.85}
+
+.views{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.views::-webkit-scrollbar{width:0}
+.view{display:none;animation:fade .24s ease both;padding-bottom:24px}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* section opener — centered, deco */
+.opener{padding:22px 20px 0;text-align:center}
+.opener .k{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-deep);font-weight:500}
+.opener h2{font-family:"Cinzel",serif;font-weight:600;font-size:23px;letter-spacing:.1em;margin:8px 0 0}
+.opener .dia{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);margin:13px auto 0}
+.pad{padding:0 20px}
+
+/* ============ HOME ============ */
+.hero{position:relative;height:262px;overflow:hidden;background:#4E1620}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .scrim{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 8%,rgba(78,22,32,0) 40%,rgba(50,12,18,.55))}
+.hero .deco-frame{position:absolute;inset:11px;border:1px solid rgba(199,160,94,.6);z-index:3;pointer-events:none}
+.hero .deco-frame::before,.hero .deco-frame::after{content:"";position:absolute;width:14px;height:14px;border:1px solid rgba(199,160,94,.95)}
+.hero .deco-frame::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.hero .deco-frame::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.hero .hc{position:absolute;left:0;right:0;bottom:0;padding:0 20px 24px;text-align:center;z-index:2}
+.hero .wm{font-family:"Cinzel",serif;font-weight:600;font-size:20px;letter-spacing:.12em;color:#EBD9B4;line-height:1.3}
+.hero .loc{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:#C7A05E;margin-top:8px;font-weight:400}
+.hero .dia{width:7px;height:7px;background:#B89656;transform:rotate(45deg);margin:12px auto 0}
+
+.greet{padding:20px 22px 0;text-align:center}
+.greet .g{font-size:14px;color:var(--muted);font-weight:300;letter-spacing:.02em}
+.greet .g b{color:var(--ink);font-weight:500}
+.rcard{margin:16px 20px 0;border:1px solid var(--frame);background:var(--panel);padding:18px 16px;position:relative}
+.rcard::before,.rcard::after{content:"";position:absolute;width:12px;height:12px;border:1px solid var(--gold)}
+.rcard::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.rcard::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.rcard .rh{font-family:"Cinzel",serif;font-weight:600;font-size:15px;letter-spacing:.1em;text-align:center;color:var(--accent)}
+.rcard .rs{font-size:12.5px;color:var(--muted);text-align:center;margin-top:5px;font-weight:300}
+.btn{width:100%;margin-top:14px;background:var(--prim-bg);color:var(--prim-ink);border:0;padding:14px;
+  font-family:"Cinzel",serif;font-weight:600;font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;
+  transition:transform .12s,filter .2s}
+.btn:hover{filter:brightness(1.05)}.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+
+.csec{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-deep);font-weight:500;
+  margin:24px 0 8px;text-align:center;display:flex;align-items:center;gap:12px}
+.csec::before,.csec::after{content:"";flex:1;height:1px;background:var(--hair)}
+.cev{display:flex;align-items:baseline;gap:12px;padding:12px 0;border-top:1px solid var(--hair);cursor:pointer}
+.cev:first-of-type{border-top:0}
+.cev .di{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);flex:none;align-self:center}
+.cev .di.ti{background:var(--blue)}
+.cev .tm{font-size:13.5px;font-weight:500;width:46px;flex:none;font-variant-numeric:tabular-nums}
+.cev .nm{font-size:14px;font-weight:500;line-height:1.25}
+.cev .vn{font-size:11.5px;color:var(--muted);margin-top:2px;font-weight:300;letter-spacing:.02em}
+.cev .vn.ti{color:var(--blue)}
+.acct{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-top:1px solid var(--hair);cursor:pointer}
+.acct .l{font-size:14px;font-weight:500}
+.acct .l small{display:block;color:var(--muted);font-weight:300;font-size:12px;margin-top:2px}
+.acct .v{font-family:"Cinzel",serif;font-weight:600;font-size:18px;color:var(--accent)}
+.island{border:1px solid var(--blue);padding:14px 16px;margin-top:16px;text-align:center;background:var(--blue-tint)}
+.island .nm{font-family:"Cinzel",serif;font-weight:600;font-size:13.5px;letter-spacing:.1em;color:var(--blue)}
+.island .dt{font-size:12px;color:var(--muted);margin-top:5px;font-weight:300;line-height:1.5}
+
+/* ============ DINE ============ */
+.intro{color:var(--muted);font-size:13.5px;line-height:1.6;margin:16px 0 4px;text-align:center;font-weight:300}
+.venue{display:flex;gap:15px;padding:17px 0;border-top:1px solid var(--hair);align-items:center;cursor:pointer;width:100%;
+  background:transparent;border-left:0;border-right:0;border-bottom:0;text-align:left;font-family:inherit;color:var(--ink)}
+.venue:first-of-type{border-top:0}
+.venue:active{opacity:.7}
+.venue .lz{width:46px;height:46px;flex:none;display:grid;place-items:center;transform:rotate(45deg);
+  border:1px solid var(--frame);background:var(--panel);margin:4px 4px 4px 6px}
+.venue .lz span{transform:rotate(-45deg);font-family:"Cinzel",serif;font-weight:600;font-size:16px;color:var(--accent)}
+.venue.ti .lz span{color:var(--blue);font-size:12px}
+.venue .vm{flex:1;min-width:0}
+.venue .vm .nm{font-family:"Cinzel",serif;font-weight:600;font-size:14.5px;letter-spacing:.06em;line-height:1.25}
+.venue .vm .ds{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.4;font-weight:300}
+.venue .vm .rw{margin-top:7px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.dress{font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep)}
+.loc{font-size:11.5px;color:var(--muted);font-weight:300;letter-spacing:.02em}
+.loc.ti{color:var(--blue)}
+.venue .chev{color:var(--faint);flex:none}.venue .chev svg{width:19px;height:19px}
+
+/* ============ EVENTS ============ */
+.dayhead{font-family:"Cinzel",serif;font-weight:600;font-size:14px;letter-spacing:.12em;margin:24px 0 4px;text-align:center;
+  display:flex;align-items:center;gap:12px}
+.dayhead::before,.dayhead::after{content:"";flex:1;height:1px;background:var(--hair-strong)}
+.event{display:flex;gap:13px;padding:15px 0;border-top:1px solid var(--hair);align-items:flex-start}
+.event:first-of-type{border-top:0}
+.event .di{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);flex:none;margin-top:7px}
+.event .di.ti{background:var(--blue)}
+.event .tcol{width:50px;flex:none;padding-top:1px}
+.event .tcol .t1{font-size:14px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.1}
+.event .tcol .t2{font-size:10.5px;color:var(--faint);font-variant-numeric:tabular-nums;margin-top:3px;font-weight:300}
+.event .eb{flex:1;min-width:0}
+.event .eb .nm{font-size:14.5px;font-weight:500;line-height:1.3}
+.event .eb .vn{font-size:11.5px;color:var(--muted);margin-top:3px;font-weight:300;letter-spacing:.02em}
+.event .eb .vn.ti{color:var(--blue)}
+.rsvp{margin-top:11px;border:1px solid var(--accent);color:var(--accent);background:transparent;
+  padding:9px 16px;font-family:"Cinzel",serif;font-weight:600;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .12s,background .2s}
+.rsvp svg{width:13px;height:13px}.rsvp:active{transform:scale(.97)}
+.rsvp.is-going{background:var(--green);border-color:var(--green);color:var(--bg)}
+
+/* ============ BOOKINGS ============ */
+.bk-empty{text-align:center;color:var(--muted);padding:56px 24px;font-weight:300}
+.bk-empty .dia{width:8px;height:8px;background:var(--gold);transform:rotate(45deg);margin:0 auto 16px}
+.ticket{border:1px solid var(--frame);background:var(--panel);padding:18px 18px 15px;margin-top:16px;position:relative}
+.ticket::before,.ticket::after{content:"";position:absolute;width:12px;height:12px;border:1px solid var(--gold)}
+.ticket::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.ticket::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.ticket.ti{border-color:var(--blue)}
+.tk-status{font-size:10px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;text-align:center;display:block}
+.tk-status.conf{color:var(--green)}.tk-status.res{color:var(--gold-deep)}
+.tk-nm{font-family:"Cinzel",serif;font-weight:600;font-size:14.5px;letter-spacing:.06em;margin-top:9px;line-height:1.4;text-align:center}
+.tk-when{font-variant-numeric:tabular-nums;font-size:13px;font-weight:500;margin-top:9px;text-align:center}
+.tk-loc{font-size:11.5px;color:var(--muted);margin-top:4px;font-weight:300;text-align:center;letter-spacing:.02em}
+.tk-loc.ti{color:var(--blue)}
+.tk-actions{margin-top:14px;padding-top:12px;border-top:1px solid var(--hair);display:flex;justify-content:center;gap:28px}
+.tk-actions button{background:transparent;border:0;font-family:"Jost";font-size:12px;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;cursor:pointer;color:var(--ink);padding:0}
+.tk-actions button.danger{color:var(--accent-soft)}
+
+/* ============ CLUB ============ */
+.hours{border:1px solid var(--frame);background:var(--panel);padding:16px 18px;margin-top:16px;position:relative}
+.hours::before,.hours::after{content:"";position:absolute;width:12px;height:12px;border:1px solid var(--gold)}
+.hours::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.hours::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.hours .hh{font-family:"Cinzel",serif;font-weight:600;font-size:13.5px;letter-spacing:.12em;text-align:center;margin-bottom:6px}
+.hrow{display:flex;justify-content:space-between;padding:10px 0;font-size:13px;border-top:1px solid var(--hair)}
+.hrow .p{color:var(--muted);font-weight:300}.hrow .v{font-weight:500;font-variant-numeric:tabular-nums}
+.hrow .v.open{color:var(--green)}
+.index{margin-top:8px}
+.ix{display:flex;gap:14px;align-items:center;padding:16px 0;border-top:1px solid var(--hair);cursor:pointer;width:100%;
+  background:transparent;border-left:0;border-right:0;border-bottom:0;text-align:left;font-family:inherit;color:var(--ink)}
+.ix:active{opacity:.7}
+.ix .di{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);flex:none}
+.ix.ti .di{background:var(--blue)}
+.ix .ib{flex:1;min-width:0}
+.ix .ib .nm{font-family:"Cinzel",serif;font-weight:600;font-size:13px;letter-spacing:.08em}
+.ix .ib .ds{font-size:11.5px;color:var(--muted);margin-top:3px;font-weight:300}
+.ix .chev{color:var(--faint);flex:none}.ix .chev svg{width:18px;height:18px}
+.appearance{display:flex;justify-content:space-between;align-items:center;margin-top:18px;border:1px solid var(--frame);background:var(--panel);padding:14px 18px}
+.appearance .al{font-size:13.5px;font-weight:500}
+.appearance .al small{display:block;color:var(--muted);font-weight:300;font-size:11.5px;margin-top:2px}
+.seg{display:flex;border:1px solid var(--hair-strong);overflow:hidden}
+.seg button{background:var(--panel-2);border:0;padding:9px 14px;font-family:"Jost";font-weight:500;font-size:12px;
+  letter-spacing:.06em;cursor:pointer;color:var(--muted)}
+.seg button.on{background:var(--prim-bg);color:var(--prim-ink)}
+
+/* ============ TAB BAR ============ */
+.tabs{flex:none;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--hair-strong);
+  background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);padding:2px 4px 0}
+.tab{border:0;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:10px 2px 8px;color:var(--faint);font-family:"Jost";font-size:9.5px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;position:relative;transition:color .18s}
+.tab svg{width:21px;height:21px}
+.tab .mk{width:5px;height:5px;background:transparent;transform:rotate(45deg);position:absolute;top:3px;left:50%;margin-left:-2.5px}
+.tab.on{color:var(--accent)}.tab.on .mk{background:var(--gold)}
+
+/* ============ SHEET ============ */
+.scrim{position:absolute;inset:0;background:rgba(20,6,9,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
+.scrim.show{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--frame);
+  padding:8px 20px calc(20px + env(safe-area-inset-bottom));transform:translateY(102%);transition:transform .34s cubic-bezier(.32,.72,0,1);
+  z-index:21;max-height:90%;overflow-y:auto;box-shadow:0 -20px 44px -22px rgba(var(--shadow),.5)}
+.sheet.show{transform:translateY(0)}
+.grab{width:38px;height:4px;background:var(--hair-strong);margin:8px auto 16px}
+.sheet h3{font-family:"Cinzel",serif;font-weight:600;font-size:17px;letter-spacing:.08em;margin:0;text-align:center;line-height:1.35}
+.sheet .ssub{color:var(--muted);font-size:12px;margin-top:5px;text-align:center;font-weight:300;letter-spacing:.06em;text-transform:uppercase}
+.sheet .dia{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);margin:12px auto 0}
+.fl{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-deep);font-weight:500;margin:20px 0 10px;text-align:center}
+.chiprow{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.chiprow::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--hair-strong);background:var(--panel);padding:9px 13px;cursor:pointer;
+  font-family:inherit;text-align:center;min-width:58px;color:var(--ink);transition:border-color .15s,background .15s}
+.chip:active{transform:scale(.97)}
+.chip .c1{font-size:9.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.14em}
+.chip .c2{font-family:"Cinzel",serif;font-weight:600;font-size:15px;margin-top:3px}
+.chip .c2.solo{font-family:"Jost";font-size:13.5px;font-weight:500;margin-top:0}
+.chip.sel{border-color:var(--accent);background:var(--panel-2)}
+.chip.sel .c1,.chip.sel .c2{color:var(--accent)}
+.timegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.timegrid .chip{min-width:0;padding:11px 4px}
+.stepper{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--hair-strong);background:var(--panel);padding:9px 14px}
+.stepper .sv{font-family:"Cinzel",serif;font-weight:600;font-size:15px;letter-spacing:.04em}
+.stepper button{width:42px;height:42px;border:1px solid var(--hair-strong);background:var(--panel-2);color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.stepper button:active{transform:scale(.93)}.stepper button svg{width:17px;height:17px}
+.sheet-foot{margin-top:22px}
+.snote{font-size:11.5px;color:var(--faint);text-align:center;margin-top:11px;line-height:1.5;font-weight:300;font-style:italic}
+.mrow{padding:13px 0;border-top:1px solid var(--hair)}.mrow:first-child{border-top:0}
+.mrow .mt{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.mrow .mn{font-family:"Cinzel",serif;font-weight:600;font-size:12.5px;letter-spacing:.06em}
+.mrow .mp{font-variant-numeric:tabular-nums;font-weight:500;color:var(--accent);font-size:13.5px}
+.mrow .md{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;font-weight:300}
+.para{color:var(--muted);font-size:13.5px;line-height:1.7;margin:12px 0 0;font-weight:300;text-align:center}
+
+.toast{position:absolute;left:50%;bottom:98px;transform:translate(-50%,18px);opacity:0;pointer-events:none;background:var(--ink);
+  color:var(--bg);padding:12px 20px;font-size:12.5px;font-weight:500;letter-spacing:.04em;display:flex;align-items:center;gap:9px;z-index:30;
+  transition:opacity .25s,transform .25s;box-shadow:0 14px 32px -14px rgba(var(--shadow),.6);white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}.toast svg{width:15px;height:15px;color:var(--green)}
+.homebar{position:absolute;left:50%;bottom:7px;transform:translateX(-50%);width:126px;height:5px;border-radius:5px;background:var(--ink);opacity:.24;z-index:25}
+
+/* ============ RAIL ============ */
+.rail{max-width:400px;padding-top:6px}
+@media (max-width:880px){.rail{max-width:520px;width:100%}}
+.rail .lead{font-family:"Cinzel",serif;font-weight:600;font-size:clamp(19px,2.4vw,23px);line-height:1.3;letter-spacing:.05em;
+  text-wrap:balance;margin:0 0 10px}
+.rail .lead-sub{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0 0 22px;font-weight:300}
+.def{padding:16px 0;border-top:1px solid var(--hair)}
+.def .dt{font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-deep);font-weight:500}
+.def .dd{margin-top:7px;color:var(--muted);font-size:13.5px;line-height:1.6;font-weight:300}
+.def .dd b{color:var(--ink);font-weight:500}
+.try{margin-top:20px;font-size:13px;color:var(--faint);display:flex;gap:8px;align-items:center;font-weight:300}
+.try svg{width:16px;height:16px;color:var(--accent);flex:none}
+.pagefoot{margin-top:36px;padding-top:20px;border-top:1px solid var(--hair-strong);color:var(--faint);font-size:12px;line-height:1.65;max-width:720px;font-weight:300}
+.pagefoot b{color:var(--muted);font-weight:500}
+:focus-visible{outline:2.5px solid var(--gold);outline-offset:2px}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/></symbol>
+  <symbol id="i-dine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v8a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V3M8 3v18"/><path d="M17 3c-2 0-3 2-3 5s1 4 3 4M17 3v18"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="1"/><path d="M3.5 9.5h17M8 3.2v3.4M16 3.2v3.4"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4-7 4V4.5a1 1 0 0 1 1-1Z"/></symbol>
+  <symbol id="i-club" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M4 21V10l8-5 8 5v11M9 21v-6h6v6M4 10h16"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 6.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-sig" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="14" width="3.2" height="6" rx="1"/><rect x="7" y="10" width="3.2" height="10" rx="1"/><rect x="12" y="6" width="3.2" height="14" rx="1"/><rect x="17" y="3" width="3.2" height="17" rx="1"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24" fill="currentColor"><path d="M12 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/><path d="M12 12c2.2 0 4.2.9 5.6 2.3l1.8-1.8A11 11 0 0 0 4.6 12.5l1.8 1.8A7.9 7.9 0 0 1 12 12Z"/><path d="M12 6c3.9 0 7.4 1.6 9.9 4.1l1.8-1.8A15.9 15.9 0 0 0 .3 8.3l1.8 1.8A13.9 13.9 0 0 1 12 6Z"/></symbol>
+  <symbol id="i-bat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="8" width="18" height="10" rx="2.5"/><rect x="4" y="10" width="12" height="6" rx="1" fill="currentColor" stroke="none"/><path d="M22 11v4" stroke-linecap="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+</svg>
+
+<div class="stage">
+  <header class="masthead">
+    <div class="mh-titles">
+      <div class="eyebrow">NYAC App Concept · The “too fancy” one</div>
+      <h1>The Grand Hall</h1>
+      <p class="sub">The Deco-hospitality direction, fully interactive. Gilded, ceremonial, spoken like a concierge — with a Candlelight mode for the evening. Try the phone.</p>
+    </div>
+    <div class="mh-tools">
+      <span class="tag">Interactive</span>
+      <button class="tbtn" id="themeToggle" aria-label="Toggle day or candlelight"><svg class="su"><use href="#i-sun"/></svg><svg class="mo"><use href="#i-moon"/></svg></button>
+    </div>
+  </header>
+
+  <div class="showcase">
+    <div class="device"><div class="screen">
+      <div class="sb"><span>4:03</span><span class="r"><svg><use href="#i-sig"/></svg><svg><use href="#i-wifi"/></svg><svg><use href="#i-bat"/></svg></span></div>
+
+      <div class="views" id="views">
+        <!-- HOME -->
+        <section class="view on" id="view-home" aria-label="Home">
+          <div class="hero">
+            <canvas id="cvHero"></canvas>
+            <div class="scrim"></div>
+            <div class="deco-frame"></div>
+            <div class="hc"><div class="wm">New York<br>Athletic Club</div><div class="loc">City House · Central Park South</div><div class="dia"></div></div>
+          </div>
+          <div class="greet"><div class="g">Good afternoon. <b>How may we host you?</b></div></div>
+          <div class="rcard">
+            <div class="rh">Reserve a Table</div>
+            <div class="rs">The Main Dining Room · this evening</div>
+            <button class="btn" data-dine-open="Main Dining Room">Begin</button>
+          </div>
+          <div class="pad">
+            <div class="csec">This Evening</div>
+            <div class="cev" data-goto="calendar"><span class="di"></span><span class="tm">7:00</span><span><div class="nm">Badminton at the City House</div><div class="vn">City House · Gymnasium</div></span></div>
+            <div class="cev" data-goto="calendar"><span class="di"></span><span class="tm">7:00</span><span><div class="nm">Chess Club Game</div><div class="vn">City House · To be announced</div></span></div>
+            <div class="cev" data-goto="calendar"><span class="di ti"></span><span class="tm">7:30</span><span><div class="nm">Adult Pickup Basketball</div><div class="vn ti">Travers Island · Field House</div></span></div>
+            <div class="csec">Your Account</div>
+            <div class="acct" data-statement="1"><div class="l">August Statement<small>Closes the 31st · tap to review</small></div><div class="v">$412.60</div></div>
+            <div class="island">
+              <div class="nm">Travers Island</div>
+              <div class="dt">The pool and lawn remain open until eight o'clock.<br>Water 78° · The last shuttle departs at 9:15.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DINE -->
+        <section class="view" id="view-dine" aria-label="Dining">
+          <div class="opener"><div class="k">Reservations</div><h2>Dining</h2><div class="dia"></div></div>
+          <div class="pad">
+            <p class="intro">Your table awaits. May we suggest a room?</p>
+            <button class="venue" data-dine-open="Main Dining Room">
+              <span class="lz"><span>M</span></span>
+              <span class="vm"><span class="nm">The Main Dining Room</span><span class="ds">Continental fine dining · Pre-Theater prix fixe from half past five</span>
+                <span class="rw"><span class="loc">City House</span><span class="dress">Jacket &amp; Tie</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+            <button class="venue" data-dine-open="The Tap Room">
+              <span class="lz"><span>T</span></span>
+              <span class="vm"><span class="nm">The Tap Room</span><span class="ds">Tavern classics and a proper bar · Walk-ins received after eight</span>
+                <span class="rw"><span class="loc">City House</span><span class="dress">Smart Casual</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+            <button class="venue" data-dine-open="The Café">
+              <span class="lz"><span>C</span></span>
+              <span class="vm"><span class="nm">The Café</span><span class="ds">All-day dining and lighter fare · Families most welcome</span>
+                <span class="rw"><span class="loc">City House</span><span class="dress">Casual</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+            <button class="venue ti" data-dine-open="Travers Island Terrace" data-ti="1">
+              <span class="lz"><span>TI</span></span>
+              <span class="vm"><span class="nm">The Terrace at Travers Island</span><span class="ds">A waterfront grill upon the Sound · Sunset seatings</span>
+                <span class="rw"><span class="loc ti">Travers Island</span><span class="dress">Resort Casual</span></span></span>
+              <span class="chev"><svg><use href="#i-chev"/></svg></span>
+            </button>
+          </div>
+        </section>
+
+        <!-- EVENTS -->
+        <section class="view" id="view-calendar" aria-label="Events">
+          <div class="opener"><div class="k">The Season</div><h2>Engagements</h2><div class="dia"></div></div>
+          <div class="pad" id="events">
+            <div class="dayhead">This Evening · Aug 24</div>
+            <div class="event" data-ev="badminton" data-title="Badminton at the City House" data-when="Mon, Aug 24 · 7:00 PM" data-loc="City House · Gymnasium">
+              <span class="di"></span>
+              <div class="tcol"><div class="t1">7:00</div><div class="t2">9:00 PM</div></div>
+              <div class="eb"><div class="nm">Badminton at the City House</div><div class="vn">City House · Gymnasium</div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Request a Place</button></div>
+            </div>
+            <div class="event" data-ev="chess" data-title="Chess Club Game" data-when="Mon, Aug 24 · 7:00 PM" data-loc="City House · To be announced">
+              <span class="di"></span>
+              <div class="tcol"><div class="t1">7:00</div><div class="t2">9:00 PM</div></div>
+              <div class="eb"><div class="nm">Chess Club Game</div><div class="vn">City House · To be announced</div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Request a Place</button></div>
+            </div>
+
+            <div class="dayhead">Wednesday · Aug 26</div>
+            <div class="event" data-ev="saturn" data-title="Saturn Society US Open Mixed Doubles" data-when="Wed, Aug 26 · 5:30 PM" data-loc="Off Site">
+              <span class="di"></span>
+              <div class="tcol"><div class="t1">5:30</div><div class="t2">11:30 PM</div></div>
+              <div class="eb"><div class="nm">Saturn Society US Open Mixed Doubles</div><div class="vn">Off Site</div>
+                <button class="rsvp is-going"><svg><use href="#i-check"/></svg>Attending</button></div>
+            </div>
+            <div class="event" data-ev="tabletennis" data-title="Table Tennis Game" data-when="Wed, Aug 26 · 6:30 PM" data-loc="City House · Gymnasium">
+              <span class="di"></span>
+              <div class="tcol"><div class="t1">6:30</div><div class="t2">7:30 PM</div></div>
+              <div class="eb"><div class="nm">Table Tennis Game</div><div class="vn">City House · Gymnasium</div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Request a Place</button></div>
+            </div>
+            <div class="event" data-ev="run" data-title="Runners' Club Central Park Run" data-when="Wed, Aug 26 · 6:30 PM" data-loc="City House · Lobby">
+              <span class="di"></span>
+              <div class="tcol"><div class="t1">6:30</div><div class="t2">8:00 PM</div></div>
+              <div class="eb"><div class="nm">Runners' Club Central Park Run</div><div class="vn">Assembling in the Lobby</div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Request a Place</button></div>
+            </div>
+            <div class="event" data-ev="basketball" data-title="Adult Pickup Basketball" data-when="Wed, Aug 26 · 7:30 PM" data-loc="Travers Island · Field House" data-ti="1">
+              <span class="di ti"></span>
+              <div class="tcol"><div class="t1">7:30</div><div class="t2">9:00 PM</div></div>
+              <div class="eb"><div class="nm">Adult Pickup Basketball</div><div class="vn ti">Travers Island · Field House</div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Request a Place</button></div>
+            </div>
+
+            <div class="dayhead">Thursday · Aug 27</div>
+            <div class="event" data-ev="bridge" data-title="Bridge Club Game" data-when="Thu, Aug 27 · 1:30 PM" data-loc="City House · Committee Room">
+              <span class="di"></span>
+              <div class="tcol"><div class="t1">1:30</div><div class="t2">4:00 PM</div></div>
+              <div class="eb"><div class="nm">Bridge Club Game</div><div class="vn">City House · Committee Room</div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Request a Place</button></div>
+            </div>
+            <div class="event" data-ev="pickleball" data-title="Pickleball at the City House" data-when="Thu, Aug 27 · 5:00 PM" data-loc="City House · Gymnasium">
+              <span class="di"></span>
+              <div class="tcol"><div class="t1">5:00</div><div class="t2">7:00 PM</div></div>
+              <div class="eb"><div class="nm">Pickleball at the City House</div><div class="vn">City House · Gymnasium</div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Request a Place</button></div>
+            </div>
+            <div class="event" data-ev="movie" data-title="Kids' Movie Night" data-when="Thu, Aug 27 · 5:00 PM" data-loc="Travers Island · Cabana Lawn" data-ti="1">
+              <span class="di ti"></span>
+              <div class="tcol"><div class="t1">5:00</div><div class="t2">8:00 PM</div></div>
+              <div class="eb"><div class="nm">Kids' Movie Night</div><div class="vn ti">Travers Island · Cabana Lawn</div>
+                <button class="rsvp"><svg><use href="#i-plus"/></svg>Request a Place</button></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BOOKINGS -->
+        <section class="view" id="view-bookings" aria-label="Bookings">
+          <div class="opener"><div class="k">Your Diary</div><h2>Engagements</h2><div class="dia"></div></div>
+          <div class="pad" id="bookings-list"></div>
+        </section>
+
+        <!-- CLUB -->
+        <section class="view" id="view-club" aria-label="The Club">
+          <div class="opener"><div class="k">Since 1868</div><h2>The House</h2><div class="dia"></div></div>
+          <div class="pad">
+            <div class="hours">
+              <div class="hh">Hours of the Day</div>
+              <div class="hrow"><span class="p">City House · Athletics</span><span class="v open">6a – 10p</span></div>
+              <div class="hrow"><span class="p">The Main Dining Room</span><span class="v open">5:30 – 10p</span></div>
+              <div class="hrow"><span class="p">Travers Island · Pool</span><span class="v open">8a – 8p</span></div>
+            </div>
+            <div class="index">
+              <button class="ix" data-menus="1"><span class="di"></span><span class="ib"><span class="nm">Menus</span><span class="ds">The dining rooms and this evening's fare</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix" data-info="Facilities"><span class="di"></span><span class="ib"><span class="nm">Facilities &amp; Booking</span><span class="ds">Squash, the pool, the gymnasium, the courts</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix ti" data-info="Travers Island"><span class="di"></span><span class="ib"><span class="nm">Travers Island</span><span class="ds">The pool, the lawn, and the Sound</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix" data-info="Shuttle Service"><span class="di"></span><span class="ib"><span class="nm">The Shuttle</span><span class="ds">City House ⇄ Travers Island</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix" data-info="Reciprocal Clubs"><span class="di"></span><span class="ib"><span class="nm">Reciprocal Clubs</span><span class="ds">Two hundred houses the world over</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+              <button class="ix" data-statement="1"><span class="di"></span><span class="ib"><span class="nm">Statements</span><span class="ds">Your account and billing history</span></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+            </div>
+            <div class="appearance">
+              <div class="al">Appearance<small>Day, or by candlelight</small></div>
+              <div class="seg" id="seg"><button data-set="light">Day</button><button data-set="dark">Candlelight</button></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <nav class="tabs" id="tabs">
+        <button class="tab on" data-tab="home"><span class="mk"></span><svg><use href="#i-home"/></svg>Home</button>
+        <button class="tab" data-tab="dine"><span class="mk"></span><svg><use href="#i-dine"/></svg>Dine</button>
+        <button class="tab" data-tab="calendar"><span class="mk"></span><svg><use href="#i-cal"/></svg>Events</button>
+        <button class="tab" data-tab="bookings"><span class="mk"></span><svg><use href="#i-book"/></svg>Diary</button>
+        <button class="tab" data-tab="club"><span class="mk"></span><svg><use href="#i-club"/></svg>House</button>
+      </nav>
+
+      <div class="scrim" id="scrim"></div>
+      <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+      <div class="toast" id="toast"><svg><use href="#i-check"/></svg><span id="toastMsg">Done</span></div>
+      <div class="homebar"></div>
+    </div></div>
+
+    <aside class="rail">
+      <h2 class="lead">Grand, gilded, and thoroughly looked after.</h2>
+      <p class="lead-sub">The “too fancy” foil — and the likeliest runner-up. A concierge in your pocket: inscriptional capitals, Deco gold frames, a drawn façade, and a voice that says “how may we host you.” Same instant engine as the flagship.</p>
+      <div class="def"><div class="dt">Ceremonial</div><div class="dd">Cinzel capitals, corner-bracket frames, diamond markers. Every screen composed like an invitation — <b>centered, measured, unhurried.</b></div></div>
+      <div class="def"><div class="dt">Candlelight mode</div><div class="dd">By night the cream turns to deep oxblood and the gold does the talking. Try the toggle, top-right, or House → Appearance.</div></div>
+      <div class="def"><div class="dt">Same instant engine</div><div class="dd">Identical flows to the flagship — reserve, RSVP, diary, statements — so the board compares character, not capability.</div></div>
+      <div class="try"><svg><use href="#i-arrow"/></svg>Tap “Begin,” request a place at an event, then open the Diary.</div>
+    </aside>
+  </div>
+
+  <footer class="pagefoot"><b>Concept prototype — the “too fancy” direction.</b> Sample data drawn from the current app; a drawn façade stands in for the Club's own photography. Not the official NYAC app, and not affiliated with or endorsed by the Club or its vendors. No data is collected.</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var views=document.getElementById("views");
+  function setTab(name){
+    document.querySelectorAll(".tab").forEach(function(t){t.classList.toggle("on",t.dataset.tab===name);});
+    document.querySelectorAll(".view").forEach(function(v){v.classList.remove("on");});
+    var v=document.getElementById("view-"+name);if(v)v.classList.add("on");
+    views.scrollTop=0;
+    if(name==="bookings")renderBookings();
+    if(name==="club")syncSeg();
+    if(name==="home")paintHero();
+  }
+  document.getElementById("tabs").addEventListener("click",function(e){var b=e.target.closest(".tab");if(b)setTab(b.dataset.tab);});
+  document.addEventListener("click",function(e){var g=e.target.closest("[data-goto]");if(g)setTab(g.dataset.goto);});
+
+  var bookings=[
+    {id:"seed-dine",kind:"dine",ti:false,title:"The Main Dining Room",when:"Fri, Aug 28 · 7:30 PM",loc:"City House · A party of two",tag:"Your table is held"},
+    {id:"ev-saturn",kind:"event",ti:false,title:"Saturn Society US Open Mixed Doubles",when:"Wed, Aug 26 · 5:30 PM",loc:"Off Site",tag:"Attending"}
+  ];
+  function esc(s){return (s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function renderBookings(){
+    var el=document.getElementById("bookings-list");
+    if(!bookings.length){el.innerHTML='<div class="bk-empty"><div class="dia"></div><div>Your diary is clear.</div><div style="font-size:13px;margin-top:6px">May we reserve you a table, or a place at an engagement?</div></div>';return;}
+    el.innerHTML=bookings.map(function(b){
+      var conf=b.kind==="event";
+      var status=conf?'<span class="tk-status conf">'+esc(b.tag)+'</span>':'<span class="tk-status res">'+esc(b.tag)+'</span>';
+      return '<div class="ticket'+(b.ti?" ti":"")+'">'+status+
+        '<div class="tk-nm">'+esc(b.title)+'</div>'+
+        '<div class="tk-when">'+esc(b.when)+'</div>'+
+        '<div class="tk-loc'+(b.ti?" ti":"")+'">'+esc(b.loc)+'</div>'+
+        '<div class="tk-actions"><button data-modify="'+b.id+'">Amend</button><button class="danger" data-cancel="'+b.id+'">Regrets</button></div></div>';
+    }).join("");
+  }
+  function addBooking(b){if(!bookings.some(function(x){return x.id===b.id;}))bookings.push(b);}
+  function removeBooking(id){bookings=bookings.filter(function(x){return x.id!==id;});}
+  document.getElementById("bookings-list").addEventListener("click",function(e){
+    var c=e.target.closest("[data-cancel]");
+    if(c){var id=c.dataset.cancel;removeBooking(id);
+      var ev=document.querySelector('.event[data-ev="'+id.replace(/^ev-/,'')+'"] .rsvp');
+      if(ev){ev.classList.remove("is-going");ev.innerHTML='<svg><use href="#i-plus"/></svg>Request a Place';}
+      renderBookings();toast("Your regrets are conveyed");return;}
+    if(e.target.closest("[data-modify]"))toast("Retrieving your reservation…");
+  });
+
+  document.getElementById("view-calendar").addEventListener("click",function(e){
+    var btn=e.target.closest(".rsvp");if(!btn)return;
+    var ev=btn.closest(".event"),id="ev-"+ev.dataset.ev,going=btn.classList.toggle("is-going");
+    if(going){btn.innerHTML='<svg><use href="#i-check"/></svg>Attending';
+      addBooking({id:id,kind:"event",ti:ev.hasAttribute("data-ti"),title:ev.dataset.title,when:ev.dataset.when,loc:ev.dataset.loc,tag:"Attending"});
+      toast("A place is held for you");
+    }else{btn.innerHTML='<svg><use href="#i-plus"/></svg>Request a Place';removeBooking(id);toast("Your regrets are conveyed");}
+  });
+
+  var toastEl=document.getElementById("toast"),toastMsg=document.getElementById("toastMsg"),tT;
+  function toast(m){toastMsg.textContent=m;toastEl.classList.add("show");clearTimeout(tT);tT=setTimeout(function(){toastEl.classList.remove("show");},2300);}
+
+  var scrim=document.getElementById("scrim"),sheet=document.getElementById("sheet");
+  function openSheet(h){sheet.innerHTML='<div class="grab"></div>'+h;scrim.classList.add("show");sheet.classList.add("show");}
+  function closeSheet(){scrim.classList.remove("show");sheet.classList.remove("show");}
+  scrim.addEventListener("click",closeSheet);
+
+  var DATES=[["TUE","25"],["WED","26"],["THU","27"],["FRI","28"],["SAT","29"],["SUN","30"]];
+  var TIMES=["5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00"];
+  function diningSheet(venue,ti){
+    var dc=DATES.map(function(d,i){return '<button class="chip'+(i===3?" sel":"")+'" data-date="'+d[0]+" "+d[1]+'"><span class="c1">'+d[0]+'</span><span class="c2">'+d[1]+'</span></button>';}).join("");
+    var tc=TIMES.map(function(t,i){return '<button class="chip'+(i===4?" sel":"")+'" data-time="'+t+'"><span class="c2 solo">'+t+'</span></button>';}).join("");
+    openSheet('<h3>'+esc(venue)+'</h3><div class="ssub">'+(ti?"Travers Island · Upon the Sound":"City House · 180 Central Park South")+'</div><div class="dia"></div>'+
+      '<div class="fl">The Date</div><div class="chiprow" data-group="date">'+dc+'</div>'+
+      '<div class="fl">The Hour</div><div class="timegrid" data-group="time">'+tc+'</div>'+
+      '<div class="fl">Your Party</div><div class="stepper"><button data-step="-1" aria-label="Fewer"><svg><use href="#i-minus"/></svg></button><span class="sv"><span id="partyN">2</span> Guests</span><button data-step="1" aria-label="More"><svg><use href="#i-plus"/></svg></button></div>'+
+      '<div class="sheet-foot"><button class="btn" id="confirmDine" style="margin-top:0">Reserve My Table</button>'+
+      '<div class="snote">'+(ti?"Resort casual — gentlemen are kindly asked to wear a collar after six.":"Jacket and tie are required in the Main Dining Room.")+'</div></div>');
+    sheet.dataset.venue=venue;sheet.dataset.ti=ti?"1":"";
+  }
+  sheet.addEventListener("click",function(e){
+    var chip=e.target.closest(".chip");
+    if(chip){chip.parentNode.querySelectorAll(".chip").forEach(function(c){c.classList.remove("sel");});chip.classList.add("sel");return;}
+    var step=e.target.closest("[data-step]");
+    if(step){var n=document.getElementById("partyN"),v=Math.max(1,Math.min(12,parseInt(n.textContent,10)+parseInt(step.dataset.step,10)));n.textContent=v;return;}
+    if(e.target.closest("#stmtHist")){toast("Retrieving your history…");return;}
+    if(e.target.closest("#closeInfo")){closeSheet();return;}
+    if(e.target.closest("#confirmDine")){
+      var venue=sheet.dataset.venue,ti=sheet.dataset.ti==="1";
+      var date=(sheet.querySelector('[data-group="date"] .sel')||{}).dataset||{};
+      var time=(sheet.querySelector('[data-group="time"] .sel')||{}).dataset||{};
+      var party=document.getElementById("partyN").textContent;
+      var dm={"TUE 25":"Tue, Aug 25","WED 26":"Wed, Aug 26","THU 27":"Thu, Aug 27","FRI 28":"Fri, Aug 28","SAT 29":"Sat, Aug 29","SUN 30":"Sun, Aug 30"};
+      addBooking({id:"dine-"+Date.now(),kind:"dine",ti:ti,title:venue,when:(dm[date.date]||"Fri, Aug 28")+" · "+(time.time||"7:30")+" PM",loc:(ti?"Travers Island":"City House")+" · A party of "+party,tag:"Your table is held"});
+      closeSheet();toast("Your table is reserved");setTab("bookings");
+    }
+  });
+
+  document.addEventListener("click",function(e){
+    var d=e.target.closest("[data-dine-open]");if(d){diningSheet(d.getAttribute("data-dine-open"),d.hasAttribute("data-ti"));return;}
+    if(e.target.closest("[data-statement]")){statementSheet();return;}
+    if(e.target.closest("[data-menus]")){menuSheet();return;}
+    var inf=e.target.closest("[data-info]");if(inf){infoSheet(inf.getAttribute("data-info"));return;}
+  });
+  function statementSheet(){
+    openSheet('<h3>August Statement</h3><div class="ssub">Account No. 8842 · Closes the 31st</div><div class="dia"></div>'+
+      '<div style="margin-top:16px">'+
+      '<div class="mrow"><div class="mt"><span class="mn">Balance Forward</span><span class="mp">$0.00</span></div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">The Main Dining Room · Aug 14</span><span class="mp">$186.40</span></div><div class="md">Dinner for two</div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Squash Court · Aug 18</span><span class="mp">$40.00</span></div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Monthly Dues</span><span class="mp">$186.20</span></div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Current Balance</span><span class="mp">$412.60</span></div></div></div>'+
+      '<div class="sheet-foot"><button class="btn" id="stmtHist" style="margin-top:0">The Full History</button></div>');
+  }
+  function menuSheet(){
+    openSheet('<h3>The Main Dining Room</h3><div class="ssub">Pre-Theater · This evening from half past five</div><div class="dia"></div>'+
+      '<div style="margin-top:16px">'+
+      '<div class="mrow"><div class="mt"><span class="mn">Oysters Rockefeller</span><span class="mp">$24</span></div><div class="md">Blue Point, creamed spinach, Pernod</div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Dover Sole Meunière</span><span class="mp">$58</span></div><div class="md">Brown butter, capers, fingerlings</div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Prime Rib au Jus</span><span class="mp">$52</span></div><div class="md">Yorkshire pudding, creamed horseradish</div></div>'+
+      '<div class="mrow"><div class="mt"><span class="mn">Baked Alaska</span><span class="mp">$18</span></div><div class="md">Finished tableside · for two</div></div></div>'+
+      '<div class="sheet-foot"><button class="btn" data-dine-open="Main Dining Room" style="margin-top:0">Reserve a Table</button></div>');
+  }
+  var INFO={
+    "Facilities":["Facilities & Booking","Squash and racquetball, the swimming pool, the fitness floor, boxing, and the rooftop courts — a court or a lane is reserved as easily as a table.","City House · Six until ten"],
+    "Travers Island":["Travers Island","The Club's twenty-seven waterfront acres upon Long Island Sound — the pool, the lawn, tennis, sailing, and the Terrace. A members' shuttle attends from the City House.","Upon the Sound · Westchester"],
+    "Shuttle Service":["The Shuttle","The members' shuttle runs between the City House and Travers Island, with our compliments. Departures at 4:30, 5:30, and 6:45. The last return is at 9:15.","City House ⇄ Travers Island"],
+    "Reciprocal Clubs":["Reciprocal Clubs","More than two hundred reciprocal clubs the world over extend their courtesies to members — from London to Tokyo. A letter of introduction awaits your request.","The World Over"]
+  };
+  function infoSheet(k){var d=INFO[k]||["The House","",""];
+    openSheet('<h3>'+d[0]+'</h3><div class="ssub">'+d[2]+'</div><div class="dia"></div><p class="para">'+d[1]+'</p>'+
+      '<div class="sheet-foot"><button class="btn ghost" id="closeInfo" style="margin-top:0">Very Good</button></div>');}
+
+  /* theme */
+  function isDark(){var c=document.documentElement.getAttribute("data-theme");return c?c==="dark":matchMedia("(prefers-color-scheme: dark)").matches;}
+  function setTheme(d){document.documentElement.setAttribute("data-theme",d?"dark":"light");syncSeg();}
+  document.getElementById("themeToggle").addEventListener("click",function(){setTheme(!isDark());});
+  document.getElementById("seg").addEventListener("click",function(e){var b=e.target.closest("[data-set]");if(b)setTheme(b.dataset.set==="dark");});
+  function syncSeg(){var seg=document.getElementById("seg");if(!seg)return;var d=isDark();
+    seg.querySelectorAll("button").forEach(function(b){b.classList.toggle("on",(b.dataset.set==="dark")===d);});}
+
+  /* hero canvas — drawn City House façade, gold on oxblood */
+  function paintHero(){var cv=document.getElementById("cvHero");if(!cv)return;
+    var dpr=Math.min(2,window.devicePixelRatio||1),r=cv.getBoundingClientRect();
+    var w=Math.max(1,Math.round(r.width)),h=Math.max(1,Math.round(r.height));
+    cv.width=w*dpr;cv.height=h*dpr;var x=cv.getContext("2d");x.setTransform(dpr,0,0,dpr,0,0);
+    var bg=x.createLinearGradient(0,0,0,h);bg.addColorStop(0,"#5c1a26");bg.addColorStop(1,"#3d0f18");
+    x.fillStyle=bg;x.fillRect(0,0,w,h);
+    var gold="rgba(198,164,95,0.85)",goldF="rgba(198,164,95,0.14)";
+    x.strokeStyle=gold;x.lineWidth=1;x.fillStyle=goldF;
+    var bw=w*0.62,bx=(w-bw)/2,top=h*0.2,base=h*1.02;
+    x.strokeRect(bx,top,bw,base-top);
+    x.beginPath();x.moveTo(bx-8,top);x.lineTo(bx+bw+8,top);x.moveTo(bx-8,top-6);x.lineTo(bx+bw+8,top-6);x.stroke();
+    x.beginPath();x.moveTo(w/2-22,top-6);x.lineTo(w/2,top-20);x.lineTo(w/2+22,top-6);x.stroke();
+    x.beginPath();x.moveTo(w/2,top-20);x.lineTo(w/2,top-40);x.stroke();
+    x.fillStyle="rgba(198,164,95,0.5)";x.fillRect(w/2,top-40,16,9);x.fillStyle=goldF;
+    var cols=5,rows=5,pad=bw*0.1,gw=(bw-pad*2),cwx=gw/cols,gutter=cwx*0.34,winW=cwx-gutter;
+    var floorTop=top+16,floorBot=base-20,gh=(floorBot-floorTop)/rows,winH=gh*0.62;
+    for(var rr2=0;rr2<rows;rr2++){for(var cx=0;cx<cols;cx++){
+      var wx=bx+pad+cx*cwx+gutter/2,wy=floorTop+rr2*gh+(gh-winH)/2;
+      if(rr2===rows-1){
+        x.beginPath();x.moveTo(wx,wy+winH);x.lineTo(wx,wy+winH*0.4);x.arc(wx+winW/2,wy+winH*0.4,winW/2,Math.PI,0);x.lineTo(wx+winW,wy+winH);x.closePath();x.fill();x.stroke();
+      }else{
+        x.fillRect(wx,wy,winW,winH);x.strokeRect(wx,wy,winW,winH);
+        x.beginPath();x.moveTo(wx+winW/2,wy);x.lineTo(wx+winW/2,wy+winH);x.moveTo(wx,wy+winH/2);x.lineTo(wx+winW,wy+winH/2);x.stroke();
+      }
+    }}
+    for(var s=1;s<rows;s++){var sy=floorTop+s*gh;x.globalAlpha=.5;x.beginPath();x.moveTo(bx+4,sy);x.lineTo(bx+bw-4,sy);x.stroke();x.globalAlpha=1;}
+  }
+  var rt;window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(paintHero,160);});
+  if(document.readyState==="complete")paintHero();else window.addEventListener("load",paintHero);
+
+  renderBookings();syncSeg();
+})();
+</script>

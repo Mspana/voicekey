@@ -69,6 +69,12 @@ body{margin:0;background:var(--pg-bg);color:var(--pg-ink);
 .chips span{font-size:11px;font-weight:600;color:var(--pg-muted);border:1px solid var(--pg-hair);
   background:var(--pg-panel);border-radius:999px;padding:5px 10px;letter-spacing:.02em}
 .chips span b{color:var(--pg-ink);font-weight:700}
+.open-btn{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:11px 18px;
+  background:#9B1B31;color:#fff;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.04em;
+  border-radius:2px;transition:filter .2s,transform .12s}
+.open-btn:hover{filter:brightness(1.08)}
+.open-btn:active{transform:translateY(1px)}
+.open-btn svg{width:15px;height:15px}
 
 .foot{margin-top:44px;padding-top:20px;border-top:1px solid var(--pg-hair);color:var(--pg-faint);font-size:12px;line-height:1.6;max-width:760px}
 .foot b{color:var(--pg-muted)}
@@ -172,7 +178,7 @@ body{margin:0;background:var(--pg-bg);color:var(--pg-ink);
     <div>
       <div class="eyebrow">NYAC App · Concept</div>
       <h1>Three directions</h1>
-      <p class="lede">Each opens on an image of the House and rebuilds around the two jobs — reserving and knowing. Pick a world; I'll build it out fully. Every hero is the frame your own photography drops into.</p>
+      <p class="lede">Each opens on an image of the House and rebuilds around the two jobs — reserving and knowing. All three are now fully interactive: open one and reserve a table, RSVP to an event, browse the House. Every hero is the frame your own photography drops into.</p>
     </div>
     <button class="tbtn" id="tt" aria-label="Toggle theme"><svg class="su"><use href="#s-sun"/></svg><svg class="mo"><use href="#s-moon"/></svg></button>
   </header>
@@ -209,6 +215,7 @@ body{margin:0;background:var(--pg-bg);color:var(--pg-ink);
         <div class="nm">The Roll of Honor</div>
         <div class="ds">Heritage editorial. A club journal: engraved photography, big Caslon headlines, confident whitespace, crimson used like ink.</div>
         <div class="chips"><span><b>Libre Caslon</b> + Public Sans</span><span>Ivory · crimson · gilt</span><span>Distinguished, quiet</span></div>
+        <a class="open-btn" href="https://claude.ai/code/artifact/c5610683-a26b-40f5-92ce-1a2ec23c8f1d">Open the app <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
 
@@ -241,6 +248,7 @@ body{margin:0;background:var(--pg-bg);color:var(--pg-ink);
         <div class="nm">The Field House</div>
         <div class="ds">Modern athletic. Dark and high-contrast, condensed type, a scoreboard for the day. Energetic, but with a dress code.</div>
         <div class="chips"><span><b>Barlow S.C.</b> + Barlow</span><span>Charcoal · crimson · pool-blue</span><span>Bold, sporting</span></div>
+        <a class="open-btn" href="https://claude.ai/code/artifact/79d9301d-3c46-4c8e-8e71-999b1de648da">Open the app <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
 
@@ -279,6 +287,7 @@ body{margin:0;background:var(--pg-bg);color:var(--pg-ink);
         <div class="nm">The Grand Hall</div>
         <div class="ds">Deco hospitality. Warm cream and gilt, monumental inscriptional caps, a drawn façade, a concierge's tone. Grand and looked-after.</div>
         <div class="chips"><span><b>Cinzel</b> + Jost</span><span>Cream · oxblood · gold</span><span>Warm, gilded</span></div>
+        <a class="open-btn" href="https://claude.ai/code/artifact/107cd0b1-7678-4c67-a075-a2d246cf5bac">Open the app <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
   </div>
